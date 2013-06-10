@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
@@ -106,8 +107,27 @@ public class ASE {
 		@Override
 		public void run() {
 
+			// Operatør nummer
 			
 
+			
+		}
+		
+		//# Functions
+		
+		private int RM20_4(String message, String unit) throws Exception {
+			
+			writer.writeBytes("RM20 4 \"" + message + "\" \"\" \"" + unit + "\"\r\n");
+			
+			if (!reader.readLine().equals("RM20 B")) {
+				throw new Exception();
+			}
+			
+			//# IGANG
+			
+			String response = reader.readLine();
+			
+			return -1;
 			
 		}
 		
