@@ -127,7 +127,7 @@ public class Simulator extends Thread{
 
 						} else if (line.equals("T")) {
 							//Saet og retuner tara(tara bliver sat til nuvaerende brutto).
-								
+							tara = brutto;	
 							writer.writeBytes("T S " + ("" + tara).replace(",", ".") + " kg\r\n");
 
 						} else if (line.equals("DW")) {
