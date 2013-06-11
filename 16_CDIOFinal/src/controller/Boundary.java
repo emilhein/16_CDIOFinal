@@ -1,14 +1,48 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Boundary {
+public class Boundary extends Thread {
 
-	private Scanner scanner = new Scanner(System.in);
+	private ArrayList<String> cache = new ArrayList<String>();
+	private boolean closing = false;
+	
+	//# New
+	
+	public Boundary() {
+		
+		start();
+		
+	}
 	
 	//# Close
 	
 	public void close() {
+		
+		closing = true;
+				
+	}
+	
+	//# Thread
+	
+	@Override
+	public void run() {
+
+		Scanner scanner = new Scanner(System.in);
+		String line;
+		
+		while (!closing) {
+			
+			line = scanner.nextLine();
+			
+			if (line != null && line.length() > 0) {
+				synchronized (cache) {
+					cache.add(line);
+				}
+			}
+			
+		}
 		
 		scanner.close();
 		
@@ -16,25 +50,37 @@ public class Boundary {
 	
 	//# Functions
 	
-	public String readString() {
+	public String readString(String prefix) {
 		
-		String temp;
+		String line;
 		
 		while (true) {
-			temp = scanner.nextLine();
-			if (temp.length() > 0) {
-				return temp;
+						
+			synchronized (cache) {
+				for (int i = 0; i < cache.size(); i++) {
+					line = cache.get(i);
+					if (line.matches("^" + prefix + ".+$")) {
+						cache.remove(i);
+						return line.substring(prefix.length());
+					}
+				}
 			}
+			
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {
+			}
+			
 		}
 		
 	}
-	public int readInt(int minimum, int maximum) {
+	public int readInt(String prefix, int minimum, int maximum) {
 		
 		int temp;
 		
 		while (true) {
 			try {
-				temp = scanner.nextInt();
+				temp = Integer.parseInt(readString(prefix));
 				if (temp < minimum) {
 					System.out.println("The number is less than " + minimum + ".");
 				} else if (temp > maximum) {
@@ -43,19 +89,18 @@ public class Boundary {
 					return temp;
 				}
 			} catch(Exception e) {
-				scanner.skip(".*");
 				System.out.println("Invalid number.");
 			}
 		}
 		
 	}
-	public double readDouble(double minimum, double maximum) {
+	public double readDouble(String prefix, double minimum, double maximum) {
 		
 		double temp;
 		
 		while (true) {
 			try {
-				temp = scanner.nextDouble();
+				temp = Double.parseDouble(readString(prefix));
 				if (temp < minimum) {
 					System.out.println("The number is less than " + minimum + ".");
 				} else if (temp > maximum) {
@@ -64,7 +109,6 @@ public class Boundary {
 					return temp;
 				}
 			} catch(Exception e) {
-				scanner.skip(".*");
 				System.out.println("Invalid number.");
 			}
 		}

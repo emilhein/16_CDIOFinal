@@ -20,7 +20,7 @@ public class ASE {
 			System.out.println("0. Exit");
 			System.out.println();
 			
-			if (boundary.readInt(0, 1) == 0) {
+			if (boundary.readInt("", 0, 1) == 0) {
 				break;
 			}
 
@@ -28,13 +28,13 @@ public class ASE {
 			System.out.println("Address:");
 			System.out.println();
 			
-			String address = boundary.readString();
+			String address = boundary.readString("");
 			
 			System.out.println();
 			System.out.println("Port:");
 			System.out.println();
 			
-			int port = boundary.readInt(0, 65535);
+			int port = boundary.readInt("", 0, 65535);
 
 			System.out.println();
 			
@@ -74,7 +74,7 @@ public class ASE {
 				writer = new DataOutputStream(socket.getOutputStream());
 
 				start();
-				join();
+				join(); // ### KAN IKKE STARTE FLERE PÅ EN GANG ###
 				
 			} finally {
 				try {

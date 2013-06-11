@@ -13,15 +13,16 @@ import java.util.regex.Pattern;
 public class Simulator extends Thread{
 	private int port = 8005;
 	ServerSocket listener;
-	private double netto;
+	private double brutto;
 	private double tara;
 	private Boundary boundary;
 	//# New
 	
 	public Simulator(Boundary boundary) {
 		
+		this.boundary = boundary;
+		
 		try {
-			this.boundary = boundary;
 			listener = new ServerSocket(port);//Hvor den lytter.
 			System.out.println(" Started server on port " + port + ".");
 			start();
@@ -33,7 +34,7 @@ public class Simulator extends Thread{
 	}
 		
 	private void consol() {
-	
+		
 		loop:
 		while(true){	
 			
@@ -42,21 +43,18 @@ public class Simulator extends Thread{
 			System.out.println("2. aendre netto");
 			System.out.println("3. afslut");
 			System.out.println();
-			double tara = 0; 
-			double brutto = 0;
 			
-			switch(boundary.readInt(1, 3)){
+			switch(boundary.readInt("!", 1, 3)){
 				
 				case 1:
 					System.out.println("Indtast veagten på skaalen efterfulgt af enter: ");
-					tara = boundary.readDouble(Double.MIN_VALUE, Double.MAX_VALUE);
+					tara = boundary.readDouble("!", Double.MIN_VALUE, Double.MAX_VALUE);
 					break;
 				case 2:
 					System.out.println("Indtast veagten på skaalen + indhold efterfulgt af enter: ");
-					brutto = boundary.readDouble(Double.MIN_VALUE, Double.MAX_VALUE);
+					brutto = boundary.readDouble("!", Double.MIN_VALUE, Double.MAX_VALUE);
 					break;
-				default:
-					
+				default:			
 					break loop;
 			}
 				
@@ -125,7 +123,7 @@ public class Simulator extends Thread{
 						if (line.equals("S")) {
 							
 							// Retuner netto vægt.
-							writer.writeBytes("S S " + ("" + netto).replace(",", ".") + " kg\r\n");
+							writer.writeBytes("S S " + ("" + (brutto - tara)).replace(",", ".") + " kg\r\n");
 
 						} else if (line.equals("T")) {
 							//Saet og retuner tara(tara bliver sat til nuvaerende brutto).
@@ -150,7 +148,7 @@ public class Simulator extends Thread{
 							writer.writeBytes("RM20 B\r\n");
 							System.out.println(matcherRM20_8.group(1));
 							System.out.println(matcherRM20_8.group(2) + matcherRM20_8.group(3));
-							writer.writeBytes("RM20 A \"" + boundary.readString().replace("\"", "_") + "\"\r\n");
+							writer.writeBytes("RM20 A \"" + boundary.readString("@").replace("\"", "_") + "\"\r\n");
 						
 						}else if (matcherRM20_4.matches()) {
 
@@ -158,14 +156,14 @@ public class Simulator extends Thread{
 							writer.writeBytes("RM20 B\r\n");
 							System.out.println(matcherRM20_4.group(1));
 								System.out.println(matcherRM20_4.group(2) + matcherRM20_4.group(3));
-								writer.writeBytes("RM20 A \"" + boundary.readInt(Integer.MIN_VALUE,Integer.MAX_VALUE) + "\"\r\n");
+								writer.writeBytes("RM20 A \"" + boundary.readInt("@", Integer.MIN_VALUE,Integer.MAX_VALUE) + "\"\r\n");
 							
 						} else if (line.equals("Z")) {
 						
 							// Fjern meddelsen fra displayet og vend tilbage til visning af netto vægt.
 							writer.writeBytes("Veagten er nulstillet: ");
 							tara = 0;
-							netto = 0;
+							brutto = 0;
 						}
 						else {
 							
