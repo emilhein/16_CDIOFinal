@@ -17,6 +17,8 @@ public class Main {
 			new ASE(boundary);
 		}
 		
+		boundary.close();
+		
 	}
 
 }
