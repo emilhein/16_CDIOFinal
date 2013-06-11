@@ -2,9 +2,10 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ASE {
 	
@@ -72,8 +73,6 @@ public class ASE {
 				reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				writer = new DataOutputStream(socket.getOutputStream());
 
-				start();
-
 			} finally {
 				try {
 					socket.close();
@@ -88,6 +87,8 @@ public class ASE {
 				} catch (Exception e) {
 				}
 			}
+			
+			start();
 			
 		}
 		
@@ -107,28 +108,99 @@ public class ASE {
 		@Override
 		public void run() {
 
-			// Operatør nummer
-			
+			try {
+				while (true) {
 
+					// 3. Operatøren indtaster operatør nr.
+					int operatorNumber = readInt("Operator:", "", "#");
+										
+					// 4. Vægten svarer tilbage med operatørnavn som så godkendes
+					String operatorName;
+					try {
+						operatorName = resolveOperator(operatorNumber);
+					} catch (Exception e) {
+						display("Not found");
+						continue;
+					}
+					if (readInt(operatorName + "?", "1", "") != 1) {
+						continue;
+					}
+					
+				}
+			} catch (Exception e) {
+				System.err.println("Weight crashed ('" + address + ":" + port + "'): " + e.getMessage());
+			} finally {
+				try {
+					socket.close();
+				} catch (Exception e) {
+				}
+				try {
+					reader.close();
+				} catch (Exception e) {
+				}
+				try {
+					writer.close();
+				} catch (Exception e) {
+				}
+			}
 			
 		}
 		
 		//# Functions
 		
-		private int RM20_4(String message, String unit) throws Exception {
+		private String resolveOperator(int number) throws Exception {
 			
-			writer.writeBytes("RM20 4 \"" + message + "\" \"\" \"" + unit + "\"\r\n");
-			
-			if (!reader.readLine().equals("RM20 B")) {
-				throw new Exception();
+			if (number == 1) {
+				return "Bo";
 			}
 			
-			//# IGANG
+			throw new Exception("Cannot find operator with number '" + number + "'.");
+		}
+		
+		private void display(String message) throws Exception {
 			
+			// Send
+			writer.writeBytes("D \"" + message + "\"\r\n");
+			
+			// Receive
 			String response = reader.readLine();
+			if (!response.equals("D A")) {
+				throw new Exception("Received message '" + response + "' differs from 'D A'.");
+			}
 			
-			return -1;
+			// Wait
+			Thread.sleep(2000);
+
+			// Send
+			writer.writeBytes("DW\r\n");
+						
+			// Receive
+			response = reader.readLine();
+			if (!response.equals("DW A")) {
+				throw new Exception("Received message '" + response + "' differs from 'DW A'.");
+			}
 			
+		}
+		private int readInt(String message, String input, String unit) throws Exception {
+			
+			// Send
+			writer.writeBytes("RM20 4 \"" + message + "\" \"" + input + "\" \"" + unit + "\"\r\n");
+			
+			// Receive
+			String response = reader.readLine();
+			if (!response.equals("RM20 B")) {
+				throw new Exception("Received message '" + response + "' differs from 'RM20 B'.");
+			}
+			
+			// Receive
+			final Pattern pattern = Pattern.compile("^RM20 A \"([^\"]*)\"$");
+			response = reader.readLine();
+			Matcher matcher = pattern.matcher(response);
+			if (!matcher.matches()) {
+				throw new Exception("Received message '" + response + "' differs from pattern '^RM20 A \"([^\"]*)\"$'.");
+			}
+			
+			return Integer.parseInt(matcher.group(1));
 		}
 		
 	}
