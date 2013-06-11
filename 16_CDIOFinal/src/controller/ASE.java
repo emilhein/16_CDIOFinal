@@ -360,11 +360,11 @@ public class ASE {
 			writer.writeBytes("S\r\n");
 			
 			// Receive
-			final Pattern pattern = Pattern.compile("^S S \\s*([0-9\\.]*) kg$");
+			final Pattern pattern = Pattern.compile("^S S \\s*-?([0-9\\.]*) kg$");
 			String response = reader.readLine();
 			Matcher matcher = pattern.matcher(response);
 			if (!matcher.matches()) {
-				throw new Exception("Received message '" + response + "' differs from pattern '^S S \\s*([0-9\\.]*) kg$'.");
+				throw new Exception("Received message '" + response + "' differs from pattern '^S S \\s*-?([0-9\\.]*) kg$'.");
 			}
 			
 			return Double.parseDouble(matcher.group(1));
@@ -375,11 +375,11 @@ public class ASE {
 			writer.writeBytes("T\r\n");
 			
 			// Receive
-			final Pattern pattern = Pattern.compile("^T S \\s*([0-9\\.]*) kg$");
+			final Pattern pattern = Pattern.compile("^T S \\s*-?([0-9\\.]*) kg$");
 			String response = reader.readLine();
 			Matcher matcher = pattern.matcher(response);
 			if (!matcher.matches()) {
-				throw new Exception("Received message '" + response + "' differs from pattern '^T S \\s*([0-9\\.]*) kg$'.");
+				throw new Exception("Received message '" + response + "' differs from pattern '^T S \\s*-?([0-9\\.]*) kg$'.");
 			}
 			
 			return Double.parseDouble(matcher.group(1));
