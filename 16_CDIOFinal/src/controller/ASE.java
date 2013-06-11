@@ -108,22 +108,49 @@ public class ASE {
 		@Override
 		public void run() {
 
+			// 1: Bekræft
+			// 0: Annuller/Tilbage
+			
 			try {
+				operator:
 				while (true) {
 
 					// 3. Operatøren indtaster operatør nr.
 					int operatorNumber = readInt("Operator:", "", "#");
-										
+					
 					// 4. Vægten svarer tilbage med operatørnavn som så godkendes
 					String operatorName;
 					try {
 						operatorName = resolveOperator(operatorNumber);
 					} catch (Exception e) {
 						display("Not found");
-						continue;
+						continue operator;
 					}
 					if (readInt(operatorName + "?", "1", "") != 1) {
-						continue;
+						continue operator;
+					}
+					
+					productBatch:
+					while (true) {
+						
+						// 5. Operatøren indtaster produktbatch nummer.
+						int productBatchNumber = readInt("Product batch:", "", "#");
+						if (productBatchNumber == 0) {
+							continue operator;
+						}
+					
+						// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
+						String productBatchName;
+						try {
+							productBatchName = resolveProductBatch(productBatchNumber);
+						} catch (Exception e) {
+							display("Not found");
+							continue productBatch;
+						}
+						if (readInt(productBatchName + "?", "1", "") != 1) {
+							continue productBatch;
+						}
+						
 					}
 					
 				}
@@ -155,6 +182,14 @@ public class ASE {
 			}
 			
 			throw new Exception("Cannot find operator with number '" + number + "'.");
+		}
+		private String resolveProductBatch(int number) throws Exception {
+			
+			if (number == 1) {
+				return "Saltvand";
+			}
+			
+			throw new Exception("Cannot find product batch with number '" + number + "'.");
 		}
 		
 		private void display(String message) throws Exception {
