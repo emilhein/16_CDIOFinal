@@ -116,63 +116,43 @@ public class ASE {
 				while (true) {
 
 					// 3. Operatøren indtaster operatør nr.
-					int operatorNumber = readInt("Operator:", "", "#");
-					
 					// 4. Vægten svarer tilbage med operatørnavn som så godkendes
-					String operatorName;
-					try {
-						operatorName = resolveOperator(operatorNumber);
-					} catch (Exception e) {
-						display("Not found");
-						continue operator;
-					}
-					if (readInt(operatorName + "?", "1", "") != 1) {
-						continue operator;
-					}
+					int operator = getOperator();
 					
 					productBatch:
 					while (true) {
 						
 						// 5. Operatøren indtaster produktbatch nummer
-						int productBatchNumber = readInt("Product batch:", "", "#");
-						if (productBatchNumber == 0) {
+						// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
+						int productBatch = getProductBatch();
+						if (productBatch == 0) {
 							continue operator;
 						}
-					
-						// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
-						String productBatchName;
-						try {
-							productBatchName = resolveProductBatch(productBatchNumber);
-						} catch (Exception e) {
-							display("Not found");
-							continue productBatch;
-						}
-						if (readInt(productBatchName + "?", "1", "") != 1) {
-							continue productBatch;
-						}
 						
-						clear:
+						containerWeight:
 						while (true) {
 							
 							// 7. Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’
-							if (readInt("Clear weight", "1", "") != 1) {
+							// 8. Vægten tareres
+							// 9. Vægten beder om første tara beholder
+							// 10. Operatør placerer første tarabeholder og trykker ’ok’
+							// 11. Vægten af tarabeholder registreres
+							// 12. Vægten tareres
+							double containerWeight = getContainerWeight();
+							if (containerWeight == Double.NaN) {
 								continue productBatch;
 							}
 							
-							// 8. Vægten tareres
-							tare();
-							
-							// 9. Vægten beder om første tara beholder
-							// 10. Operatør placerer første tarabeholder og trykker ’ok’
-							if (readInt("Place container", "1", "") != 1) {
-								continue clear;
+							materialBatch:
+							while (true) {
+								
+								// 13. Vægten beder om raavarebatch nummer på første råvare
+								int materialBatch = getMaterialBatch();
+								if (materialBatch == 0) {
+									continue containerWeight;
+								}
+								
 							}
-							
-							// 11. Vægten af tarabeholder registreres
-							double container = weight();
-
-							// 12. Vægten tareres
-							tare();
 							
 						}
 						
@@ -200,21 +180,113 @@ public class ASE {
 		
 		//# Functions
 		
-		private String resolveOperator(int number) throws Exception {
+		private int getOperator() throws Exception {
 			
-			if (number == 1) {
-				return "Bo";
+			while (true) {
+				
+				int number = readInt("Operator:", "", "#");
+				String name;
+				
+				// === HARDCODED ===
+				if (number == 1) {
+					name = "Bo";
+				} else {
+					display("Not found");
+					continue;
+				}
+				// === HARDCODED ===
+				
+				if (readInt(name + "?", "1", "") != 1) {
+					continue;
+				}
+				
+				return number;
+				
 			}
 			
-			throw new Exception("Cannot find operator with number '" + number + "'.");
 		}
-		private String resolveProductBatch(int number) throws Exception {
+		private int getProductBatch() throws Exception {
 			
-			if (number == 1) {
-				return "Saltvand";
+			while (true) {
+				
+				int number = readInt("Product batch:", "", "#");
+				
+				if (number == 0) {
+					return 0;
+				}
+				
+				String name;
+				
+				// === HARDCODED ===
+				if (number == 1) {
+					name = "Saltvand";
+				} else {
+					display("Not found");
+					continue;
+				}
+				// === HARDCODED ===
+				
+				if (readInt(name + "?", "1", "") != 1) {
+					continue;
+				}
+				
+				return number;
+				
 			}
 			
-			throw new Exception("Cannot find product batch with number '" + number + "'.");
+		}
+		private double getContainerWeight() throws Exception {
+			
+			while (true) {
+				
+				if (readInt("Clear weight", "1", "") != 1) {
+					return Double.NaN;
+				}
+
+				tare();
+				
+				if (readInt("Place container", "1", "") != 1) {
+					continue;
+				}
+
+				double weight = weight();
+
+				tare();
+				
+				return weight;
+				
+			}
+			
+		}
+		private int getMaterialBatch() throws Exception {
+			
+			while (true) {
+				
+				int number = readInt("Material batch:", "", "#");
+				
+				if (number == 0) {
+					return 0;
+				}
+				
+				String name;
+				
+				// === HARDCODED ===
+				if (number == 1) {
+					name = "Vand";
+				} else {
+					display("Not found");
+					continue;
+				}
+				// === HARDCODED ===
+				
+				if (readInt(name + "?", "1", "") != 1) {
+					continue;
+				}
+				
+				return number;
+				
+			}
+			
 		}
 		
 		private void display(String message) throws Exception {
