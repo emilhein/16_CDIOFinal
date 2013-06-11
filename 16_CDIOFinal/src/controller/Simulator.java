@@ -33,6 +33,7 @@ public class Simulator extends Thread{
 	}
 		
 	private void consol() {
+	
 		loop:
 		while(true){	
 			
@@ -48,11 +49,11 @@ public class Simulator extends Thread{
 				
 				case 1:
 					System.out.println("Indtast veagten på skaalen efterfulgt af enter: ");
-					tara = boundary.readInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
+					tara = boundary.readDouble(Double.MIN_VALUE, Double.MAX_VALUE);
 					break;
 				case 2:
 					System.out.println("Indtast veagten på skaalen + indhold efterfulgt af enter: ");
-					brutto = boundary.readInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
+					brutto = boundary.readDouble(Double.MIN_VALUE, Double.MAX_VALUE);
 					break;
 				default:
 					
