@@ -152,6 +152,12 @@ public class ASE {
 									continue containerWeight;
 								}
 								
+								// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
+								/*double materialWeight = getMaterialWeight();
+								if (containerWeight == Double.NaN) {
+									continue productBatch;
+								}*/
+								
 							}
 							
 						}
@@ -284,6 +290,19 @@ public class ASE {
 				}
 				
 				return number;
+				
+			}
+			
+		}
+		private double getMaterialWeight() throws Exception {
+			
+			while (true) {
+				
+				if (readInt("Place material", "1", "") != 1) {
+					return Double.NaN;
+				}
+				
+				return weight();
 				
 			}
 			
