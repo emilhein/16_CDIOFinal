@@ -133,7 +133,7 @@ public class ASE {
 					productBatch:
 					while (true) {
 						
-						// 5. Operatøren indtaster produktbatch nummer.
+						// 5. Operatøren indtaster produktbatch nummer
 						int productBatchNumber = readInt("Product batch:", "", "#");
 						if (productBatchNumber == 0) {
 							continue operator;
@@ -149,6 +149,31 @@ public class ASE {
 						}
 						if (readInt(productBatchName + "?", "1", "") != 1) {
 							continue productBatch;
+						}
+						
+						clear:
+						while (true) {
+							
+							// 7. Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’
+							if (readInt("Clear weight", "1", "") != 1) {
+								continue productBatch;
+							}
+							
+							// 8. Vægten tareres
+							tare();
+							
+							// 9. Vægten beder om første tara beholder
+							// 10. Operatør placerer første tarabeholder og trykker ’ok’
+							if (readInt("Place container", "1", "") != 1) {
+								continue clear;
+							}
+							
+							// 11. Vægten af tarabeholder registreres
+							double container = weight();
+
+							// 12. Vægten tareres
+							tare();
+							
 						}
 						
 					}
@@ -236,6 +261,36 @@ public class ASE {
 			}
 			
 			return Integer.parseInt(matcher.group(1));
+		}
+		private double weight() throws Exception {
+			
+			// Send
+			writer.writeBytes("S\r\n");
+			
+			// Receive
+			final Pattern pattern = Pattern.compile("^S S \\s*([0-9\\.]*) kg$");
+			String response = reader.readLine();
+			Matcher matcher = pattern.matcher(response);
+			if (!matcher.matches()) {
+				throw new Exception("Received message '" + response + "' differs from pattern '^S S \\s*([0-9\\.]*) kg$'.");
+			}
+			
+			return Double.parseDouble(matcher.group(1));
+		}
+		private double tare() throws Exception {
+			
+			// Send
+			writer.writeBytes("T\r\n");
+			
+			// Receive
+			final Pattern pattern = Pattern.compile("^T S \\s*([0-9\\.]*) kg$");
+			String response = reader.readLine();
+			Matcher matcher = pattern.matcher(response);
+			if (!matcher.matches()) {
+				throw new Exception("Received message '" + response + "' differs from pattern '^T S \\s*([0-9\\.]*) kg$'.");
+			}
+			
+			return Double.parseDouble(matcher.group(1));
 		}
 		
 	}
