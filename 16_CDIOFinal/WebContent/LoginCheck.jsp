@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Insert title here</title>
+		<title>LoginCheck</title>
 	</head>
 	<body>
 		<% 
@@ -13,6 +13,12 @@
 		
 		if (username.equals("Mathias") && password.equals("123")){
 			session.setAttribute("username",username);
+			session.setAttribute("type", "admin");
+			response.sendRedirect("Home.jsp");
+		}
+		else if (username.equals("Khaan") && password.equals("123")){
+			session.setAttribute("username",username);
+			session.setAttribute("type", "pharmaceut");
 			response.sendRedirect("Home.jsp");
 		}
 		else

@@ -4,7 +4,8 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Insert title here</title>
+		<title>User Administration</title>
+		
 		<style type="text/css">
 			#tabs{
 				padding:0; 
@@ -61,17 +62,16 @@
 		<div id='tabs'>
 			<ul>
 				<li><a href='Home.jsp'>Home</a>
-				<li><a href='#' class='active'>User Administration</a>
-				<li><a href='#'>Commodity Administration</a>
-				<li><a href='#'>Prescription Administration</a>
-				<li><a href='#'>Commodity-batch Administration</a>
-				<li><a href='#'>Product-batch Administration</a>
+				<li><a href='UserAdministration.jsp' class='active'>User Administration</a>
+				<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
+				<li><a href='PrescriptionAdministration.jsp'>Prescription Administration</a>
+				<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+				<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
 			</ul>
 		</div>
 		
 		<div id='content'>
-			My main content goes here! USER!
-			bla bla bla
+			The content for user administration goes here
 			
 			<h2>Printing some status messages for the user administration tab</h2>
 			

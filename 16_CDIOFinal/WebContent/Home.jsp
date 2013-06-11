@@ -58,15 +58,17 @@
 		</style>
 	</head>
 	<body>
-		<h2>You're logged in as: Admin</h2>
+		<h2>You're logged in as: <label> <%= session.getAttribute("username") %> </label> </h2>
 		<div id='tabs'>
 			<ul>
-				<li><a href='#' class='active'>Home</a>
+				<li><a href='Home.jsp' class='active'>Home</a>
+				<% if(session.getAttribute("type") == "admin") { %>
 				<li><a href='UserAdministration.jsp'>User Administration</a>
+				<% } %>
 				<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
-				<li><a href='#'>Prescription Administration</a>
-				<li><a href='#'>Commodity-batch Administration</a>
-				<li><a href='#'>Product-batch Administration</a>
+				<li><a href='PrescriptionAdministration.jsp'>Prescription Administration</a>
+				<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+				<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
 			</ul>
 		</div>
 		
@@ -75,7 +77,12 @@
 			bla bla bla
 			
 			<h2>Printing some status messages</h2>
+			<% System.out.println(session.getAttribute("username")); %>
 			
 		</div>
+		
+		<form action="Login.jsp" method="post">
+			<br/> <input type="submit" value="Log out">
+		</form>
 	</body>
 </html>
