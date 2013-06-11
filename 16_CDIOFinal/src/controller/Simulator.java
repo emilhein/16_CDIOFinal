@@ -25,12 +25,44 @@ public class Simulator extends Thread{
 			listener = new ServerSocket(port);//Hvor den lytter.
 			System.out.println(" Started server on port " + port + ".");
 			start();
+			consol();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 				}
 	
 	}
 		
+	private void consol() {
+		loop:
+		while(true){	
+			
+			System.out.println();
+			System.out.println("1. aendre tara");
+			System.out.println("2. aendre netto");
+			System.out.println("3. afslut");
+			System.out.println();
+			double tara = 0; 
+			double brutto = 0;
+			
+			switch(boundary.readInt(1, 3)){
+				
+				case 1:
+					System.out.println("Indtast veagten på skaalen efterfulgt af enter: ");
+					tara = boundary.readInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
+					break;
+				case 2:
+					System.out.println("Indtast veagten på skaalen + indhold efterfulgt af enter: ");
+					brutto = boundary.readInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
+					break;
+				default:
+					
+					break loop;
+			}
+				
+		}
+		
+	}
+
 	public void close() {
 		try {
 			
@@ -52,7 +84,7 @@ public class Simulator extends Thread{
 		}
 		
 		//# Classes
-		
+	
 		private class Client extends Thread {
 			
 			Socket socket;
@@ -95,9 +127,8 @@ public class Simulator extends Thread{
 							writer.writeBytes("S S " + ("" + netto).replace(",", ".") + " kg\r\n");
 
 						} else if (line.equals("T")) {
-							
-							// Saet og retuner tara(tara bliver sat til nuvaerende brutto).
-							tara = netto + tara;							
+							//Saet og retuner tara(tara bliver sat til nuvaerende brutto).
+								
 							writer.writeBytes("T S " + ("" + tara).replace(",", ".") + " kg\r\n");
 
 						} else if (line.equals("DW")) {
@@ -128,7 +159,14 @@ public class Simulator extends Thread{
 								System.out.println(matcherRM20_4.group(2) + matcherRM20_4.group(3));
 								writer.writeBytes("RM20 A \"" + boundary.readInt(Integer.MIN_VALUE,Integer.MAX_VALUE) + "\"\r\n");
 							
-						} else {
+						} else if (line.equals("Z")) {
+						
+							// Fjern meddelsen fra displayet og vend tilbage til visning af netto vægt.
+							writer.writeBytes("Veagten er nulstillet: ");
+							tara = 0;
+							netto = 0;
+						}
+						else {
 							
 							// Retuner en fejlmeddelse.
 							writer.writeBytes("Error\r\n"); //# TODO: Send rigtig fejlkode.
