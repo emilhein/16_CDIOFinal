@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
 
 
 public class Simulator extends Thread{
-	public int port = 8004;
+	private int port = 8005;
 	ServerSocket listener;
-	public double netto;
-	public double tara;
+	private double netto;
+	private double tara;
 	private Boundary boundary;
 	//# New
 	
