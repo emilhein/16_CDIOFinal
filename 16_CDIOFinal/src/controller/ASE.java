@@ -73,6 +73,9 @@ public class ASE {
 				reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				writer = new DataOutputStream(socket.getOutputStream());
 
+				start();
+				join();
+				
 			} finally {
 				try {
 					socket.close();
@@ -87,8 +90,6 @@ public class ASE {
 				} catch (Exception e) {
 				}
 			}
-			
-			start();
 			
 		}
 		
