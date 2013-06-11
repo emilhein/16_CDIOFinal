@@ -154,16 +154,33 @@ public class ASE {
 								}
 								
 								// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
-								/*double materialWeight = getMaterialWeight();
+								double materialWeight = getMaterialWeight();
 								if (containerWeight == Double.NaN) {
-									continue productBatch;
-								}*/
+									continue materialBatch;
+								}
+								
+								// ### TILFØJ INDTASTNINGER TIL EN LISTE ###
+
+								// ### ER DER FLERE RÅVARER DER SKAL AFVEJES? ###
+								
+								// 15. Pkt. 7 – 14 gentages indtil alle råvarer er afvejet
+								if (false) {
+									continue containerWeight;
+								}
+								
+								break productBatch;
 								
 							}
 							
 						}
 						
 					}
+					
+					// 16. Systemet sætter produktbatch nummerets status til ”Afsluttet”
+					
+					// ### IKKE LAVET ENDNU ###
+					
+					// 17. Det kan herefter genoptages af en ny operatør
 					
 				}
 			} catch (Exception e) {
@@ -297,15 +314,11 @@ public class ASE {
 		}
 		private double getMaterialWeight() throws Exception {
 			
-			while (true) {
-				
-				if (readInt("Place material", "1", "") != 1) {
-					return Double.NaN;
-				}
-				
-				return weight();
-				
+			if (readInt("Place material", "1", "") != 1) {
+				return Double.NaN;
 			}
+			
+			return weight();
 			
 		}
 		
