@@ -85,5 +85,8 @@
 			<h2>Printing some status messages for the user administration tab</h2>
 			
 		</div>
+		<form action="Login.jsp" method="post">
+			<br/> <input type="submit" value="Log out">
+		</form>
 	</body>
 	</html>
