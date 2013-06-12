@@ -39,7 +39,7 @@ public class Connector
 			
 			try {
 				connection.close();
-			} catch (SQLException ex) {
+			} catch (Exception ex) {
 			}
 			
 			throw new DALException(e);
@@ -54,11 +54,11 @@ public class Connector
 
 		try {
 			connection.close();
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 		}
 		try {
 			statement.close();
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 		}
 		
 	}
