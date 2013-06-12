@@ -1,3 +1,5 @@
+<%@page import="database_objects.Operator"%>
+<%@page import="database.DatabaseAccess"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,26 +10,33 @@
 	</head>
 	<body>
 		<% 
-		String username=request.getParameter("username");
+		DatabaseAccess db = new DatabaseAccess();
+		
+		String oprId=request.getParameter("oprId");
 		String password=request.getParameter("password");
 		
-		if (username.equals("Mathias") && password.equals("123")){
-			session.setAttribute("username",username);
+		int id = Integer.getInteger(oprId);		
+		database_objects.Operator operator = db.getOperator(id);
+		
+		
+		
+		if (oprId.equals("Mathias") && password.equals("123")){
+			session.setAttribute("oprId",oprId);
 			session.setAttribute("user", 1);
 			response.sendRedirect("Home.jsp");
 		}
-		else if (username.equals("Khaan") && password.equals("123")){
-			session.setAttribute("username",username);
+		else if (oprId.equals("Khaan") && password.equals("123")){
+			session.setAttribute("oprId",oprId);
 			session.setAttribute("user", 2);
 			response.sendRedirect("Home.jsp");
 		}
-		else if (username.equals("Jens") && password.equals("123")){
-			session.setAttribute("username",username);
+		else if (oprId.equals("Jens") && password.equals("123")){
+			session.setAttribute("oprId",oprId);
 			session.setAttribute("user", 3);
 			response.sendRedirect("Home.jsp");
 		}
-		else if (username.equals("Emil") && password.equals("123")){
-			session.setAttribute("username",username);
+		else if (oprId.equals("Emil") && password.equals("123")){
+			session.setAttribute("oprId",oprId);
 			session.setAttribute("user", 4);
 			response.sendRedirect("Home.jsp");
 		}

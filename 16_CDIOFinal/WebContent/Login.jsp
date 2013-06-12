@@ -15,7 +15,7 @@
 		<center>
 			<h2>Login Details</h2>
 			<form action="LoginCheck.jsp" method="post">
-				<br/>Username: <input type="text" name="username">
+				<br/>User id: <input type="text" name="oprId">
 				<br/><br/>Password: <input type="password" name="password">
 				<br/><br/><input type="submit" value="Login">
 			</form>
