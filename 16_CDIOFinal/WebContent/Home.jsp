@@ -61,14 +61,33 @@
 		<h2>You're logged in as: <label> <%= session.getAttribute("username") %> </label> </h2>
 		<div id='tabs'>
 			<ul>
-				<li><a href='Home.jsp' class='active'>Home</a>
-				<% if(session.getAttribute("type") == "admin") { %>
-				<li><a href='UserAdministration.jsp'>User Administration</a>
-				<% } %>
-				<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
-				<li><a href='PrescriptionAdministration.jsp'>Prescription Administration</a>
-				<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
-				<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
+				<% int userType = Integer.parseInt(session.getAttribute("user").toString());
+				switch(userType) {
+					case 1: %>
+						<li><a href='Home.jsp' class='active'>Home</a>
+						<li><a href='UserAdministration.jsp'>User Administration</a>
+						<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
+						<li><a href='PrescriptionAdministration.jsp'>Prescription Administration</a>
+						<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
+					<% break;
+					case 2: %>
+						<li><a href='Home.jsp' class='active'>Home</a>
+						<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
+						<li><a href='PrescriptionAdministration.jsp'>Prescription Administration</a>
+						<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
+						<% break;
+					case 3: %>
+						<li><a href='Home.jsp' class='active'>Home</a>
+						<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
+						<% break;
+					case 4: %>
+						<li><a href='Home.jsp' class='active'>Home</a>
+						<% break;
+				}
+				%>
 			</ul>
 		</div>
 		
