@@ -86,6 +86,7 @@
 					case 4: %>
 						<li><a href='Home.jsp' class='active'>Home</a>
 						<% break;
+					defualt: response.sendRedirect("Error.jsp"); break;
 				}
 				%>
 			</ul>
