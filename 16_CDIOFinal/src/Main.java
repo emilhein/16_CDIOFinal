@@ -22,7 +22,6 @@ public class Main {
 			case 3:
 				resetDatabase();
 		}
-			
 				
 		boundary.close();
 		

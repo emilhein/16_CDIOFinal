@@ -41,6 +41,10 @@ public class Connector
 				connection.close();
 			} catch (Exception ex) {
 			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
 			
 			throw new DALException(e);
 			

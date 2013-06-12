@@ -30,28 +30,6 @@
 		}
 		else response.sendRedirect("Error.jsp"); // Wrong password
 		
-		if (oprId.equals("Mathias") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 1);
-			response.sendRedirect("Home.jsp");
-		}
-		else if (oprId.equals("Khaan") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 2);
-			response.sendRedirect("Home.jsp");
-		}
-		else if (oprId.equals("Jens") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 3);
-			response.sendRedirect("Home.jsp");
-		}
-		else if (oprId.equals("Emil") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 4);
-			response.sendRedirect("Home.jsp");
-		}
-		else
-			response.sendRedirect("Error.jsp");
 		%>	
 	</body>
 </html>
