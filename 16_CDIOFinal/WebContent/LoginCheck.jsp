@@ -13,12 +13,22 @@
 		
 		if (username.equals("Mathias") && password.equals("123")){
 			session.setAttribute("username",username);
-			session.setAttribute("type", "admin");
+			session.setAttribute("user", "admin");
 			response.sendRedirect("Home.jsp");
 		}
 		else if (username.equals("Khaan") && password.equals("123")){
 			session.setAttribute("username",username);
-			session.setAttribute("type", "pharmaceut");
+			session.setAttribute("user", "pharmaceut");
+			response.sendRedirect("Home.jsp");
+		}
+		else if (username.equals("Jens") && password.equals("123")){
+			session.setAttribute("username",username);
+			session.setAttribute("user", "foreman");
+			response.sendRedirect("Home.jsp");
+		}
+		else if (username.equals("Emil") && password.equals("123")){
+			session.setAttribute("username",username);
+			session.setAttribute("user", "operator");
 			response.sendRedirect("Home.jsp");
 		}
 		else
