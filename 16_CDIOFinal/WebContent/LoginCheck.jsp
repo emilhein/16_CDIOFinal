@@ -15,16 +15,16 @@
 		String oprId=request.getParameter("oprId");
 		String password=request.getParameter("password");
 		
-		int id = Integer.getInteger(oprId);		
+		int id = Integer.parseInt(oprId);		
 		database_objects.Operator operator = db.getOperator(id);
 		
 		if (password == operator.getPassword()){
 			switch (operator.getRights()){
-			case 0: session.setAttribute("user", 0); break;
-			case 1: session.setAttribute("user", 1); break;
-			case 2: session.setAttribute("user", 2); break;
-			case 3: session.setAttribute("user", 3); break;
-			case 4: session.setAttribute("user", 4); break;
+			case 0: session.setAttribute("user", 0); response.sendRedirect("Home.jsp"); break;
+			case 1: session.setAttribute("user", 1); response.sendRedirect("Home.jsp"); break;
+			case 2: session.setAttribute("user", 2); response.sendRedirect("Home.jsp"); break;
+			case 3: session.setAttribute("user", 3); response.sendRedirect("Home.jsp"); break;
+			case 4: session.setAttribute("user", 4); response.sendRedirect("Home.jsp"); break;
 			default: response.sendRedirect("Error.jsp"); break;
 			}
 		}
