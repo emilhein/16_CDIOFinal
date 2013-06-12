@@ -18,7 +18,7 @@
 		int id = Integer.parseInt(oprId);		
 		database_objects.Operator operator = db.getOperator(id);
 		
-		if (password == operator.getPassword()){
+		if (operator.getPassword().equals(password)){
 			switch (operator.getRights()){
 			case 0: session.setAttribute("user", 0); response.sendRedirect("Home.jsp"); break;
 			case 1: session.setAttribute("user", 1); response.sendRedirect("Home.jsp"); break;
@@ -28,7 +28,10 @@
 			default: response.sendRedirect("Error.jsp"); break;
 			}
 		}
-		else response.sendRedirect("Error.jsp"); // Wrong password
+		else{ 
+			System.out.println("hej");
+			response.sendRedirect("Error.jsp"); // Wrong password
+		}
 		
 		%>	
 	</body>
