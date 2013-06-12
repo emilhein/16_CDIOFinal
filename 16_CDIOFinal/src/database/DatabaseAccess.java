@@ -87,7 +87,7 @@ public class DatabaseAccess {
 			connector.doUpdate("CREATE TABLE recipeComponent(recipeId INTEGER, commodityId INTEGER, nomNetto REAL NOT NULL, tolerance REAL NOT NULL, PRIMARY KEY(recipeId, commodityId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId), FOREIGN KEY(commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL AUTO_INCREMENT, recipeId INTEGER, ts DATETIME, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
-<<<<<<< HEAD
+
 			
 			
 			//operator --- oprId: int, oprName: varchar, initialer: varchar, cpr: varchar, password: varchar, rights: int.
@@ -131,10 +131,6 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
 			
 			
-=======
-
-			connector.doUpdate("INSERT INTO operator VALUES(1,'Mathias','MEL','2404922559',1,'123')");
->>>>>>> branch 'master' of https://github.com/emilhein/16_CDIOFinal.git
 		} finally {
 
 			// Close
