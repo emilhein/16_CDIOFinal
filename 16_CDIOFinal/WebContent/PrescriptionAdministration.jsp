@@ -61,12 +61,27 @@
 		<h2>You're logged in as: Admin</h2>
 		<div id='tabs'>
 			<ul>
-				<li><a href='Home.jsp'>Home</a>
-				<li><a href='UserAdministration.jsp'>User Administration</a>
-				<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
-				<li><a href='PrescriptionAdministration.jsp' class='active'>Prescription Administration</a>
-				<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
-				<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
+				<% int userType = Integer.parseInt(session.getAttribute("user").toString());
+				switch(userType) {
+					case 1: %>
+						<li><a href='Home.jsp'>Home</a>
+						<li><a href='UserAdministration.jsp'>User Administration</a>
+						<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
+						<li><a href='PrescriptionAdministration.jsp' class='active'>Prescription Administration</a>
+						<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
+					<% break;
+					case 2: %>
+						<li><a href='Home.jsp'>Home</a>
+						<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
+						<li><a href='PrescriptionAdministration.jsp' class='active'>Prescription Administration</a>
+						<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
+						<% break;
+					case 3: session.sendRedirect("Home.jsp"); break;
+					case 4: session.sendRedirect("Home.jsp"); break;
+				}
+				%>
 			</ul>
 		</div>
 		
