@@ -10,18 +10,18 @@ package database_objects;
 public class Recipe 
 {
 	int recipeId;
-	String recipeNavn;
+	String recipeName;
     
-	public Recipe(int recipeId, String recipeNavn)
+	public Recipe(int recipeId, String recipeName)
 	{
         this.recipeId = recipeId;
-        this.recipeNavn = recipeNavn;
+        this.recipeName = recipeName;
     }
 
     public int getRecipeId() { return recipeId; }
 	public void setRecipeId(int recipeId) { this.recipeId = recipeId; }
-	public String getRecipeNavn() { return recipeNavn; }
-	public void setRecipeNavn(String recipeNavn) { this.recipeNavn = recipeNavn; }
+	public String getRecipeName() { return recipeName; }
+	public void setRecipeName(String recipeName) { this.recipeName = recipeName; }
 	public String toString() { 
 		return recipeId + "\t" + recipeId; 
 	}
