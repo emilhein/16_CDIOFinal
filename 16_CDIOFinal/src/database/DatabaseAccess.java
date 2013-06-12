@@ -86,7 +86,48 @@ public class DatabaseAccess {
 			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL AUTO_INCREMENT, recipeId INTEGER, ts DATETIME, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
 			
-			connector.doUpdate("INSERT INTO operator VALUES(1,'Mathias','MEL','2404922559',1,'123')");
+			
+			//operator --- oprId: int, oprName: varchar, initialer: varchar, cpr: varchar, password: varchar, rights: int.
+			//commodity --- commodityID: int, commodityName: Varchar, supplier: varchar. 
+			//commoditybatch --- cbId: int, commodityId: int, quantity: real.
+			//recipe --- recipeId: int, recipeName: varchar, 
+			//recipeComponent --- recipeId: int, commodityId int, nomNetto: Real, Tolerance: real.
+			//productbatch --- pbId: int, recipeId: int, ts: Datetime, state: int.
+			//productsbatchComponent --- pbId: int, cbId: int, tara: real, netto: real, oprId: int.
+			
+			
+			// indsæt operatoere.
+			connector.doUpdate("INSERT INTO operator VALUES(1,'Mathias','MEL','2404922559','123',1)");
+			connector.doUpdate("INSERT INTO operator VALUES(2,'Emil','EHE','2404922559','123',2)");
+			connector.doUpdate("INSERT INTO operator VALUES(3,'Jens','JWDK','2404922559','123',3)");
+			connector.doUpdate("INSERT INTO operator VALUES(4,'Khan','KN','2404922559','123',4)");
+			
+			// indsæt commodity.
+			connector.doUpdate("INSERT INTO commodity VALUES(1,'Citron','Spain')");
+			connector.doUpdate("INSERT INTO commodity VALUES(2,'salt','Samsoe')");
+			connector.doUpdate("INSERT INTO commodity VALUES(3,'vand','Norge')");
+			
+			// indsæt commodityBatch.
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(1,1,2.3)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(2,3,25.3)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(3,2,1.0)");
+			
+			// indsæt recipe.
+			connector.doUpdate("INSERT INTO recipe VALUES(1,'Citronvand')");
+			connector.doUpdate("INSERT INTO recipe VALUES(2,'Citronsalt')");
+			connector.doUpdate("INSERT INTO recipe VALUES(3,'CitronMedSalt')");
+			
+			// indsæt recipeComponent.
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 0.7)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.4)");
+			
+			// indsæt productBatch.
+			connector.doUpdate("INSERT INTO productBatch VALUES(1,1,'2013-06-11 14:00:01',1)");
+			
+			// indsæt productBatchComponent.
+			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
+			
+			
 		} finally {
 			
 			// Close
