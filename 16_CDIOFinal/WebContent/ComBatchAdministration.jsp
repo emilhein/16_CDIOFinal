@@ -83,7 +83,7 @@
 						<li><a href='ComBatchAdministration.jsp' class='active'>Commodity-batch Administration</a>
 						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
 						<% break;
-					case 4: session.sendRedirect("Home.jsp"); break;
+					case 4: response.sendRedirect("Home.jsp"); break;
 				}
 				%>
 			</ul>
