@@ -7,6 +7,9 @@ import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import database.DatabaseAccess;
+import database_objects.Operator;
+
 public class ASE {
 	
 	//# New
@@ -64,6 +67,7 @@ public class ASE {
 		private Socket socket = null;
 		private BufferedReader reader = null;
 		private DataOutputStream writer = null;
+		private DatabaseAccess databaseAccess = null;
 		
 		private String address;
 		private int port;
@@ -80,6 +84,7 @@ public class ASE {
 				socket = new Socket(address, port);
 				reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				writer = new DataOutputStream(socket.getOutputStream());
+				databaseAccess = new DatabaseAccess();
 				
 			} catch (Exception e) {
 				
@@ -93,6 +98,10 @@ public class ASE {
 				}
 				try {
 					writer.close();
+				} catch (Exception ex) {
+				}
+				try {
+					databaseAccess.close();
 				} catch (Exception ex) {
 				}
 				
@@ -112,13 +121,15 @@ public class ASE {
 			// 1: Bekræft
 			// 0: Annuller/Tilbage
 			
+			
 			try {
+				
 				operator:
 				while (true) {
 
 					// 3. Operatøren indtaster operatør nr.
 					// 4. Vægten svarer tilbage med operatørnavn som så godkendes
-					int operator = getOperator();
+					Operator operator = getOperator();
 					
 					productBatch:
 					while (true) {
@@ -201,6 +212,10 @@ public class ASE {
 					writer.close();
 				} catch (Exception e) {
 				}
+				try {
+					databaseAccess.close();
+				} catch (Exception e) {
+				}
 				
 			}
 			
@@ -208,27 +223,27 @@ public class ASE {
 		
 		//# Functions
 		
-		private int getOperator() throws Exception {
+		private Operator getOperator() throws Exception {
 			
 			while (true) {
 				
 				int number = readInt("Operator:", "", "#");
 				String name;
 				
-				// === HARDCODED ===
-				if (number == 1) {
-					name = "Bo";
-				} else {
+				Operator operator;
+				
+				try {
+					operator = databaseAccess.getOperator(number);
+				} catch (Exception e) {
 					display("Not found");
 					continue;
 				}
-				// === HARDCODED ===
 				
-				if (readInt(name + "?", "1", "") != 1) {
+				if (readInt(operator.getOprName() + "?", "1", "") != 1) {
 					continue;
 				}
 				
-				return number;
+				return operator;
 				
 			}
 			

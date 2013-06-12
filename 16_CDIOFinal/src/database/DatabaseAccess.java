@@ -51,7 +51,7 @@ public class DatabaseAccess {
 
 	//# Close
 
-	public void Close() {
+	public void close() {
 
 		try {
 			connector.Close();
