@@ -10,48 +10,26 @@
 	</head>
 	<body>
 		<% 
-//		DatabaseAccess db = new DatabaseAccess();
+		DatabaseAccess db = new DatabaseAccess();
 		
 		String oprId=request.getParameter("oprId");
 		String password=request.getParameter("password");
 		
-//		int id = Integer.getInteger(oprId);		
-//		database_objects.Operator operator = db.getOperator(id);
+		int id = Integer.getInteger(oprId);		
+		database_objects.Operator operator = db.getOperator(id);
 		
-//		if (password == operator.getPassword()){
-	//		switch (operator.getRights()){
-		//	case 0: session.setAttribute("user", 0); break;
-		//	case 1: session.setAttribute("user", 1); break;
-		//	case 2: session.setAttribute("user", 2); break;
-		//	case 3: session.setAttribute("user", 3); break;
-		//	case 4: session.setAttribute("user", 4); break;
-		//	default: response.sendRedirect("Error.jsp"); break;
-		//	}
-		//}
-		//else response.sendRedirect("Error.jsp"); // Wrong password
+		if (password == operator.getPassword()){
+			switch (operator.getRights()){
+			case 0: session.setAttribute("user", 0); break;
+			case 1: session.setAttribute("user", 1); break;
+			case 2: session.setAttribute("user", 2); break;
+			case 3: session.setAttribute("user", 3); break;
+			case 4: session.setAttribute("user", 4); break;
+			default: response.sendRedirect("Error.jsp"); break;
+			}
+		}
+		else response.sendRedirect("Error.jsp"); // Wrong password
 		
-		if (oprId.equals("Mathias") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 1);
-			response.sendRedirect("Home.jsp");
-		}
-		else if (oprId.equals("Khaan") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 2);
-			response.sendRedirect("Home.jsp");
-		}
-		else if (oprId.equals("Jens") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 3);
-			response.sendRedirect("Home.jsp");
-		}
-		else if (oprId.equals("Emil") && password.equals("123")){
-			session.setAttribute("oprId",oprId);
-			session.setAttribute("user", 4);
-			response.sendRedirect("Home.jsp");
-		}
-		else
-			response.sendRedirect("Error.jsp");
 		%>	
 	</body>
 </html>
