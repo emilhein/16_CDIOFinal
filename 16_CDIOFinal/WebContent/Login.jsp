@@ -4,7 +4,7 @@
 <html>
 <%
 	session.setAttribute("type", null);
-	session.setAttribute("username", null);
+	session.setAttribute("oprId", null);
 %>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

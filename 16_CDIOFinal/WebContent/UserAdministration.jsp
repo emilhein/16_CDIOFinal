@@ -74,7 +74,7 @@
 					case 2: response.sendRedirect("Home.jsp"); break;
 					case 3: response.sendRedirect("Home.jsp"); break;
 					case 4: response.sendRedirect("Home.jsp"); break;
-					defualt: response.sendRedirect("Error.jsp"); break;
+					default: response.sendRedirect("Error.jsp"); break;
 				}
 				%>
 			</ul>

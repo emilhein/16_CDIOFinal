@@ -84,7 +84,7 @@
 						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
 						<% break;
 					case 4: response.sendRedirect("Home.jsp"); break;
-					defualt: response.sendRedirect("Error.jsp"); break;
+					default: response.sendRedirect("Error.jsp"); break;
 				}
 				%>
 			</ul>
