@@ -36,13 +36,15 @@ public class DatabaseAccess {
 				}
 			}
 
-		} finally {
+		} catch (Exception e) {
 
 			// Close
 			try {
 				connector.Close();
-			} catch (Exception e) {
+			} catch (Exception ex) {
 			}
+			
+			throw new DALException(e);
 		}
 
 	}
