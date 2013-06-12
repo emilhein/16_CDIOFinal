@@ -29,7 +29,7 @@
 			}
 		}
 		else{ 
-			System.out.println("hej");
+			System.out.println("Wrong password");
 			response.sendRedirect("Error.jsp"); // Wrong password
 		}
 		
