@@ -13,17 +13,25 @@ public class ASE {
 
 	public ASE(Boundary boundary) {
 		
+		boolean first = true;
+		
 		while (true) {
 			
-			System.out.println();
-			System.out.println("1. Connect to weight");
-			System.out.println("0. Exit");
-			System.out.println();
+			if (!first) {
 			
-			if (boundary.readInt("", 0, 1) == 0) {
-				break;
+				System.out.println();
+				System.out.println("1. Connect to weight");
+				System.out.println("0. Exit");
+				System.out.println();
+				
+				if (boundary.readInt("", 0, 1) == 0) {
+					break;
+				}
+				
 			}
 
+			first = false;
+			
 			System.out.println();
 			System.out.println("Address:");
 			System.out.println();
@@ -72,36 +80,28 @@ public class ASE {
 				socket = new Socket(address, port);
 				reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				writer = new DataOutputStream(socket.getOutputStream());
-
-				start();
-				join(); // ### KAN IKKE STARTE FLERE PÅ EN GANG ###
 				
-			} finally {
+			} catch (Exception e) {
+				
 				try {
 					socket.close();
-				} catch (Exception e) {
+				} catch (Exception ex) {
 				}
 				try {
 					reader.close();
-				} catch (Exception e) {
+				} catch (Exception ex) {
 				}
 				try {
 					writer.close();
-				} catch (Exception e) {
+				} catch (Exception ex) {
 				}
+				
+				throw e;
+				
 			}
 			
-		}
-		
-		//# Properties
-		
-		public String getAddress() {
+			start();
 			
-			return address;
-		}
-		public int getPort() {
-			
-			return port;
 		}
 		
 		//# Thread
@@ -184,8 +184,11 @@ public class ASE {
 					
 				}
 			} catch (Exception e) {
+			
 				System.err.println("Weight crashed ('" + address + ":" + port + "'): " + e.getMessage());
+			
 			} finally {
+				
 				try {
 					socket.close();
 				} catch (Exception e) {
@@ -198,6 +201,7 @@ public class ASE {
 					writer.close();
 				} catch (Exception e) {
 				}
+				
 			}
 			
 		}
