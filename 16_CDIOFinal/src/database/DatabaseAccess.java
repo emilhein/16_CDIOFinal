@@ -77,6 +77,12 @@ public class DatabaseAccess {
 				}
 			}
 			
+			// Wait - Nødvendig for at sikre at tabellerne er slettet
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+			}
+			
 			// Create
 			connector.doUpdate("CREATE TABLE operator(oprId INTEGER NOT NULL AUTO_INCREMENT, oprName VARCHAR(20), ini VARCHAR(4), cpr VARCHAR(10) NOT NULL, Upassword VARCHAR(10) NOT NULL, rights INTEGER NOT NULL, PRIMARY KEY(oprId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE commodity(commodityId INTEGER NOT NULL AUTO_INCREMENT, commodityName VARCHAR(20), supplier VARCHAR(20), PRIMARY KEY(commodityId)) ENGINE=innoDB;");
