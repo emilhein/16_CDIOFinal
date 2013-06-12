@@ -5,7 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Home Page</title>
-		<link rel="stylesheet" type="text/css" href="TabStyle.css">
+		<link rel="stylesheet" type="text/css" href="TabStyle.css"> 
 	</head>
 	<body>
 		<h2>You're logged in as: <label> <%= session.getAttribute("username") %> </label> </h2>
