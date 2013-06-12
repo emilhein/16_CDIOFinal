@@ -7,8 +7,11 @@ import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import database.DALException;
 import database.DatabaseAccess;
 import database_objects.Operator;
+import database_objects.ProductBatch;
+import database_objects.Recipe;
 
 public class ASE {
 	
@@ -121,6 +124,9 @@ public class ASE {
 			// 1: Bekræft
 			// 0: Annuller/Tilbage
 			
+			Operator operator = null;
+			ProductBatch productBatch = null;
+			Recipe recipe = null;
 			
 			try {
 				
@@ -129,15 +135,14 @@ public class ASE {
 
 					// 3. Operatøren indtaster operatør nr.
 					// 4. Vægten svarer tilbage med operatørnavn som så godkendes
-					Operator operator = getOperator();
+					getOperator(operator);
 					
 					productBatch:
 					while (true) {
 						
 						// 5. Operatøren indtaster produktbatch nummer
 						// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
-						int productBatch = getProductBatch();
-						if (productBatch == 0) {
+						if (!getProductBatch(productBatch, recipe)) {
 							continue operator;
 						}
 						
@@ -223,19 +228,16 @@ public class ASE {
 		
 		//# Functions
 		
-		private Operator getOperator() throws Exception {
+		private void getOperator(Operator operator) throws Exception {
 			
 			while (true) {
 				
 				int number = readInt("Operator:", "", "#");
-				String name;
-				
-				Operator operator;
 				
 				try {
 					operator = databaseAccess.getOperator(number);
-				} catch (Exception e) {
-					display("Not found");
+				} catch (DALException e) {
+					display("Invalid");
 					continue;
 				}
 				
@@ -243,37 +245,34 @@ public class ASE {
 					continue;
 				}
 				
-				return operator;
+				return;
 				
 			}
 			
 		}
-		private int getProductBatch() throws Exception {
+		private boolean getProductBatch(ProductBatch productBatch, Recipe recipe) throws Exception {
 			
 			while (true) {
 				
 				int number = readInt("Product batch:", "", "#");
 				
 				if (number == 0) {
-					return 0;
+					return false;
 				}
 				
-				String name;
-				
-				// === HARDCODED ===
-				if (number == 1) {
-					name = "Saltvand";
-				} else {
-					display("Not found");
-					continue;
-				}
-				// === HARDCODED ===
-				
-				if (readInt(name + "?", "1", "") != 1) {
+				try {
+					productBatch = databaseAccess.getProductBatch(number);
+					recipe = databaseAccess.getRecipe(productBatch.getReceptId());
+				} catch (DALException e) {
+					display("Invalid");
 					continue;
 				}
 				
-				return number;
+				if (readInt(recipe.getRecipeName() + "?", "1", "") != 1) {
+					continue;
+				}
+				
+				return true;
 				
 			}
 			
