@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class Connector
 {
 	/**
@@ -24,44 +23,67 @@ public class Connector
 	 * @throws SQLException 
 	 */
 	
+	private Connection connection;
+	private Statement statement;
 	
-	public static Connection connectToDatabase(String url, String username, String password) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
-	{
-		// call the driver class' no argument constructor
-		Class.forName("com.mysql.jdbc.Driver").newInstance();
+	//# New
+	
+	public Connector(String server, int port, String database, String username, String password) throws DALException {
 		
-		// get Connection-object via DriverManager
-		return (Connection) DriverManager.getConnection(url, username, password);
+		try {
+			
+			connection = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + database, username, password);
+			statement = connection.createStatement();
+			
+		} catch (SQLException e) {
+			
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+			}
+			
+			throw new DALException(e);
+			
+		}
+		
 	}
 	
-	private static Connection conn;
-	private static Statement stm;
+	//# Close
 	
-	//The constructor.
-	public Connector(String server, int port, String database,String username, String password)throws InstantiationException, IllegalAccessException,ClassNotFoundException, SQLException
-	{
-		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database, username, password);
-		stm		= conn.createStatement();
+	public void Close() {
+
+		try {
+			connection.close();
+		} catch (SQLException ex) {
+		}
+		try {
+			statement.close();
+		} catch (SQLException ex) {
+		}
+		
 	}
 	
-	//The constructor with standard parameters.
-	public Connector() throws InstantiationException, IllegalAccessException,ClassNotFoundException, SQLException
-	{
-		this(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
-	}
+	//# Functions
 	
-	//Returns an result.
-	public static ResultSet doQuery(String cmd) throws DALException
+	public ResultSet doQuery(String command) throws DALException
 	{
-		try { return stm.executeQuery(cmd); }
-		catch (SQLException e) { throw new DALException(e); }
+		
+		try {
+			return statement.executeQuery(command);
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		
 	}
-	
-	//INSERT, UPDATE, or DELETE statement.
-	public static int doUpdate(String cmd) throws DALException
+	public int doUpdate(String command) throws DALException
 	{
-		try { return stm.executeUpdate(cmd); }
-		catch (SQLException e) { throw new DALException(e); }
+		
+		try {
+			return statement.executeUpdate(command);
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		
 	}
 	
 	
