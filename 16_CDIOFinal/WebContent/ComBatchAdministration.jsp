@@ -1,3 +1,6 @@
+<%@page import="database_objects.CommodityBatch"%>
+<%@page import="database_objects.Commodity"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -93,6 +96,30 @@
 		<div id='content'>
 			The content for commodity batch administration goes here
 			<h2>Printing some status messages</h2>
+			
+	<table id="list">
+	<tr class="info">
+		<th class="nr">Cb id nummer</th>
+		<th class="nr"> id vare nummer</th>
+		<th class="nr">mængde</th>
+	</tr>
+	<%
+		
+		java.util.List<CommodityBatch> CommodityBatch; //commodityId.getCommodityBatch();
+		
+		for(CommodityBatch commoditybatch :CommodityBatch) {
+			%>
+	<tr class="item">
+		<td class="nr"><%= commoditybatch.getCbId() %></td>
+		<td class="nr"><%= commoditybatch.getCommodityId() %></td>
+		<td class="nr"><%= commoditybatch.getMaengde() %></td>
+		
+		
+	 </tr>
+	
+	<% 
+	} %>
+	</table>
 			
 		</div>
 		<form action="Login.jsp" method="post">
