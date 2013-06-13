@@ -294,7 +294,8 @@ public class ASE {
 				try {
 					procedure.productBatch = databaseAccess.getProductBatch(number);
 					procedure.recipe = databaseAccess.getRecipe(procedure.productBatch.getReceptId());
-					procedure.recipeComp = databaseAccess.getRecipeCompList(procedure.productBatch.getReceptId()); //# TODO: Undlad færdige elementer.
+					//procedure.recipeComp = databaseAccess.getRecipeCompList(procedure.productBatch.getReceptId()); //# TODO: Undlad færdige elementer.
+					procedure.recipeComp = databaseAccess.getRestRecipeComp(procedure.productBatch.getPbId()); //# Ny (virker ikke?)
 				} catch (DALException e) {
 					display("Invalid");
 					continue;
