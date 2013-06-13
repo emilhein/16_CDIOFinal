@@ -61,7 +61,7 @@ public class ASE {
 				new Weight(address, port);
 				System.out.println("Connected to weight.");
 			} catch (Exception e) {
-				System.out.println("Cannot connect to weight (" + e.getMessage() + ").");
+				System.err.println("Cannot connect to weight (" + e.getMessage() + ").");
 			}
 			
 		}
@@ -295,15 +295,15 @@ public class ASE {
 				try {
 					procedure.productBatch = databaseAccess.getProductBatch(number);
 					procedure.recipe = databaseAccess.getRecipe(procedure.productBatch.getReceptId());
-					procedure.recipeComp = databaseAccess.getRecipeCompList(procedure.productBatch.getReceptId());;
+					procedure.recipeComp = databaseAccess.getRecipeCompList(procedure.productBatch.getReceptId()); //# TODO: Undlad færdige elementer.
 				} catch (DALException e) {
 					display("Invalid");
 					continue;
 				}
 				
 				if (procedure.recipeComp.size() < 1) {
-					display("Invalid");
-					continue;				
+					display("Done");
+					continue;			
 				}
 				
 				if (readInt(procedure.recipe.getRecipeName() + "?", "1", "") != 1) {

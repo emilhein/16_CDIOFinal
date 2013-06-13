@@ -1,4 +1,5 @@
 package controller;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,66 +9,86 @@ import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-
 public class Simulator extends Thread{
-	private int port = 8005;
-	ServerSocket listener;
+
+	private ServerSocket listener;
+	private Boundary boundary;
 	private double brutto;
 	private double tara;
-	private Boundary boundary;
+	
 	//# New
 	
 	public Simulator(Boundary boundary) {
 		
 		this.boundary = boundary;
 		
-		try {
-			listener = new ServerSocket(port);//Hvor den lytter.
-			System.out.println(" Started server on port " + port + ".");
-			start();
-			consol();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		while (true) {
+			
+			System.out.println();
+			System.out.println("Port:");
+			System.out.println();
+			
+			int port = boundary.readInt("", 0, 65535);
+
+			System.out.println();
+			
+			try {
+				listener = new ServerSocket(port);
+				start();
+				System.out.println("Simulator started.");
+			} catch (Exception e) {
+				System.err.println("Cannot start simulator (" + e.getMessage() + ").");
+				continue;
+			}
+	
+			menu:
+			while(true){
+				
+				System.out.println();
+				System.out.println("!1. Change brutto");
+				System.out.println("!2. Change tara");
+				System.out.println("!0. Exit");
+				System.out.println();
+				
+				switch(boundary.readInt("!", 0, 2)){
+					
+					case 1:
+						
+						System.out.println();
+						System.out.println("Brutto:");
+						System.out.println();
+						brutto = boundary.readDouble("!", Double.MIN_VALUE, Double.MAX_VALUE);
+						break;
+						
+					case 2:
+						
+						System.out.println();
+						System.out.println("Tara:");
+						System.out.println();
+						tara = boundary.readDouble("!", Double.MIN_VALUE, Double.MAX_VALUE);
+						break;
+						
+					default:			
+						break menu;
 				}
+					
+			}
+			
+			break;
+			
+		}
 	
 	}
-		
-	private void consol() {
-		
-		loop:
-		while(true){	
-			
-			System.out.println();
-			System.out.println("1. aendre tara");
-			System.out.println("2. aendre netto");
-			System.out.println("3. afslut");
-			System.out.println();
-			
-			switch(boundary.readInt("!", 1, 3)){
-				
-				case 1:
-					System.out.println("Indtast veagten på skaalen efterfulgt af enter: ");
-					tara = boundary.readDouble("!", Double.MIN_VALUE, Double.MAX_VALUE);
-					break;
-				case 2:
-					System.out.println("Indtast veagten på skaalen + indhold efterfulgt af enter: ");
-					brutto = boundary.readDouble("!", Double.MIN_VALUE, Double.MAX_VALUE);
-					break;
-				default:			
-					break loop;
-			}
-				
-		}
-		
-	}
 
+	//# Close
+	
 	public void close() {
+		
 		try {
-			
 			listener.close();
 		} catch (IOException e) {
 		}
+		
 	}
 		
 		//# Functions
