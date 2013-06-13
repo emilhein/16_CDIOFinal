@@ -95,7 +95,8 @@ public class Simulator extends Thread {
 	// # Functions
 
 	public void run() {
-		
+
+		Pattern patternD = Pattern.compile("^D \"([^\"]*)\"$");
 		Pattern patternRM20_8 = Pattern.compile("^RM20 8 \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$");
 		Pattern patternRM20_4 = Pattern.compile("^RM20 4 \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$");
 		
@@ -137,7 +138,8 @@ public class Simulator extends Thread {
 					}
 					
 					// Process
-					
+
+					Matcher matcherD = patternD.matcher(line);
 					Matcher matcherRM20_8 = patternRM20_8.matcher(line);
 					Matcher matcherRM20_4 = patternRM20_4.matcher(line);
 					
@@ -160,12 +162,12 @@ public class Simulator extends Thread {
 
 						writer.writeBytes("DW A\r\n");
 
-					} else if (line.startsWith("D ") && line.length() > 2) {
+					} else if (matcherD.matches()) {
 
 						// Vis meddelse på displayet.
 
 						System.out.println();
-						System.out.println(line.substring(2));
+						System.out.println(matcherD.group(1));
 						writer.writeBytes("D A\r\n");
 
 					} else if (matcherRM20_8.matches()) {
