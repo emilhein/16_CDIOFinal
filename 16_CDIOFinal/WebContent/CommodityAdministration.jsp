@@ -60,13 +60,21 @@
 						<td><%= commodity.getCommodityId() %> </td>
 						<td><input type="text" value="<%= commodity.getCommodityName() %>" name="Name"></td>
 						<td><input type="text" value="<%= commodity.getSupplier() %>" name="Supplier"></td>
-						<td><input type="submit" value="Opdater" name="button"></td>
+						<td><input type="submit" value="Update" name="button"></td>
 					</tr>
 				</form>
 				<% 
 					}
 				%>
-				
+				<form action="ChangeCommodity.jsp" method="post" style="display:inline">
+					<input type="hidden" value="0" name="Commodity ID">
+					<tr>
+						<td><input type="text" name="Commodity ID"></td>
+						<td><input type="text" name="Commodity name"></td>
+						<td><input type="text" name="Supplier"></td>
+						<td><input type="submit" value="Add"></td>
+					</tr>	
+				</form>
 			</table>
 			
 			

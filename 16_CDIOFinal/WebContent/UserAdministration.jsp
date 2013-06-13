@@ -60,7 +60,7 @@
 					<td><input type="text" value="<%= operator.getCpr() %>" name="CPR"></td>
 					<td><input type="text" value="<%= operator.getPassword() %>" name="Password"></td>
 					<td><input type="text" value="<%= operator.getRights() %>" name="Rigths"></td>
-					<td><input type="submit" value="Opdater" name="button"></td>
+					<td><input type="submit" value="Update" name="button"></td>
 					
 				</tr>
 			</form> 
@@ -76,7 +76,7 @@
 					<td><input type="text" name="cpr"></td>
 					<td><input type="text" name="Password"></td>
 					<td><input type="text" name="Rights"></td>
-					<td><input type="submit" value="Tilføj"></td>
+					<td><input type="submit" value="Add"></td>
 				</tr>
 			</form>
 		</table>
