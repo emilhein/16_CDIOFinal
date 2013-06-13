@@ -1,7 +1,9 @@
 package database;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import database_objects.*;
@@ -78,14 +80,16 @@ public class DatabaseAccess {
 				} catch (DALException e) {
 				}
 			}
-
+			Date datetime = new Date();
+			String ts = datetime.toString();
+			
 			// Create
 			connector.doUpdate("CREATE TABLE operator(oprId INTEGER NOT NULL AUTO_INCREMENT, oprName VARCHAR(20), ini VARCHAR(4), cpr VARCHAR(10) NOT NULL, Upassword VARCHAR(10) NOT NULL, rights INTEGER NOT NULL, PRIMARY KEY(oprId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE commodity(commodityId INTEGER NOT NULL AUTO_INCREMENT, commodityName VARCHAR(20), supplier VARCHAR(20), PRIMARY KEY(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE commodityBatch(cbId INTEGER NOT NULL AUTO_INCREMENT, commodityId INTEGER, quantity REAL NOT NULL, PRIMARY KEY(cbId), FOREIGN KEY (commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipe(recipeId INTEGER NOT NULL AUTO_INCREMENT, recipeName VARCHAR(20), PRIMARY KEY(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipeComponent(recipeId INTEGER, commodityId INTEGER, nomNetto REAL NOT NULL, tolerance REAL NOT NULL, PRIMARY KEY(recipeId, commodityId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId), FOREIGN KEY(commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
-			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL AUTO_INCREMENT, recipeId INTEGER, ts DATETIME, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
+			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL AUTO_INCREMENT, recipeId INTEGER, ts VARCHAR(30), state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
 
 			
@@ -95,7 +99,7 @@ public class DatabaseAccess {
 			//commoditybatch --- cbId: int, commodityId: int, quantity: real.
 			//recipe --- recipeId: int, recipeName: varchar, 
 			//recipeComponent --- recipeId: int, commodityId int, nomNetto: Real, Tolerance: real.
-			//productbatch --- pbId: int, recipeId: int, ts: Datetime, state: int.
+			//productbatch --- pbId: int, recipeId: int, ts: VARCHAR(30), state: int.
 			//productsbatchComponent --- pbId: int, cbId: int, tara: real, netto: real, oprId: int.
 			
 			
@@ -125,8 +129,8 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.4)");
 			
 			// indsæt productBatch.
-			connector.doUpdate("INSERT INTO productBatch VALUES(1,1,'2013-06-11 14:00:01',1)");
-			
+			connector.doUpdate("INSERT INTO productBatch VALUES(1,1,'"+ts+"',1)");
+			System.out.println(ts);
 			// indsæt productBatchComponent.
 			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
 			
