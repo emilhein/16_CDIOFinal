@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -377,22 +378,37 @@ public class ASE {
 		}
 		private boolean getCommodityWeight(Procedure procedure) throws Exception {
 			
+			double target = procedure.recipeComp.get(0).getNomNetto();
 			double tolerance = procedure.recipeComp.get(0).getNomNetto() * procedure.recipeComp.get(0).getTolerance();
+			boolean stopped = false;
+			int pause = 0;
 			
 			while (true) {
 			
-				if (readInt("Place commodity", "1", "") != 1) {
-					return false;
+				if (pause == 0 && !stopped) {
+					if (readInt("Place commodity", "1", "") != 1) {
+						return false;
+					}
+					pause = 10;
 				}
+				pause -= 1;
 				
 				procedure.commodityWeight = weight();
 				
-				if (procedure.commodityWeight > procedure.recipeComp.get(0).getNomNetto() + tolerance) {
-					display("Greater");
+				if (procedure.commodityWeight > target + tolerance) {
+					display("+" +  Double.toString(Math.abs(procedure.commodityWeight - target)).substring(0, 6));
+					stopped = false;
 					continue;
 				}
-				if (procedure.commodityWeight < procedure.recipeComp.get(0).getNomNetto() - tolerance) {
-					display("Less");
+				if (procedure.commodityWeight < target - tolerance) {
+					display("-" +  Double.toString(Math.abs(procedure.commodityWeight - target)).substring(0, 6));
+					stopped = false;
+					continue;
+				}
+				
+				if (!stopped) {
+					display("Stop");
+					stopped = true;
 					continue;
 				}
 				
