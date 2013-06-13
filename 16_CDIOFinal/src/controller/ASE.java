@@ -6,9 +6,13 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import database.DALException;
 import database.DatabaseAccess;
+import database_objects.Commodity;
+import database_objects.CommodityBatch;
 import database_objects.Operator;
+import database_objects.ProductBatch;
+import database_objects.Recipe;
 
 public class ASE {
 	
@@ -120,29 +124,42 @@ public class ASE {
 
 			// 1: Bekræft
 			// 0: Annuller/Tilbage
-			
+
+			int step = 0;
+			Operator operator = null;
+			ProductBatch productBatch = null;
+			Recipe recipe = null;
+			CommodityBatch commodityBatch = null;
+			Commodity commodity = null;
+			double containerWeight = 0;
+			double commodityWeight = 0;
 			
 			try {
 				
-				operator:
 				while (true) {
-
-					// 3. Operatøren indtaster operatør nr.
-					// 4. Vægten svarer tilbage med operatørnavn som så godkendes
-					Operator operator = getOperator();
+				
+					switch (step) {
 					
-					productBatch:
-					while (true) {
-						
-						// 5. Operatøren indtaster produktbatch nummer
-						// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
-						int productBatch = getProductBatch();
-						if (productBatch == 0) {
-							continue operator;
-						}
-						
-						containerWeight:
-						while (true) {
+						case 0:
+							
+							// 3. Operatøren indtaster operatør nr.
+							// 4. Vægten svarer tilbage med operatørnavn som så godkendes
+							getOperator(operator);
+							step += 1;
+							break;
+							
+						case 1:
+					
+							// 5. Operatøren indtaster produktbatch nummer
+							// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
+							if (getProductBatch(productBatch, recipe)) {
+								step += 1;
+							} else {
+								step -= 1;
+							}
+							break;
+					
+						case 2:
 							
 							// 7. Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’
 							// 8. Vægten tareres
@@ -150,50 +167,54 @@ public class ASE {
 							// 10. Operatør placerer første tarabeholder og trykker ’ok’
 							// 11. Vægten af tarabeholder registreres
 							// 12. Vægten tareres
-							double containerWeight = getContainerWeight();
-							if (containerWeight == Double.NaN) {
-								continue productBatch;
+							if (getContainerWeight(containerWeight)) {
+								step += 1;
+							} else {
+								step -= 1;
 							}
+							break;
+					
+						case 3:
 							
-							materialBatch:
-							while (true) {
-								
-								// 13. Vægten beder om raavarebatch nummer på første råvare
-								int materialBatch = getMaterialBatch();
-								if (materialBatch == 0) {
-									continue containerWeight;
-								}
-								
-								// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
-								double materialWeight = getMaterialWeight();
-								if (containerWeight == Double.NaN) {
-									continue materialBatch;
-								}
-								
-								// ### TILFØJ INDTASTNINGER TIL EN LISTE ###
+							// 13. Vægten beder om raavarebatch nummer på første råvare
+							if (getCommodityBatch(commodityBatch, commodity)) {
+								step += 1;
+							} else {
+								step -= 1;
+							}
+							break;
 
-								// ### ER DER FLERE RÅVARER DER SKAL AFVEJES? ###
-								
-								// 15. Pkt. 7 – 14 gentages indtil alle råvarer er afvejet
-								if (false) {
-									continue containerWeight;
-								}
-								
-								break productBatch;
-								
-							}
+						case 4:
 							
-						}
-						
+							// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
+							if (getCommodityWeight(commodityWeight)) {
+								step += 1;
+							} else {
+								step -= 1;
+							}
+							break;
+					
+						case 5:
+							
+							// 15. Pkt. 7 – 14 gentages indtil alle råvarer er afvejet
+							step += 1;
+							break;
+					
+						case 6:
+							
+							// 16. Systemet sætter produktbatch nummerets status til ”Afsluttet”
+							step += 1;
+							break;
+							
+						default:
+							
+							// 17. Det kan herefter genoptages af en ny operatør
+							step = 0;
+							
 					}
-					
-					// 16. Systemet sætter produktbatch nummerets status til ”Afsluttet”
-					
-					// ### IKKE LAVET ENDNU ###
-					
-					// 17. Det kan herefter genoptages af en ny operatør
-					
+
 				}
+				
 			} catch (Exception e) {
 			
 				System.err.println("Weight crashed ('" + address + ":" + port + "'): " + e.getMessage());
@@ -223,19 +244,16 @@ public class ASE {
 		
 		//# Functions
 		
-		private Operator getOperator() throws Exception {
+		private void getOperator(Operator operator) throws Exception {
 			
 			while (true) {
 				
 				int number = readInt("Operator:", "", "#");
-				String name;
-				
-				Operator operator;
 				
 				try {
 					operator = databaseAccess.getOperator(number);
-				} catch (Exception e) {
-					display("Not found");
+				} catch (DALException e) {
+					display("Invalid");
 					continue;
 				}
 				
@@ -243,47 +261,44 @@ public class ASE {
 					continue;
 				}
 				
-				return operator;
+				return;
 				
 			}
 			
 		}
-		private int getProductBatch() throws Exception {
+		private boolean getProductBatch(ProductBatch productBatch, Recipe recipe) throws Exception {
 			
 			while (true) {
 				
 				int number = readInt("Product batch:", "", "#");
 				
 				if (number == 0) {
-					return 0;
+					return false;
 				}
 				
-				String name;
-				
-				// === HARDCODED ===
-				if (number == 1) {
-					name = "Saltvand";
-				} else {
-					display("Not found");
-					continue;
-				}
-				// === HARDCODED ===
-				
-				if (readInt(name + "?", "1", "") != 1) {
+				try {
+					productBatch = databaseAccess.getProductBatch(number);
+					recipe = databaseAccess.getRecipe(productBatch.getReceptId());
+				} catch (DALException e) {
+					display("Invalid");
 					continue;
 				}
 				
-				return number;
+				if (readInt(recipe.getRecipeName() + "?", "1", "") != 1) {
+					continue;
+				}
+				
+				return true;
 				
 			}
 			
 		}
-		private double getContainerWeight() throws Exception {
+		private boolean getContainerWeight(double containerWeight) throws Exception {
 			
 			while (true) {
 				
 				if (readInt("Clear weight", "1", "") != 1) {
-					return Double.NaN;
+					return false;
 				}
 
 				tare();
@@ -292,52 +307,51 @@ public class ASE {
 					continue;
 				}
 
-				double weight = weight();
+				containerWeight = weight();
 
 				tare();
 				
-				return weight;
+				return true;
 				
 			}
 			
 		}
-		private int getMaterialBatch() throws Exception {
+		private boolean getCommodityBatch(CommodityBatch commodityBatch, Commodity commodity) throws Exception {
 			
 			while (true) {
 				
 				int number = readInt("Material batch:", "", "#");
 				
 				if (number == 0) {
-					return 0;
+					return false;
 				}
 				
-				String name;
-				
-				// === HARDCODED ===
-				if (number == 1) {
-					name = "Vand";
-				} else {
-					display("Not found");
-					continue;
-				}
-				// === HARDCODED ===
-				
-				if (readInt(name + "?", "1", "") != 1) {
+				try {
+					commodityBatch = databaseAccess.getCommodityBatch(number);
+					commodity = databaseAccess.getCommodity(commodityBatch.getCommodityId());
+				} catch (DALException e) {
+					display("Invalid");
 					continue;
 				}
 				
-				return number;
+				if (readInt(commodity.getCommodityName() + "?", "1", "") != 1) {
+					continue;
+				}
+				
+				return true;
 				
 			}
 			
 		}
-		private double getMaterialWeight() throws Exception {
+		private boolean getCommodityWeight(double commodityWeight) throws Exception {
 			
 			if (readInt("Place material", "1", "") != 1) {
-				return Double.NaN;
+				return false;
 			}
 			
-			return weight();
+			commodityWeight = weight();
+			
+			return true;
 			
 		}
 		

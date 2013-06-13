@@ -5,57 +5,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Commodity Administration</title>
+		<link rel="stylesheet" type="text/css" href="TabStyle.css">
 		
-		<style type="text/css">
-			#tabs{
-				padding:0; 
-			    margin:0; 
-			    font-family:Arial, Helvetica, sans-serif; 
-			    font-size:12px; 
-			    color:#FFF; 
-			    font-weight:bold;
-			}
-			#tabs ul{
-			list-style:none;
-			margin:0;
-			padding:0;
-			}
-			#tabs ul li{ 
-			    display:inline; 
-			    margin:0; 
-			    text-transform:capitalize; 
-			} 
-			#tabs ul li a{ 
-			    padding:5px 16px; 
-			    color:#FFF; 
-			    background:#E7A272; 
-			    float:left; 
-			    text-decoration:none; 
-			    border:1px solid #D17B40; 
-			    border-left:0; 
-			    margin:0; 
-			    text-transform:capitalize; 
-			} 
-			#tabs ul li a:hover{ 
-			    background:#EAEAEA; 
-			    color:#7F9298; 
-			    text-decoration:none; 
-			    border-bottom:1px solid #EAEAEA; 
-			} 
-			#tabs ul li a.active{ 
-			    background:#EAEAEA; 
-			    color:#7F9298; 
-			    border-bottom:1px solid #EAEAEA; 
-			} 
-			#content{    
-			    background:#EAEAEA; 
-			    clear:both; 
-			    font-size:11px; 
-			    color:#000; 
-			    padding:10px; 
-			    font-family:Arial, Helvetica, sans-serif; 
-			}
-		</style>
 	</head>
 	<body>
 		<h2>You're logged in as: Admin</h2>
