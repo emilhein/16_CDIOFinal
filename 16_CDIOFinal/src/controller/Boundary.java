@@ -2,6 +2,8 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Boundary extends Thread {
 
@@ -51,17 +53,18 @@ public class Boundary extends Thread {
 	//# Functions
 	
 	public String readString(String prefix) {
-		
-		String line;
+
+		Pattern pattern = Pattern.compile("^" + prefix + "(.+)$");
+		Matcher matcher;
 		
 		while (true) {
 						
 			synchronized (cache) {
 				for (int i = 0; i < cache.size(); i++) {
-					line = cache.get(i);
-					if (line.matches("^" + prefix + ".+$")) {
+					matcher = pattern.matcher(cache.get(i));
+					if (matcher.matches()) {
 						cache.remove(i);
-						return line.substring(prefix.length());
+						return matcher.group(1);
 					}
 				}
 			}

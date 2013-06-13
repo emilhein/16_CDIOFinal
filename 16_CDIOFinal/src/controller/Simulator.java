@@ -179,7 +179,7 @@ public class Simulator extends Thread {
 						System.out.println(matcherRM20_8.group(1));
 						System.out.println(matcherRM20_8.group(2) + " " + matcherRM20_8.group(3));
 						System.out.println();
-						writer.writeBytes("RM20 A \"" + boundary.readString("#").replace("\"", "") + "\"\r\n");
+						writer.writeBytes("RM20 A \"" + boundary.readString("\\#").replace("\"", "") + "\"\r\n");
 
 					} else if (matcherRM20_4.matches()) {
 
@@ -190,7 +190,7 @@ public class Simulator extends Thread {
 						System.out.println(matcherRM20_4.group(1));
 						System.out.println(matcherRM20_4.group(2) + " " + matcherRM20_4.group(3));
 						System.out.println();
-						writer.writeBytes("RM20 A \"" + boundary.readInt("#", Integer.MIN_VALUE, Integer.MAX_VALUE) + "\"\r\n");
+						writer.writeBytes("RM20 A \"" + boundary.readInt("\\#", Integer.MIN_VALUE, Integer.MAX_VALUE) + "\"\r\n");
 
 					} else if (line.equals("Z")) {
 

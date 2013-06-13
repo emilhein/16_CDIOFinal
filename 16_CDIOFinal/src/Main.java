@@ -31,7 +31,6 @@ public class Main {
 				default:
 					break menu;
 			}
-
 			
 		}
 						
@@ -43,12 +42,13 @@ public class Main {
 		
 		System.out.println();
 		System.out.println("Resetting database...");
-		System.out.println();
 		
 		try {
 			DatabaseAccess.reset();
+			System.out.println();
 			System.out.println("The database is now reset");
 		} catch (DALException e) {
+			System.err.println();
 			System.err.println("Cannot reset database (" + e.getMessage() + ")");
 		}
 		
