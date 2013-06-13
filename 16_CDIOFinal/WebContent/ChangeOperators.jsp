@@ -42,12 +42,12 @@
 		errors.add("Adgangskode er ugyldig.");
 		}
 		if (errors.size() == 0) {
-
-			session.updateOperator(oprId, oprName, ini, cpr, password,
-					rights);
+			session.addOperator(oprId, oprName, ini, cpr, password, rights);
+			
 
 		} else {
-			session.addOperator(oprId, oprName, ini, cpr, password, rights);
+			session.updateOperator(oprId, oprName, ini, cpr, password,
+					rights);
 		}
 		response.sendRedirect("UserAdministration.jsp");
 
