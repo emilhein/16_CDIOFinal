@@ -1,5 +1,8 @@
 <jsp:useBean id="s" class="web.Session" scope="session" />
 <jsp:setProperty name="s" property="*" />
+<%@page import="database_objects.Commodity" %>
+<%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -41,6 +44,32 @@
 		
 		<div id='content'>
 			The content for Commodity Administration goes here
+			
+			<table>
+				<tr>
+					<th>Commodity ID</th>
+					<th>Commodity name</th>
+					<th>Supplier</th>	
+				</tr>
+				<%
+					for(Commodity commodity : s.getCommodityList()) {
+				%>
+				<form action="ChangeCommodity.jsp" method="post" style="display:inline">
+					<input type="hidden" value="<%= commodity.getCommodityId()  %>" name="commodityId">
+					<tr>
+						<td><%= commodity.getCommodityId() %> </td>
+						<td><input type="text" value="<%= commodity.getCommodityName() %>" name="Name"></td>
+						<td><input type="text" value="<%= commodity.getSupplier() %>" name="Supplier"></td>
+						<td><input type="submit" value="Opdater" name="button"></td>
+					</tr>
+				</form>
+				<% 
+					}
+				%>
+				
+			</table>
+			
+			
 			<h2>Printing some status messages</h2>
 			
 		</div>

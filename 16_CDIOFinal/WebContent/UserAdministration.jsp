@@ -77,7 +77,7 @@
 					<td><input type="text" name="Password"></td>
 					<td><input type="text" name="Rights"></td>
 					<td><input type="submit" value="Tilføj"></td>
-					</tr>
+				</tr>
 			</form>
 		</table>
 			
