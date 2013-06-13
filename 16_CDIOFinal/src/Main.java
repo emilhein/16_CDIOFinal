@@ -8,21 +8,33 @@ public class Main {
 
 		Boundary boundary = new Boundary();
 		
-		System.out.println();
-		System.out.println("1. Start simulator");
-		System.out.println("2. Start ASE");
-		System.out.println("3. Reset database");
-		System.out.println();
+		menu:
+		while (true) {
+		
+			System.out.println();
+			System.out.println("1. Start simulator");
+			System.out.println("2. Start ASE");
+			System.out.println("3. Reset database");
+			System.out.println("0. Exit");
+			System.out.println();
 
-		switch (boundary.readInt("", 1, 3)) {
-			case 1:
-				new Simulator(boundary);
-			case 2:
-				new ASE(boundary);
-			case 3:
-				resetDatabase();
+			switch (boundary.readInt("", 0, 3)) {
+				case 1:
+					new Simulator(boundary);
+					break;
+				case 2:
+					new ASE(boundary);
+					break;
+				case 3:
+					resetDatabase();
+					break;
+				default:
+					break menu;
+			}
+
+			
 		}
-				
+						
 		boundary.close();
 		
 	}
