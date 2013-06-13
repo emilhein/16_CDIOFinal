@@ -1,3 +1,5 @@
+<jsp:useBean id="s" class="web.Session" scope="session" />
+<jsp:setProperty name="s" property="*" />
 <%@page import="database_objects.Operator"%>
 <%@page import="database.DatabaseAccess"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -10,22 +12,14 @@
 	</head>
 	<body>
 		<% 
-		DatabaseAccess db = new DatabaseAccess();
 		
-		String oprId=request.getParameter("oprId");
-		String password=request.getParameter("password");
 		
-		int id = Integer.parseInt(oprId);		
-		database_objects.Operator operator = db.getOperator(id);
-		
-		if (operator.getPassword().equals(password)){
-			switch (operator.getRights()){
-			case 0: session.setAttribute("user", 0); response.sendRedirect("Home.jsp"); break;
-			case 1: session.setAttribute("user", 1); response.sendRedirect("Home.jsp"); break;
-			case 2: session.setAttribute("user", 2); response.sendRedirect("Home.jsp"); break;
-			case 3: session.setAttribute("user", 3); response.sendRedirect("Home.jsp"); break;
-			case 4: session.setAttribute("user", 4); response.sendRedirect("Home.jsp"); break;
-			default: response.sendRedirect("Error.jsp"); break;
+					
+		if (s.login(request.getParameter("oprId"),request.getParameter("password"))){		
+			if (s.getOperator().getRights() >= 0 && s.getOperator().getRights() <= 4) {
+				response.sendRedirect("Home.jsp");
+			} else {
+				response.sendRedirect("Error.jsp");
 			}
 		}
 		else{ 

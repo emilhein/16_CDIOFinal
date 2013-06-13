@@ -1,3 +1,8 @@
+<jsp:useBean id="s" class="web.Session" scope="session" />
+<jsp:setProperty name="s" property="*" />
+<%@page import="database_objects.Operator"%>
+<%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,8 +16,8 @@
 		<h2>You're logged in as: Admin</h2>
 		<div id='tabs'>
 			<ul>
-				<% int userType = Integer.parseInt(session.getAttribute("user").toString());
-				switch(userType) {
+				<%
+				switch(s.getOperator().getRights()) {
 					case 1: %>
 						<li><a href='Home.jsp'>Home</a>
 						<li><a href='UserAdministration.jsp' class='active'>User Administration</a>
@@ -32,6 +37,48 @@
 		
 		<div id='content'>
 			The content for user administration goes here
+			
+			<table>
+			<tr>
+				<th>oprId</th>
+				<th>oprName</th>
+				<th>ini</th>
+				<th>cpr</th>
+				<th>password</th>
+				<th>rights</th>
+				<th></th>
+			</tr>
+			<%
+				for (Operator operator : s.getOperators()) {
+			%>
+			<form action="AddOperator.jsp" method="post" style="display:inline">
+				<input type="hidden" value="<%= operator.getOprId() %>" name="OprId">
+				<tr>
+					<td><%= operator.getOprId() %></td>
+					<td><input type="text" value="<%= operator.getOprName() %>" name="Name"></td>
+					<td><input type="text" value="<%= operator.getIni() %>" name="Initials"></td>
+					<td><input type="text" value="<%= operator.getCpr() %>" name="CPR"></td>
+					<td><input type="text" value="<%= operator.getPassword() %>" name="Password"></td>
+					<td><input type="text" value="<%= operator.getRights() %>" name="Rigths"></td>
+					<td><input type="submit" value="Opdater" name="button"></td>
+					
+				</tr>
+			</form> 
+			<%
+				}
+			%>
+			<form action="AddOperator.jsp" method="post" style="display:inline">
+				<tr>
+					<td><input type="text" name="Identification"></td>
+					<td><input type="text" name="Name"></td>
+					<td><input type="text" name="Initials"></td>
+					<td><input type="text" name="CPR"></td>
+					<td><input type="text" name="Password"></td>
+					<td><input type="submit" value="Tilføj"></td>
+					</tr>
+			</form>
+		</table>
+			
 			
 			<h2>Printing some status messages for the user administration tab</h2>
 			
