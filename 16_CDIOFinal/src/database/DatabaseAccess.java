@@ -80,9 +80,7 @@ public class DatabaseAccess {
 				} catch (DALException e) {
 				}
 			}
-			Date datetime = new Date();
-			String ts = datetime.toString();
-			
+						
 			// Create
 			connector.doUpdate("CREATE TABLE operator(oprId INTEGER NOT NULL, oprName VARCHAR(20), ini VARCHAR(4), cpr VARCHAR(10) NOT NULL, Upassword VARCHAR(10) NOT NULL, rights INTEGER NOT NULL, PRIMARY KEY(oprId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE commodity(commodityId INTEGER NOT NULL, commodityName VARCHAR(20), supplier VARCHAR(20), PRIMARY KEY(commodityId)) ENGINE=innoDB;");
@@ -129,10 +127,10 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.4)");
 			
 			// indsæt productBatch.
-			connector.doUpdate("INSERT INTO productBatch VALUES(1,1,'"+ts+"',1)");
+			connector.doUpdate("INSERT INTO productBatch VALUES(1,1,'" + new Date().toString() + "',1)");
 			
 			// indsæt productBatchComponent.
-			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
+			//connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
 			
 			
 		} finally {

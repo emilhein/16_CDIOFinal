@@ -385,7 +385,7 @@ public class ASE {
 			
 			while (true) {
 			
-				if (pause == 0 && !stopped) {
+				if (pause <= 0 && !stopped) {
 					if (readInt("Place commodity", "1", "") != 1) {
 						return false;
 					}
@@ -395,13 +395,16 @@ public class ASE {
 				
 				procedure.commodityWeight = weight();
 				
-				if (procedure.commodityWeight > target + tolerance) {
-					display("+" +  Double.toString(Math.abs(procedure.commodityWeight - target)).substring(0, 6));
-					stopped = false;
-					continue;
-				}
-				if (procedure.commodityWeight < target - tolerance) {
-					display("-" +  Double.toString(Math.abs(procedure.commodityWeight - target)).substring(0, 6));
+				boolean greater = procedure.commodityWeight > target + tolerance;
+				boolean less = procedure.commodityWeight < target - tolerance;
+				
+				if (greater || less) {
+					String message = (greater ? "+ " : "- ") + Double.toString(Math.abs(procedure.commodityWeight - target));
+					if (message.length() > 7) {
+						display(message.substring(0, 7));
+					} else {
+						display(message);
+					}
 					stopped = false;
 					continue;
 				}
