@@ -13,7 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="TabStyle.css">
 	</head>
 	<body>
-		<h2>You're logged in as: Admin</h2>
+		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
 		<div id='tabs'>
 			<ul>
 				<%
