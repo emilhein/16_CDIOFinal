@@ -106,7 +106,7 @@ public class DatabaseAccess {
 			// indsæt operatoere.
 			connector.doUpdate("INSERT INTO operator VALUES(1,'Mathias','MEL','2404922559','123',1)");
 			connector.doUpdate("INSERT INTO operator VALUES(2,'Emil','EHE','2404922559','123',2)");
-			connector.doUpdate("INSERT INTO operator VALUES(3,'Jens','JWDK','2404922559','123',3)");
+			connector.doUpdate("INSERT INTO operator VALUES(3,'Jens','JWN','2404922559','123',3)");
 			connector.doUpdate("INSERT INTO operator VALUES(4,'Khan','KN','2404922559','123',4)");
 			
 			// indsæt commodity.

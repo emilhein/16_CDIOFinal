@@ -126,13 +126,7 @@ public class ASE {
 			// 0: Annuller/Tilbage
 
 			int step = 0;
-			Operator operator = null;
-			ProductBatch productBatch = null;
-			Recipe recipe = null;
-			CommodityBatch commodityBatch = null;
-			Commodity commodity = null;
-			double containerWeight = 0;
-			double commodityWeight = 0;
+			Procedure procedure = null;
 			
 			try {
 				
@@ -144,7 +138,8 @@ public class ASE {
 							
 							// 3. Operatøren indtaster operatør nr.
 							// 4. Vægten svarer tilbage med operatørnavn som så godkendes
-							getOperator(operator);
+							procedure = new Procedure();
+							getOperator(procedure);
 							step += 1;
 							break;
 							
@@ -152,7 +147,7 @@ public class ASE {
 					
 							// 5. Operatøren indtaster produktbatch nummer
 							// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
-							if (getProductBatch(productBatch, recipe)) {
+							if (getProductBatch(procedure)) {
 								step += 1;
 							} else {
 								step -= 1;
@@ -167,7 +162,7 @@ public class ASE {
 							// 10. Operatør placerer første tarabeholder og trykker ’ok’
 							// 11. Vægten af tarabeholder registreres
 							// 12. Vægten tareres
-							if (getContainerWeight(containerWeight)) {
+							if (getContainerWeight(procedure)) {
 								step += 1;
 							} else {
 								step -= 1;
@@ -177,7 +172,7 @@ public class ASE {
 						case 3:
 							
 							// 13. Vægten beder om raavarebatch nummer på første råvare
-							if (getCommodityBatch(commodityBatch, commodity)) {
+							if (getCommodityBatch(procedure)) {
 								step += 1;
 							} else {
 								step -= 1;
@@ -187,7 +182,7 @@ public class ASE {
 						case 4:
 							
 							// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
-							if (getCommodityWeight(commodityWeight)) {
+							if (getCommodityWeight(procedure)) {
 								step += 1;
 							} else {
 								step -= 1;
@@ -244,20 +239,20 @@ public class ASE {
 		
 		//# Functions
 		
-		private void getOperator(Operator operator) throws Exception {
+		private void getOperator(Procedure procedure) throws Exception {
 			
 			while (true) {
 				
 				int number = readInt("Operator:", "", "#");
 				
 				try {
-					operator = databaseAccess.getOperator(number);
+					procedure.operator = databaseAccess.getOperator(number);
 				} catch (DALException e) {
 					display("Invalid");
 					continue;
 				}
 				
-				if (readInt(operator.getOprName() + "?", "1", "") != 1) {
+				if (readInt(procedure.operator.getOprName() + "?", "1", "") != 1) {
 					continue;
 				}
 				
@@ -266,7 +261,7 @@ public class ASE {
 			}
 			
 		}
-		private boolean getProductBatch(ProductBatch productBatch, Recipe recipe) throws Exception {
+		private boolean getProductBatch(Procedure procedure) throws Exception {
 			
 			while (true) {
 				
@@ -277,14 +272,14 @@ public class ASE {
 				}
 				
 				try {
-					productBatch = databaseAccess.getProductBatch(number);
-					recipe = databaseAccess.getRecipe(productBatch.getReceptId());
+					procedure.productBatch = databaseAccess.getProductBatch(number);
+					procedure.recipe = databaseAccess.getRecipe(procedure.productBatch.getReceptId());
 				} catch (DALException e) {
 					display("Invalid");
 					continue;
 				}
 				
-				if (readInt(recipe.getRecipeName() + "?", "1", "") != 1) {
+				if (readInt(procedure.recipe.getRecipeName() + "?", "1", "") != 1) {
 					continue;
 				}
 				
@@ -293,7 +288,7 @@ public class ASE {
 			}
 			
 		}
-		private boolean getContainerWeight(double containerWeight) throws Exception {
+		private boolean getContainerWeight(Procedure procedure) throws Exception {
 			
 			while (true) {
 				
@@ -307,7 +302,7 @@ public class ASE {
 					continue;
 				}
 
-				containerWeight = weight();
+				procedure.containerWeight = weight();
 
 				tare();
 				
@@ -316,25 +311,25 @@ public class ASE {
 			}
 			
 		}
-		private boolean getCommodityBatch(CommodityBatch commodityBatch, Commodity commodity) throws Exception {
+		private boolean getCommodityBatch(Procedure procedure) throws Exception {
 			
 			while (true) {
 				
-				int number = readInt("Material batch:", "", "#");
+				int number = readInt("Commodity batch:", "", "#");
 				
 				if (number == 0) {
 					return false;
 				}
 				
 				try {
-					commodityBatch = databaseAccess.getCommodityBatch(number);
-					commodity = databaseAccess.getCommodity(commodityBatch.getCommodityId());
+					procedure.commodityBatch = databaseAccess.getCommodityBatch(number);
+					procedure.commodity = databaseAccess.getCommodity(procedure.commodityBatch.getCommodityId());
 				} catch (DALException e) {
 					display("Invalid");
 					continue;
 				}
 				
-				if (readInt(commodity.getCommodityName() + "?", "1", "") != 1) {
+				if (readInt(procedure.commodity.getCommodityName() + "?", "1", "") != 1) {
 					continue;
 				}
 				
@@ -343,13 +338,13 @@ public class ASE {
 			}
 			
 		}
-		private boolean getCommodityWeight(double commodityWeight) throws Exception {
+		private boolean getCommodityWeight(Procedure procedure) throws Exception {
 			
-			if (readInt("Place material", "1", "") != 1) {
+			if (readInt("Place commodity", "1", "") != 1) {
 				return false;
 			}
 			
-			commodityWeight = weight();
+			procedure.commodityWeight = weight();
 			
 			return true;
 			
@@ -429,6 +424,20 @@ public class ASE {
 			}
 			
 			return Double.parseDouble(matcher.group(1));
+		}
+		
+		//# Classes
+		
+		private class Procedure {
+			
+			public Operator operator = null;
+			public ProductBatch productBatch = null;
+			public Recipe recipe = null;
+			public CommodityBatch commodityBatch = null;
+			public Commodity commodity = null;
+			public double containerWeight = 0;
+			public double commodityWeight = 0;
+			
 		}
 		
 	}
