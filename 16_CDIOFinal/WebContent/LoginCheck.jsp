@@ -12,10 +12,7 @@
 		<title>LoginCheck</title>
 	</head>
 	<body>
-		<% 
-		
-		
-					
+		<% 			
 		if (s.login(request.getParameter("oprId"),request.getParameter("password"))){		
 			if (s.getOperator().getRights() >= 0 && s.getOperator().getRights() <= 4) {
 				response.sendRedirect("Home.jsp");
