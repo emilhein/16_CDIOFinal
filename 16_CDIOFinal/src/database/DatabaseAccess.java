@@ -346,7 +346,7 @@ public class DatabaseAccess {
 		}
 		catch (SQLException e) {throw new DALException(e);}
 	}
-
+	
 	public List<RecipeComp> getRecipeCompList() throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
 		ResultSet rs = connector.doQuery("SELECT * FROM recipeComponent");
@@ -363,6 +363,19 @@ public class DatabaseAccess {
 	public List<RecipeComp> getRecipeCompList(int recipeId) throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
 		ResultSet rs = connector.doQuery("SELECT * FROM recipeComponent where recipeId = " + recipeId);
+		try {
+			while (rs.next()) {
+				list.add(new RecipeComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
+	public List<RecipeComp> getRestRecipeComp(int pbId) throws DALException {
+		List<RecipeComp> list = new ArrayList<RecipeComp>();
+		ResultSet rs = connector.doQuery("	Select recipeId, commodityId, nomNetto, tolerance from recipeComponent natural join productbatch WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
 		try {
 			while (rs.next()) {
 				list.add(new RecipeComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4)));
