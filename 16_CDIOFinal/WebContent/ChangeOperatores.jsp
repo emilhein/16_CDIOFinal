@@ -9,7 +9,7 @@
 	<body>
 	<%
 		java.util.ArrayList<String> errors = new java.util.ArrayList<String>();
-			
+
 			try {
 		int oprId = s.getOperator().getOprId();
 		if (oprId < 1) {
@@ -21,12 +21,14 @@
 			} catch (Exception e) {
 		errors.add("Identifikation er ikke et tal.");
 			}
+
 			int oprId = s.getOperator().getOprId();
 			String oprName = s.getOperator().getOprName();
 			String ini = s.getOperator().getIni();
 			String cpr = s.getOperator().getCpr();
 			String password = s.getOperator().getPassword();
 			int rights = s.getOperator().getRights();
+
 			if (!oprName.matches("^.{2,20}$")) {
 		errors.add("Navn er ugyldig.");
 			}
@@ -38,7 +40,7 @@
 			}
 			if (!password.matches("^.{7,8}$")) {
 		errors.add("Adgangskode er ugyldig.");
-			}
+		}
 		if (errors.size() == 0) {
 
 			session.updateOperator(oprId, oprName, ini, cpr, password,
@@ -47,7 +49,7 @@
 		} else {
 			session.addOperator(oprId, oprName, ini, cpr, password, rights);
 		}
-		response.sendRedirect("OperatorAdministration.jsp");
+		response.sendRedirect("UserAdministration.jsp");
 
 		for (String line : errors) {
 	%>

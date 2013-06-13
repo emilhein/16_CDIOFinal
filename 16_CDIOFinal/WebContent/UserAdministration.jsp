@@ -82,7 +82,7 @@
 		</table>
 			
 			
-			<h2>Printing some status messages for the user administration tab</h2>
+			<h2>Opret eller rediger en bruger</h2>
 			
 		</div>
 		<form action="Login.jsp" method="post">
