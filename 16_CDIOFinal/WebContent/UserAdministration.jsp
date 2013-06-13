@@ -70,11 +70,12 @@
 			<form action="ChangeOperators.jsp" method="post" style="display:inline">
 				<input type="hidden" value="0" name="OprId">
 				<tr>
-					<td><input type="text" name="Identification"></td>
+					<td><input type="text" name="oprId"></td>
 					<td><input type="text" name="Name"></td>
-					<td><input type="text" name="Initials"></td>
-					<td><input type="text" name="CPR"></td>
+					<td><input type="text" name="Ini"></td>
+					<td><input type="text" name="cpr"></td>
 					<td><input type="text" name="Password"></td>
+					<td><input type="text" name="Rights"></td>
 					<td><input type="submit" value="Tilføj"></td>
 					</tr>
 			</form>
