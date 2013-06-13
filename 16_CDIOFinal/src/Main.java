@@ -16,7 +16,7 @@ public class Main {
 
 		switch (boundary.readInt("", 1, 3)) {
 			case 1:
-				new Simulator(boundary).close();
+				new Simulator(boundary);
 			case 2:
 				new ASE(boundary);
 			case 3:
