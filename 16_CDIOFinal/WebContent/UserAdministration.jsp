@@ -51,7 +51,7 @@
 			<%
 				for (Operator operator : s.getOperators()) {
 			%>
-			<form action="AddOperator.jsp" method="post" style="display:inline">
+			<form action="ChangeOperators.jsp" method="post" style="display:inline">
 				<input type="hidden" value="<%= operator.getOprId() %>" name="OprId">
 				<tr>
 					<td><%= operator.getOprId() %></td>
@@ -67,7 +67,8 @@
 			<%
 				}
 			%>
-			<form action="AddOperator.jsp" method="post" style="display:inline">
+			<form action="ChangeOperators.jsp" method="post" style="display:inline">
+				<input type="hidden" value="0" name="OprId">
 				<tr>
 					<td><input type="text" name="Identification"></td>
 					<td><input type="text" name="Name"></td>
