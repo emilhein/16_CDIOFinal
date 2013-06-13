@@ -281,6 +281,10 @@ public class DatabaseAccess {
 		catch (SQLException e) {throw new DALException(e);}
 	}
 
+	public void updateProductBatch(ProductBatch pb) throws DALException{
+		connector.doUpdate("UPDATE productBatch SET state = " + pb.getStatus() + " where pbId = " + pb.getPbId());
+	}
+	
 	//ProductBatchComp___________________________________________________________________________
 	public void createProductBatchComp(ProductBatchComp pbc)throws DALException {
 		connector.doUpdate(
