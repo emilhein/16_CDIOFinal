@@ -1,3 +1,5 @@
+<jsp:useBean id="s" class="web.Session" scope="session" />
+<jsp:setProperty name="s" property="*" />
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,8 +13,8 @@
 		<h2>You're logged in as: <label> <%= session.getAttribute("username") %> </label> </h2>
 		<div id='tabs'>
 			<ul>
-				<% int userType = Integer.parseInt(session.getAttribute("user").toString());
-				switch(userType) {
+				<% 
+				switch(s.getOperator().getRights()) {
 					case 1: %>
 						<li><a href='Home.jsp' class='active'>Home</a>
 						<li><a href='UserAdministration.jsp'>User Administration</a>
