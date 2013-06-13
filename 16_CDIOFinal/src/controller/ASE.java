@@ -124,7 +124,8 @@ public class ASE {
 
 			// 1: Bekræft
 			// 0: Annuller/Tilbage
-			
+
+			int step = 0;
 			Operator operator = null;
 			ProductBatch productBatch = null;
 			Recipe recipe = null;
@@ -135,42 +136,84 @@ public class ASE {
 			
 			try {
 				
+				while (true) {
+				
+					switch (step) {
+					
+						case 0:
+							
+							// 3. Operatøren indtaster operatør nr.
+							// 4. Vægten svarer tilbage med operatørnavn som så godkendes
+							getOperator(operator);
+							step += 1;
+							break;
+							
+						case 1:
+					
+							// 5. Operatøren indtaster produktbatch nummer
+							// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
+							if (getProductBatch(productBatch, recipe)) {
+								step += 1;
+							} else {
+								step -= 1;
+							}
+							break;
+					
+						case 2:
+							
+							// 7. Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’
+							// 8. Vægten tareres
+							// 9. Vægten beder om første tara beholder
+							// 10. Operatør placerer første tarabeholder og trykker ’ok’
+							// 11. Vægten af tarabeholder registreres
+							// 12. Vægten tareres
+							if (getContainerWeight(containerWeight)) {
+								step += 1;
+							} else {
+								step -= 1;
+							}
+							break;
+					
+						case 3:
+							
+							// 13. Vægten beder om raavarebatch nummer på første råvare
+							if (getCommodityBatch(commodityBatch, commodity)) {
+								step += 1;
+							} else {
+								step -= 1;
+							}
+							break;
 
-				// 3. Operatøren indtaster operatør nr.
-				// 4. Vægten svarer tilbage med operatørnavn som så godkendes
-				getOperator(operator);
-				
-				// 5. Operatøren indtaster produktbatch nummer
-				// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
-				if (!getProductBatch(productBatch, recipe)) {
-					// Tilbage
-				}
-				
-				// 7. Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’
-				// 8. Vægten tareres
-				// 9. Vægten beder om første tara beholder
-				// 10. Operatør placerer første tarabeholder og trykker ’ok’
-				// 11. Vægten af tarabeholder registreres
-				// 12. Vægten tareres
-				if (!getContainerWeight(containerWeight)) {
-					// Tilbage
-				}
+						case 4:
+							
+							// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
+							if (getCommodityWeight(commodityWeight)) {
+								step += 1;
+							} else {
+								step -= 1;
+							}
+							break;
+					
+						case 5:
+							
+							// 15. Pkt. 7 – 14 gentages indtil alle råvarer er afvejet
+							step += 1;
+							break;
+					
+						case 6:
+							
+							// 16. Systemet sætter produktbatch nummerets status til ”Afsluttet”
+							step += 1;
+							break;
+							
+						default:
+							
+							// 17. Det kan herefter genoptages af en ny operatør
+							step = 0;
+							
+					}
 
-				// 13. Vægten beder om raavarebatch nummer på første råvare
-				if (!getCommodityBatch(commodityBatch, commodity)) {
-					// Tilbage
 				}
-
-				// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
-				if (!getCommodityWeight(commodityWeight)) {
-					// Tilbage
-				}
-				
-				// 15. Pkt. 7 – 14 gentages indtil alle råvarer er afvejet
-				
-				// 16. Systemet sætter produktbatch nummerets status til ”Afsluttet”
-				
-				// 17. Det kan herefter genoptages af en ny operatør
 				
 			} catch (Exception e) {
 			
