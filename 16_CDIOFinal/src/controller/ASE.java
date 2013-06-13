@@ -12,7 +12,9 @@ import database_objects.Commodity;
 import database_objects.CommodityBatch;
 import database_objects.Operator;
 import database_objects.ProductBatch;
+import database_objects.ProductBatchComp;
 import database_objects.Recipe;
+import database_objects.RecipeComp;
 
 public class ASE {
 	
@@ -168,6 +170,8 @@ public class ASE {
 								step -= 1;
 							}
 							break;
+							
+							// Skriv Commodity nummer
 					
 						case 3:
 							
@@ -192,12 +196,25 @@ public class ASE {
 						case 5:
 							
 							// 15. Pkt. 7 – 14 gentages indtil alle råvarer er afvejet
+							procedure.productBatch.setStatus(1);
+							procedure.commodityBatch.setMaengde(procedure.commodityBatch.getMaengde() - procedure.commodityWeight);
+							
+							databaseAccess.updateProductBatch(procedure.productBatch);
+							databaseAccess.updateCommodityBatch(procedure.commodityBatch);
+							databaseAccess.createProductBatchComp(new ProductBatchComp(procedure.productBatch.getPbId(), procedure.commodityBatch.getCbId(), procedure.containerWeight, procedure.commodityWeight, procedure.operator.getOprId()));
+							
+							//databaseAccess.getRecipeComp(procedure.recipe.getRecipeId(), procedure.commodity.getCommodityId()).getRaavareId();
+							
 							step += 1;
 							break;
 					
 						case 6:
 							
 							// 16. Systemet sætter produktbatch nummerets status til ”Afsluttet”
+							procedure.productBatch.setStatus(2);
+							
+							databaseAccess.updateProductBatch(procedure.productBatch);
+							
 							step += 1;
 							break;
 							
