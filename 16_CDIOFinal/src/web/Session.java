@@ -66,10 +66,10 @@ public class Session {
 
 		}
 
-		int userId;
+		int parsedId;
 		
 		try {
-			userId = Integer.parseInt(id);
+			parsedId = Integer.parseInt(id);
 		} catch (Exception e) {
 			logout();
 			return "You must enter a valid user id.";
@@ -85,7 +85,7 @@ public class Session {
 		// Check
 		
 		try {
-			operator = databaseAccess.getOperator(userId);
+			operator = databaseAccess.getOperator(parsedId);
 		} catch (Exception e) {
 			logout();
 			return "Wrong user id or password.";
@@ -103,25 +103,25 @@ public class Session {
 		operator = null;
 		
 	}
-	public static String updateOperator(String id, String name, String initials, String password, String rigths) {
+	public static String updateOperator(String id, String name, String initials, String password, String rights) {
 		
 		// User id
 		
 		Operator operator;
-		int userId;
+		int parsedId;
 		
 		try {
-			userId = Integer.parseInt(id);
+			parsedId = Integer.parseInt(id);
 		} catch (Exception e) {
 			return "User id must be a number.";
 		}
 		
-		if (userId < 1 || userId > 99999999) {
+		if (parsedId < 1 || parsedId > 99999999) {
 			return "User id must between 1 and 99999999.";
 		}
 		
 		try {
-			operator = databaseAccess.getOperator(userId);
+			operator = databaseAccess.getOperator(parsedId);
 		} catch (Exception e) {
 			return "Could not find operator (" + e.getMessage() + ").";
 		}
@@ -144,12 +144,27 @@ public class Session {
 			return "Password length must be between 5 and 8 characters.";
 		}
 		
+		// Rights
+		
+		int parsedRights;
+		
+		try {
+			parsedRights = Integer.parseInt(rights);
+		} catch (Exception e) {
+			return "Rigths must be a number.";
+		}
+		
+		if (parsedRights < 1 || parsedRights > 4) {
+			return "Rights must between 1 and 4.";
+		}
+		
 		// Save
 		
 		operator.setOprName(name);
 		operator.setIni(initials);
 		operator.setPassword(password);
-
+		operator.setRights(parsedRights);
+		
 		try {
 			databaseAccess.updateOperator(operator);
 		} catch (Exception e) {

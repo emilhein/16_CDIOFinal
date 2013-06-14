@@ -25,13 +25,13 @@
 
 					// Update operator
 					
-					message = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rigths"));
+					message = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rights"));
 					
 				} else if (request.getParameter("add") != null) {
 
 					// Add operator
 					
-					message = s.addOperator(request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rigths"));
+					message = s.addOperator(request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rights"));
 					
 				}
 			}
@@ -52,9 +52,8 @@
 			<%
 				if (message != null) {
 			%>
-			<br>
 			<span style="color: red"><%= message %></span>
-			<br>
+			<br><br>
 			<%
 				}
 			%>
@@ -80,7 +79,7 @@
 						<td><input type="text" name="initials" value="<%= operator.getIni() %>"></td>
 						<td><center><%= operator.getCpr() %></center></td>
 						<td><input type="text" name="password" value="<%= operator.getPassword() %>"></td>
-						<td><input type="text" name="rigths" value="<%= operator.getRights() %>"></td>
+						<td><input type="text" name="rights" value="<%= operator.getRights() %>"></td>
 						<td><input type="submit" value="Update"></td>
 					</tr>
 				</form>
