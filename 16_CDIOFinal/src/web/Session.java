@@ -96,6 +96,11 @@ public class Session {
 			return "Wrong user id or password.";
 		}
 		
+		if (operator.getRights() == 0) {
+			logout();
+			return "Operator is blocked.";
+		}
+		
 		return null;
 	}
 	public void logout() {
@@ -113,11 +118,11 @@ public class Session {
 		try {
 			parsedId = Integer.parseInt(id);
 		} catch (Exception e) {
-			return "User id must be a number.";
+			return "Id must be a number.";
 		}
 		
 		if (parsedId < 1 || parsedId > 99999999) {
-			return "User id must between 1 and 99999999.";
+			return "Id must between 1 and 99999999.";
 		}
 		
 		try {
@@ -154,8 +159,8 @@ public class Session {
 			return "Rigths must be a number.";
 		}
 		
-		if (parsedRights < 1 || parsedRights > 4) {
-			return "Rights must between 1 and 4.";
+		if (parsedRights < 0 || parsedRights > 4) {
+			return "Rights must between 0 and 4.";
 		}
 		
 		// Save
@@ -173,9 +178,69 @@ public class Session {
 		
 		return null;
 	}
-	public static String addOperator(String name, String initials, String cpr, String password, String rigths) {
+	public static String addOperator(String id, String name, String initials, String cpr, String password, String rights) {
 		
-		return "TODO";
+		// User id
+		
+		int parsedId;
+		
+		try {
+			parsedId = Integer.parseInt(id);
+		} catch (Exception e) {
+			return "Id must be a number.";
+		}
+		
+		if (parsedId < 1 || parsedId > 99999999) {
+			return "Id must between 1 and 99999999.";
+		}
+		
+		// Name
+		
+		if (!name.matches("^.{2,20}$")) {
+			return "Name length must be between 2 and 20 characters.";
+		}
+		
+		// Initials
+		
+		if (!initials.matches("^.{2,4}$")) {
+			return "Initials length must be between 2 and 4 characters.";
+		}
+		
+		// CPR
+		
+		if (!cpr.matches("^[0-9]{10}$")) {
+			return "CPR must be a 10 digit number.";
+		}
+		
+		// Password
+		
+		if (!password.matches("^.{5,8}$")) {
+			return "Password length must be between 5 and 8 characters.";
+		}
+		
+		// Rights
+		
+		int parsedRights;
+		
+		try {
+			parsedRights = Integer.parseInt(rights);
+		} catch (Exception e) {
+			return "Rigths must be a number.";
+		}
+		
+		if (parsedRights < 0 || parsedRights > 4) {
+			return "Rights must between 0 and 4.";
+		}
+		
+		// Save
+		
+		try {
+			databaseAccess.createOperator(new Operator(parsedId, name, initials, cpr, password, parsedRights));
+		} catch (Exception e) {
+			return "Could not add operator (" + e.getMessage() + ").";
+		}
+		
+		return null;
 	}
 	public static String addCommodity(String commodityId, String commodityName, String supplier) {
 		
