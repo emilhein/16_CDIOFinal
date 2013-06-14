@@ -14,6 +14,28 @@
 		
 	</head>
 	<body>
+	<%
+			if (!s.loggedIn()) {
+				response.sendRedirect("Login.jsp");
+			} 
+			if (s.getRights() != 1) {
+				response.sendRedirect("Home.jsp");
+			}
+			
+			String message = null;
+			
+			if (request.getMethod().equalsIgnoreCase("post")) {
+				if (request.getParameter("add") != null) {
+
+					// Add operator
+					
+					message = s.addCommodity1(request.getParameter("commodityId"), request.getParameter("commodityName"), request.getParameter("supplier"));
+					
+				}
+					
+				}
+			
+		%>
 		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
 		<div id='tabs'>
 			<ul>
@@ -56,11 +78,12 @@
 				%>
 				<form action="ChangeCommodity.jsp" method="post" style="display:inline">
 					<input type="hidden" value="<%= commodity.getCommodityId()  %>" name="commodityId">
+					<td><input type="hidden" value="<%= commodity.getCommodityName() %>" name="Name"></td>
+					<td><input type="hidden" value="<%= commodity.getSupplier() %>" name="Supplier"></td>
 					<tr>
 						<td><%= commodity.getCommodityId() %> </td>
-						<td><input type="text" value="<%= commodity.getCommodityName() %>" name="Name"></td>
-						<td><input type="text" value="<%= commodity.getSupplier() %>" name="Supplier"></td>
-						<td><input type="submit" value="Update" name="button"></td>
+						<td><%= commodity.getCommodityName() %> </td>
+						<td><%= commodity.getSupplier() %> </td>
 					</tr>
 				</form>
 				<% 

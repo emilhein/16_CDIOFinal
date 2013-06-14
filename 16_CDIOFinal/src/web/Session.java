@@ -177,7 +177,10 @@ public class Session {
 		
 		return "TODO";
 	}
-	
+	public static String addCommodity(String commodityId, String commodityName, String supplier) {
+		
+		return "TODO";
+	}
 	
 // Operator_____________________________________________________________________________________________
 	public Operator getOperator() {
