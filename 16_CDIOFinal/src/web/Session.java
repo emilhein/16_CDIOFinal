@@ -44,6 +44,19 @@ public class Session {
 	}
 	
 	//# Functions
+	
+	public static String resolve(String p) {
+		
+		return "Show.jsp";
+		
+	/*	if (p != null) {
+			if (p.equalsIgnoreCase("UserAdministration")) {
+				return "UserAdministration.jsp";
+			}
+		}
+		
+		return "Home.jsp";*/
+	}
 
 
 //	public boolean login(String id, String password) {
