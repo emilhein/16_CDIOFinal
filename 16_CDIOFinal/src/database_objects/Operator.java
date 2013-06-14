@@ -39,16 +39,21 @@ public class Operator
 	public void setPassword(String password) { this.password = password; }
 	public int getRights() { return rights; }
 	public void setRights(int rights) { this.rights = rights; }
-	public String toString() { return oprId + "\t" + oprName + "\t" + ini + "\t" + cpr + "\t" + password; }
+	public String toString() { return oprId + "\t" + oprName + "\t" + ini + "\t" + cpr + "\t" + password + "\t" + rights; }
 	
 	@Override
 	public boolean equals(Object obj)
 	{
 		Operator test = (Operator)obj;
-		if(test.oprName == this.oprName && test.oprId == this.oprId && test.cpr == this.cpr && test.ini == this.ini && test.password == this.password && test.rights == this.rights)
-		{
-			
-		}
-		return false;
+		if(test.oprId == this.oprId
+		&& test.oprName.equals(this.oprName)
+		&& test.cpr.equals(this.cpr) 
+		&& test.ini.equals(this.ini) 
+		&& test.password.equals(this.password) 
+		&& test.rights == this.rights
+		)
+			return true;	
+		else
+			return false;
 	}
 }
