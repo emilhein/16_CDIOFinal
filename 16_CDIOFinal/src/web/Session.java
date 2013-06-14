@@ -1,7 +1,6 @@
 package web;
 
 import java.util.List;
-
 import database.DALException;
 import database.DatabaseAccess;
 import database_objects.CommodityBatch;
