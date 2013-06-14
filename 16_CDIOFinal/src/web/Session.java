@@ -1,7 +1,6 @@
 package web;
 
 import java.util.List;
-
 import database.DALException;
 import database.DatabaseAccess;
 import database_objects.CommodityBatch;
@@ -24,7 +23,6 @@ public class Session {
 			try {
 				databaseAccess = new DatabaseAccess();
 			} catch (DALException e) {
-				// TODO
 			}
 		}
 
@@ -49,6 +47,13 @@ public class Session {
 		}
 
 	}
+	public void logout() {
+		
+		operator = null;
+		
+	}
+	
+	
 // Operator_____________________________________________________________________________________________
 	public Operator getOperator() {
 		return operator;
