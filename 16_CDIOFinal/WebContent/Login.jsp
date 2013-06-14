@@ -16,7 +16,7 @@
 			// Log out
 			
 			s.logout();
-			message = "You are now logged out";
+			message = "You are now logged out.";
 			
 		} else if (s.loggedIn()) {
 			
