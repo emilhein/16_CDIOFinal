@@ -31,7 +31,7 @@
 
 					// Add operator
 					
-					message = s.addOperator(request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rights"));
+					message = s.addOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rights"));
 					
 				}
 			}
