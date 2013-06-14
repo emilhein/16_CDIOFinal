@@ -23,7 +23,6 @@ public class Session {
 			try {
 				databaseAccess = new DatabaseAccess();
 			} catch (DALException e) {
-				// TODO
 			}
 		}
 
