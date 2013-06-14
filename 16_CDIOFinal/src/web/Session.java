@@ -56,6 +56,15 @@ public class Session {
 		}
 	}
 	
+	public void updateOperator(int oprId, String oprName, String ini, String cpr, String password, int rights)
+	{
+		try {
+			databaseAccess.updateOperator(new Operator(oprId, oprName, ini, cpr, password, rights));
+		} catch (DALException e) {
+		 //TODO
+		}
+	}
+	
 	public Commodity getCommodity(){
 		return commodity;
 	}

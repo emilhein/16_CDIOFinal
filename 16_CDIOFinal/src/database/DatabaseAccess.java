@@ -82,7 +82,7 @@ public class DatabaseAccess {
 			}
 						
 			// Create
-			connector.doUpdate("CREATE TABLE operator(oprId INTEGER NOT NULL, oprName VARCHAR(20), ini VARCHAR(4), cpr VARCHAR(10) NOT NULL, Upassword VARCHAR(10) NOT NULL, rights INTEGER NOT NULL, PRIMARY KEY(oprId)) ENGINE=innoDB;");
+			connector.doUpdate("CREATE TABLE operator(oprId INTEGER NOT NULL, oprName VARCHAR(20), ini VARCHAR(4), cpr VARCHAR(10) NOT NULL, oprPassword VARCHAR(10) NOT NULL, rights INTEGER NOT NULL, PRIMARY KEY(oprId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE commodity(commodityId INTEGER NOT NULL, commodityName VARCHAR(20), supplier VARCHAR(20), PRIMARY KEY(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE commodityBatch(cbId INTEGER NOT NULL, commodityId INTEGER, quantity REAL NOT NULL, PRIMARY KEY(cbId), FOREIGN KEY (commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipe(recipeId INTEGER NOT NULL, recipeName VARCHAR(20), PRIMARY KEY(recipeId)) ENGINE=innoDB;");
