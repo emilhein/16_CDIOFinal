@@ -284,6 +284,19 @@ public class DatabaseAccess {
 		connector.doUpdate("UPDATE productBatch SET state = " + pb.getStatus() + " where pbId = " + pb.getPbId());
 	}
 	
+	public List<ProductBatch> getProductBatchList() throws DALException {
+		List<ProductBatch> list = new ArrayList<ProductBatch>();
+		ResultSet rs = connector.doQuery("SELECT * FROM productBatch");
+		try {
+			while (rs.next()) {
+				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
 	//ProductBatchComp___________________________________________________________________________
 	public void createProductBatchComp(ProductBatchComp pbc)throws DALException {
 		connector.doUpdate(
@@ -301,7 +314,7 @@ public class DatabaseAccess {
 		catch (SQLException e) {throw new DALException(e);}
 	}
 
-	public List<ProductBatchComp> getProductBatchComp() throws DALException {
+	public List<ProductBatchComp> getProductBatchCompList() throws DALException {
 		List<ProductBatchComp> list = new ArrayList<ProductBatchComp>();
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent");
 		try {
