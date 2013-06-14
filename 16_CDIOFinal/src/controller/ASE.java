@@ -294,8 +294,7 @@ public class ASE {
 				try {
 					procedure.productBatch = databaseAccess.getProductBatch(number);
 					procedure.recipe = databaseAccess.getRecipe(procedure.productBatch.getReceptId());
-					//procedure.recipeComp = databaseAccess.getRecipeCompList(procedure.productBatch.getReceptId()); //# TODO: Undlad færdige elementer.
-					procedure.recipeComp = databaseAccess.getRestRecipeComp(procedure.productBatch.getPbId()); //# Ny (virker ikke?)
+					procedure.recipeComp = databaseAccess.getRestRecipeComp(procedure.productBatch.getPbId());
 				} catch (DALException e) {
 					display("Invalid");
 					continue;
@@ -343,7 +342,16 @@ public class ASE {
 			while (true) {
 				
 				int commodityId = procedure.recipeComp.get(0).getRaavareId();
-				int number = readInt("Commodity batch for " + commodityId + ":", "", "#");
+				String commodityName;
+
+				try {
+					commodityName = databaseAccess.getCommodity(commodityId).getCommodityName();
+				} catch (DALException e) {
+					display("Error");
+					continue;
+				}
+				
+				int number = readInt("Commodity batch for " + commodityName + ":", "", "#");
 				
 				if (number == 0) {
 					return false;
