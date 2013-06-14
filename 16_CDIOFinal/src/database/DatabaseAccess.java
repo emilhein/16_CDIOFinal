@@ -231,7 +231,7 @@ public class DatabaseAccess {
 	//Operator_______________________________________________________________________________________
 	public void createOperator(Operator opr)throws DALException {
 		connector.doUpdate(
-				"INSERT INTO Operator(oprId, oprName, ini, cpr, oprPassword, rights) VALUES " +
+				"INSERT INTO operator(oprId, oprName, ini, cpr, oprPassword, rights) VALUES " +
 						"(" + opr.getOprId() + ", '" + opr.getOprName() + "','" + opr.getIni() + "','" + opr.getCpr() + "','" + opr.getPassword() + "'," + opr.getRights() + ")");
 
 	}
@@ -293,9 +293,9 @@ public class DatabaseAccess {
 	}
 
 	public ProductBatchComp getProductBatchComp(int pbId, int cbId) throws DALException {
-		ResultSet rs = connector.doQuery("SELECT * FROM ProductBatchComponent WHERE pbId = " + pbId + " AND cbId = " + cbId);
+		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent WHERE pbId = " + pbId + " AND cbId = " + cbId);
 		try {
-			if (!rs.first()) throw new DALException("The productbatchcomponent " + pbId + " , " + cbId + " doesn't exist");
+			if (!rs.first()) throw new DALException("The productBatchComponent " + pbId + " , " + cbId + " doesn't exist");
 			return new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5));
 		}
 		catch (SQLException e) {throw new DALException(e);}
