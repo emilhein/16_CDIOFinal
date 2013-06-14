@@ -49,7 +49,6 @@
 			bla bla bla
 			
 			<h2>Printing some status messages</h2>
-			<% System.out.println(session.getAttribute("username")); %>
 			
 		</div>
 		
