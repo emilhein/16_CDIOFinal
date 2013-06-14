@@ -1,5 +1,6 @@
 package web;
 
+import java.util.ArrayList;
 import java.util.List;
 import database.DALException;
 import database.DatabaseAccess;
@@ -12,6 +13,7 @@ import database_objects.Recipe;
 public class Session {
 
 	private static DatabaseAccess databaseAccess;
+	private static List<Page> pages = new ArrayList<Page>();
 	private Operator operator = null;
 	
 	//# New
@@ -24,13 +26,23 @@ public class Session {
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
+			pages.add(new Page("Home", 4));
+			pages.add(new Page("UserAdministration", 1));
+			pages.add(new Page("CommodityAdministration", 2));
+			pages.add(new Page("PrescriptionAdministration", 2));
+			pages.add(new Page("ComBatchAdministration", 3));
+			pages.add(new Page("ProductBatchAdministration", 3));
 		}
 
 	}
 	
 	//# Properties
 	
-	public boolean loggedIn() {
+	public List<Page> getPages() {
+		
+		return pages;
+	}
+	public boolean isLoggedIn() {
 		
 		return operator != null;
 	}
@@ -42,41 +54,79 @@ public class Session {
 		
 		return operator.getRights();
 	}
+	public List<Operator> getOperators() {
+		
+		try {
+			return databaseAccess.getOperatorList();
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public List<Commodity> getCommodities() {
+	
+		try {
+			return databaseAccess.getCommodityList();
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public List<Recipe> getRecipes() {
+		
+		try {
+			return databaseAccess.getRecipeList();
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public List<CommodityBatch> getCommodityBatches() {
+		
+		try {
+			return databaseAccess.getCommodityBatchList();
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public List<ProductBatch> getProductBatches() {
+		
+		try {
+			return databaseAccess.getProductBatchList();
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 	
 	//# Functions
 	
-	public static String resolve(String p) {
+	public Page getPage(String page) {
 		
-		return "Show.jsp";
-		
-	/*	if (p != null) {
-			if (p.equalsIgnoreCase("UserAdministration")) {
-				return "UserAdministration.jsp";
+		if (page != null) {
+			for (Page x : pages) {
+				if (page.equalsIgnoreCase(x.getName()) && getRights() <= x.getRightsRequired()) {
+					return x;
+				}
 			}
 		}
 		
-		return "Home.jsp";*/
+		return pages.get(0);
 	}
-
-
-//	public boolean login(String id, String password) {
-//
-//		try {
-//			operator = databaseAccess.getOperator(Integer.parseInt(id));
-//			return operator.getPassword().equals(password);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-
 	public String login(String id, String password) {
 		
-		// User id
+		logout();
+		
+		// Id
 		
 		if (id == null || id.length() < 1) {
-			logout();
-			return "You must enter a user id.";
-
+			return "You must enter a id.";
 		}
 
 		int parsedId;
@@ -84,36 +134,35 @@ public class Session {
 		try {
 			parsedId = Integer.parseInt(id);
 		} catch (Exception e) {
-			logout();
-			return "You must enter a valid user id.";
+			return "You must enter a valid id.";
 		}
 		
 		// Password
 		
 		if (password == null || password.length() < 1) {
-			logout();
 			return "You must enter a password.";
 		}
 		
 		// Check
 		
+		Operator operator;
+		
 		try {
 			operator = databaseAccess.getOperator(parsedId);
 		} catch (Exception e) {
-			logout();
+			System.err.println("Wrong user id or password (" + e.getMessage() + ").");
 			return "Wrong user id or password.";
 		}
 		
 		if (!operator.getPassword().equals(password)) {
-			logout();
 			return "Wrong user id or password.";
 		}
 		
-		if (operator.getRights() == 0) {
-			logout();
+		if (operator.getRights() == 5) {
 			return "Operator is blocked.";
 		}
 		
+		this.operator = operator;
 		return null;
 	}
 	public void logout() {
@@ -123,7 +172,7 @@ public class Session {
 	}
 	public static String updateOperator(String id, String name, String initials, String password, String rights) {
 		
-		// User id
+		// Id
 		
 		Operator operator;
 		int parsedId;
@@ -135,7 +184,7 @@ public class Session {
 		}
 		
 		if (parsedId < 1 || parsedId > 99999999) {
-			return "Id must between 1 and 99999999.";
+			return "Id must be between 1 and 99999999.";
 		}
 		
 		try {
@@ -172,11 +221,11 @@ public class Session {
 			return "Rigths must be a number.";
 		}
 		
-		if (parsedRights < 0 || parsedRights > 4) {
-			return "Rights must between 0 and 4.";
+		if (parsedRights < 1 || parsedRights > 5) {
+			return "Rights must be between 1 and 5.";
 		}
 		
-		// Save
+		// Update
 		
 		operator.setOprName(name);
 		operator.setIni(initials);
@@ -193,7 +242,7 @@ public class Session {
 	}
 	public static String addOperator(String id, String name, String initials, String cpr, String password, String rights) {
 		
-		// User id
+		// Id
 		
 		int parsedId;
 		
@@ -241,11 +290,11 @@ public class Session {
 			return "Rigths must be a number.";
 		}
 		
-		if (parsedRights < 0 || parsedRights > 4) {
-			return "Rights must between 0 and 4.";
+		if (parsedRights < 1 || parsedRights > 5) {
+			return "Rights must between 1 and 5.";
 		}
 		
-		// Save
+		// Add
 		
 		try {
 			databaseAccess.createOperator(new Operator(parsedId, name, initials, cpr, password, parsedRights));
@@ -255,12 +304,13 @@ public class Session {
 		
 		return null;
 	}
-	public static String addCommodity(String commodityId, String commodityName, String supplier) {
-		// Commodityid
+	public static String addCommodity(String id, String name, String supplier) {
+
+		// Id
 		
 		int parsedId;
 		try {
-			parsedId = Integer.parseInt(commodityId);
+			parsedId = Integer.parseInt(id);
 		} catch (Exception e) {
 			return "Id must be a number.";
 		}
@@ -268,36 +318,36 @@ public class Session {
 		if (parsedId < 1 || parsedId > 99999999) {
 			return "Id must between 1 and 99999999.";
 		}
+		
 		// Name
 
-		if (!commodityName.matches("^.{2,20}$")) {
+		if (!name.matches("^.{2,20}$")) {
 			return "Name length must be between 2 and 20 characters.";
 		}
 
-		// supplier
+		// Supplier
 
 		if (!supplier.matches("^.{2,20}$")) {
-			return "Name length must be between 2 and 20 characters.";
+			return "Supplier length must be between 2 and 20 characters.";
 		}
-				
-	
-
+		
+		// Add
+		
 		try {
-			databaseAccess.createCommodity(new Commodity(parsedId, commodityName,
-					supplier));
+			databaseAccess.createCommodity(new Commodity(parsedId, name, supplier));
 		} catch (Exception e) {
-			return "Could not at commodity (" + e.getMessage() + ").";
+			return "Could not add commodity (" + e.getMessage() + ").";
 		}
 				
-				return null;
-
+		return null;
 	}
-	public static String addRecipe(String recipeId, String recipeName) {
-		// recipeid
+	public static String addRecipe(String id, String name) {
+		
+		// Id
 		
 		int parsedId;
 		try {
-			parsedId = Integer.parseInt(recipeId);
+			parsedId = Integer.parseInt(id);
 		} catch (Exception e) {
 			return "Id must be a number.";
 		}
@@ -305,172 +355,167 @@ public class Session {
 		if (parsedId < 1 || parsedId > 99999999) {
 			return "Id must between 1 and 99999999.";
 		}
-		// recipeName
+		
+		// Name
 
-		if (!recipeName.matches("^.{2,20}$")) {
+		if (!name.matches("^.{2,20}$")) {
 			return "Name length must be between 2 and 20 characters.";
 		}
 
+		// Add
 
 		try {
-			databaseAccess.createRecipe(new Recipe(parsedId, recipeName));
+			databaseAccess.createRecipe(new Recipe(parsedId, name));
 		} catch (Exception e) {
 			return "Could not add recipe (" + e.getMessage() + ").";
 		}
 				
-				return null;
-
-	}	
-	public static String addCommodityBatch(String cbId, String commodityId, String maengde) {
-		// cbid
+		return null;
+	}
+	public static String updateCommodityBatch(String id, String quantity) {
 		
+		// Id
+		
+		CommodityBatch commodityBatch;
 		int parsedId;
+		
 		try {
-			parsedId = Integer.parseInt(cbId);
+			parsedId = Integer.parseInt(id);
 		} catch (Exception e) {
 			return "Id must be a number.";
 		}
-
-		if (parsedId < 1 || parsedId > 99999999) {
-			return "Id must between 1 and 99999999.";
-		}
-		// commodityId
-		int parsedId1;
+		
 		try {
-			parsedId1 = Integer.parseInt(commodityId);
+			commodityBatch = databaseAccess.getCommodityBatch(parsedId);
 		} catch (Exception e) {
-			return "Id must be a number.";
+			return "Could not find commodity batch (" + e.getMessage() + ").";
 		}
-
-		if (parsedId1 < 1 || parsedId > 99999999) {
-			return "Id must between 1 and 99999999.";
-		}
-		int parsedId2;
-		//maengde
-		try {
-			parsedId2 = Integer.parseInt(maengde);
-		} catch (Exception e) {
-			return "Id must be a number.";
-		}
-
-		if (parsedId2 < 1 || parsedId > 99999999) {
-			return "Id must between 1 and 99999999.";
-		}
-
+		
+		// Quantity
+		
+		double parsedQuantity;
 
 		try {
-			databaseAccess.createCommodityBatch(new CommodityBatch(parsedId, parsedId1, parsedId2));
+			parsedQuantity = Double.parseDouble(quantity);
 		} catch (Exception e) {
-			return "Could not add a new commodityBatch (" + e.getMessage() + ").";
+			return "Quantity must be a number.";
+		}
+		
+		if (parsedQuantity < 1 || parsedQuantity > 99999999) {
+			return "Quantity must be between 1 and 99999999.";
 		}
 				
-				return null;
+		// Update
+		
+		commodityBatch.setMaengde(parsedQuantity);
+		
+		try {
+			databaseAccess.updateCommodityBatch(commodityBatch);
+		} catch (Exception e) {
+			return "Could not update commodity batch (" + e.getMessage() + ").";
+		}
+		
+		return null;
+	}
+	public static String addCommodityBatch(String id, String commodityId, String quantity) {
+	
+		// Id
+		
+		int parsedId;
+				
+		try {
+			parsedId = Integer.parseInt(id);
+		} catch (Exception e) {
+			return "Id must be a number.";
+		}
+				
+		if (parsedId < 1 || parsedId > 99999999) {
+			return "Id must be between 1 and 99999999.";
+		}
+					
+		// Commodity Id
+				
+		int parsedCommodityId;
 
-	}	
-	// Operator_____________________________________________________________________________________________
-	public Operator getOperator() {
-		return operator;
-	}
+		try {
+			parsedCommodityId = Integer.parseInt(commodityId);
+		} catch (Exception e) {
+			return "Commodity Id must be a number.";
+		}
+				
+		if (parsedCommodityId < 1 || parsedCommodityId > 99999999) {
+			return "Commodity Id must be between 1 and 99999999.";
+		}
+				
+		// Quantity
+				
+		double parsedQuantity;
 
-	public List<Operator> getOperators() {
 		try {
-			return databaseAccess.getOperatorList();
-		} catch (DALException e) {
-			e.printStackTrace();
-			return null;
+			parsedQuantity = Double.parseDouble(quantity);
+		} catch (Exception e) {
+			return "Quantity must be a number.";
 		}
-	}
+				
+		if (parsedQuantity < 1 || parsedQuantity > 99999999) {
+			return "Quantity must be between 1 and 99999999.";
+		}
+		
+		// Add
 
-	public void addOperator(int oprId, String oprName, String ini, String cpr, String password, int rights) { 
 		try {
-			databaseAccess.createOperator(new Operator(oprId, oprName, ini, cpr, password, rights));
-		} catch (DALException e) {
-			e.printStackTrace();
+			databaseAccess.createCommodityBatch(new CommodityBatch(parsedId, parsedCommodityId, parsedQuantity));
+		} catch (Exception e) {
+			return "Could not add commodity batch (" + e.getMessage() + ").";
 		}
+				
+		return null;
 	}
-	
-	public void updateOperator(int oprId, String oprName, String ini, String cpr, String password, int rights)
-	{
-		try {
-			databaseAccess.updateOperator(new Operator(oprId, oprName, ini, cpr, password, rights));
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
-	}
-	//Commodity_______________________________________________________________________________________
-	
-	
-	public List<Commodity> getCommodityList(){
-		try {
-			return databaseAccess.getCommodityList();
-		} catch (DALException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public void addCommodity(int commodityId, String commodityName, String supplier) {
-		try {
-			databaseAccess.createCommodity(new Commodity(commodityId, commodityName, supplier));
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
-	}	
-	//CommodityBatch________________________________________________________________________________________
-	public List<CommodityBatch> getCommodityBatchList(){
-		try {
-			return databaseAccess.getCommodityBatchList();
-		} catch (DALException e) {
-			e.printStackTrace();
-			return null;
+	public static String addProductBatch(String id, String receptId, String timestamp) {
+		
+		// Id
+		
+		int parsedId;
 			
-		}
-	}
-	
-	
-	public void addCommodityBatch(int cbId, int commodityId, double maengde) {
 		try {
-			databaseAccess.createCommodityBatch(new CommodityBatch(cbId, commodityId, maengde));
-		} catch (DALException e) {
-			e.printStackTrace();
+			parsedId = Integer.parseInt(id);
+		} catch (Exception e) {
+			return "Id must be a number.";
 		}
-	}
-	//ProductBathch___________________________________________________________________________________________
-	public List<ProductBatch> getProductBatchList(){
-		try {
-			return databaseAccess.getProductBatchList();
-		} catch (DALException e) {
-			e.printStackTrace();
-			return null;
+				
+		if (parsedId < 1 || parsedId > 99999999) {
+			return "Id must be between 1 and 99999999.";
 		}
-	}
+					
+		// Recept Id
+				
+		int parsedReceptId;
 
-	
-	public void addProductBatch(int pbId, int  receptId, String timeStamp, int status) {
 		try {
-			databaseAccess.createProductBatch(new ProductBatch(pbId, receptId, timeStamp, status));
-		} catch (DALException e) {
-			e.printStackTrace();
+			parsedReceptId = Integer.parseInt(receptId);
+		} catch (Exception e) {
+			return "Recept Id must be a number.";
 		}
-	}
-	
-	//Recipe___________________________________________________________________________________________________
-	public List<Recipe> getRecipeList(){
-		try {
-			return databaseAccess.getRecipeList();
-		} catch (DALException e) {
-			e.printStackTrace();
-			return null;
+				
+		if (parsedReceptId < 1 || parsedReceptId > 99999999) {
+			return "Recept Id must be between 1 and 99999999.";
 		}
-	}
+				
+		// Timestamp
 
-	
-	public void addRecipe(int recipeId, String  recipeName) {
-		try {
-			databaseAccess.createRecipe(new Recipe(recipeId, recipeName));
-		} catch (DALException e) {
-			e.printStackTrace();
+		if (!timestamp.matches("^.{2,20}$")) {
+			return "Timestamp length must be between 2 and 20 characters.";
 		}
+		
+		// Add
+
+		try {
+			databaseAccess.createProductBatch(new ProductBatch(parsedId, parsedReceptId, timestamp, 0));
+		} catch (Exception e) {
+			return "Could not add product batch (" + e.getMessage() + ").";
+		}
+				
+		return null;
 	}
 	
 }
