@@ -1,92 +1,100 @@
-<jsp:useBean id="s" class="web.Session" scope="session" />
-<jsp:setProperty name="s" property="*" />
-<%@page import="database_objects.Operator"%>
-<%@page import="java.util.List"%>
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page import="database_objects.Operator" %>
+<jsp:useBean id="s" class="web.Session" scope="session"/>
+<jsp:setProperty name="s" property="*"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>User Administration</title>
 		<link rel="stylesheet" type="text/css" href="TabStyle.css">
+		<title>User Administration</title>
 	</head>
 	<body>
-		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
+		<%
+			if (!s.loggedIn()) {
+				response.sendRedirect("Login.jsp");
+			} 
+			if (s.getRights() != 1) {
+				response.sendRedirect("Home.jsp");
+			}
+			
+			String message = null;
+			
+			if (request.getMethod().equalsIgnoreCase("post")) {
+				if (request.getParameter("update") != null) {
+
+					// Update operator
+					
+					message = s.updateOperator(request.getParameter("id"), request.getParameter("password"));
+					
+				} else if (request.getParameter("add") != null) {
+
+					// Add operator
+					
+				}
+			}
+			
+		%>
+		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
 		<div id='tabs'>
 			<ul>
-				<%
-				switch(s.getOperator().getRights()) {
-					case 1: %>
-						<li><a href='Home.jsp'>Home</a>
-						<li><a href='UserAdministration.jsp' class='active'>User Administration</a>
-						<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
-						<li><a href='PrescriptionAdministration.jsp'>Prescription Administration</a>
-						<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
-						<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
-					<% break;
-					case 2: response.sendRedirect("Home.jsp"); break;
-					case 3: response.sendRedirect("Home.jsp"); break;
-					case 4: response.sendRedirect("Home.jsp"); break;
-					default: response.sendRedirect("Error.jsp"); break;
-				}
-				%>
+				<li><a href='Home.jsp'>Home</a>
+				<li><a href='UserAdministration.jsp' class='active'>User Administration</a>
+				<li><a href='CommodityAdministration.jsp'>Commodity Administration</a>
+				<li><a href='PrescriptionAdministration.jsp'>Prescription Administration</a>
+				<li><a href='ComBatchAdministration.jsp'>Commodity-batch Administration</a>
+				<li><a href='ProductBatchAdministration.jsp'>Product-batch Administration</a>
 			</ul>
 		</div>
-		
 		<div id='content'>
-			The content for user administration goes here
-			
+			<h2>Add or update operators</h2>
 			<table>
-			<tr>
-				<th>oprId</th>
-				<th>oprName</th>
-				<th>ini</th>
-				<th>cpr</th>
-				<th>password</th>
-				<th>rights</th>
-				<th></th>
-			</tr>
-			<%
-				for (Operator operator : s.getOperators()) {
-			%>
-			<form action="ChangeOperators.jsp" method="post" style="display:inline">
-				<input type="hidden" value="<%= operator.getOprId() %>" name="OprId">
 				<tr>
-					<td><%= operator.getOprId() %></td>
-					<td><input type="text" value="<%= operator.getOprName() %>" name="Name"></td>
-					<td><input type="text" value="<%= operator.getIni() %>" name="Initials"></td>
-					<td><input type="text" value="<%= operator.getCpr() %>" name="CPR"></td>
-					<td><input type="text" value="<%= operator.getPassword() %>" name="Password"></td>
-					<td><input type="text" value="<%= operator.getRights() %>" name="Rigths"></td>
-					<td><input type="submit" value="Update" name="button"></td>
-					
+					<th>Id</th>
+					<th>Name</th>
+					<th>Initials</th>
+					<th>CPR</th>
+					<th>Password</th>
+					<th>Rights</th>
+					<th></th>
 				</tr>
-			</form> 
-			<%
-				}
-			%>
-			<form action="ChangeOperators.jsp" method="post" style="display:inline">
-				<input type="hidden" value="0" name="OprId">
-				<tr>
-					<td><input type="text" name="oprId"></td>
-					<td><input type="text" name="Name"></td>
-					<td><input type="text" name="Ini"></td>
-					<td><input type="text" name="cpr"></td>
-					<td><input type="text" name="Password"></td>
-					<td><input type="text" name="Rights"></td>
-					<td><input type="submit" value="Add"></td>
-				</tr>
-			</form>
-		</table>
-			
-			
-			<h2>Opret eller rediger en bruger</h2>
-			
+				<%
+					for (Operator operator : s.getOperators()) {
+				%>
+				<form method="post">
+					<input type="hidden" name="update" value="true">
+					<input type="hidden" name="id" value="<%= operator.getOprId() %>">
+					<tr>
+						<td><center><%= operator.getOprId() %></center></td>
+						<td><input type="text" name="name" value="<%= operator.getOprName() %>"></td>
+						<td><input type="text" name="initials" value="<%= operator.getIni() %>"></td>
+						<td><center><%= operator.getCpr() %></center></td>
+						<td><input type="text" name="password" value="<%= operator.getPassword() %>"></td>
+						<td><input type="text" name="rigths" value="<%= operator.getRights() %>"></td>
+						<td><input type="submit" value="Update"></td>
+					</tr>
+				</form>
+				<%
+					}
+				%>
+				<form method="post">
+					<input type="hidden" name="add" value="true">
+					<tr>
+						<td><input type="text" name="id"></td>
+						<td><input type="text" name="name"></td>
+						<td><input type="text" name="initials"></td>
+						<td><input type="text" name="cpr"></td>
+						<td><input type="text" name="password"></td>
+						<td><input type="text" name="rights"></td>
+						<td><input type="submit" value="Add"></td>
+					</tr>
+				</form>
+			</table>
 		</div>
+		<br>
 		<form action="Login.jsp" method="post">
-			<br/> <input type="submit" value="Log out">
+			<input type="hidden" name="logout" value="true">
+			<input type="submit" value="Logout">
 		</form>
 	</body>
 	</html>

@@ -25,15 +25,16 @@
 			
 			response.sendRedirect("Home.jsp");
 			
-		} else if (request.getMethod().equalsIgnoreCase("POST")) {
+		} else if (request.getMethod().equalsIgnoreCase("post")) {
 			
 			// Log in
 			
-			if (s.login(request.getParameter("id"), request.getParameter("password"))){		
+			message = s.login(request.getParameter("id"), request.getParameter("password"));
+			
+			if (message == null){
 				response.sendRedirect("Home.jsp");
 			} else {
 				s.logout();
-				message = "User id or password is wrong.";
 			}
 			
 		}
@@ -44,11 +45,11 @@
 				<table>
 					<tr>
 						<td>User id:</td>
-						<td><input type="text" name="id"></td>
+						<td><input type="text" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
 					</tr>
 					<tr>
 						<td>Password:</td>
-						<td><input type="password" name="password"></td>
+						<td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
 					</tr>
 				</table>
 				<br>

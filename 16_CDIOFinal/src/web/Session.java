@@ -46,15 +46,46 @@ public class Session {
 	
 	//# Functions
 
-	public boolean login(String id, String password) {
-
-		try {
-			operator = databaseAccess.getOperator(Integer.parseInt(id));
-			return operator.getPassword().equals(password);
-		} catch (Exception e) {
-			return false;
+	public String login(String id, String password) {
+		
+		// User id
+		
+		if (id == null || id.length() < 1) {
+			logout();
+			return "You must enter a user id.";
 		}
 
+		int userId;
+		
+		try {
+			userId = Integer.parseInt(id);
+		} catch (Exception e) {
+			logout();
+			return "You must enter a valid user id.";
+		}
+		
+		// Password
+		
+		if (password == null || password.length() < 1) {
+			logout();
+			return "You must enter a password.";
+		}
+		
+		// Check
+		
+		try {
+			operator = databaseAccess.getOperator(userId);
+		} catch (Exception e) {
+			logout();
+			return "Wrong user id or password.";
+		}
+		
+		if (!operator.getPassword().equals(password)) {
+			logout();
+			return "Wrong user id or password.";
+		}
+		
+		return null;
 	}
 	public void logout() {
 		

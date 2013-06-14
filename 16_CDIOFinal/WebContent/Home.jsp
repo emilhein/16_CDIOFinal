@@ -10,6 +10,11 @@
 		<title>Home Page</title>
 	</head>
 	<body>
+		<%
+			if (!s.loggedIn()) {
+				response.sendRedirect("Login.jsp");
+			}
+		%>
 		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
 		<div id='tabs'>
 			<ul>
@@ -50,9 +55,10 @@
 			</ul>
 		</div>
 		<div id='content'>
-			My main content goes here!
 			<h2>Printing some status messages</h2>
+			My main content goes here!
 		</div>
+		<br>
 		<form action="Login.jsp" method="post">
 			<input type="hidden" name="logout" value="true">
 			<input type="submit" value="Logout">
