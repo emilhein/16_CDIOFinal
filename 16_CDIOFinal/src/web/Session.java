@@ -4,6 +4,7 @@ import java.util.List;
 
 import database.DALException;
 import database.DatabaseAccess;
+import database_objects.CommodityBatch;
 import database_objects.Operator;
 import database_objects.Commodity;
 
@@ -35,7 +36,7 @@ public class Session {
 		}
 
 	}
-
+// Operator_____________________________________________________________________________________________
 	public Operator getOperator() {
 		return operator;
 	}
@@ -64,7 +65,7 @@ public class Session {
 		 //TODO
 		}
 	}
-	
+	//Commodity_______________________________________________________________________________________
 	public Commodity getCommodity(){
 		return commodity;
 	}
@@ -83,7 +84,25 @@ public class Session {
 		} catch (DALException e) {
 			// mathias er awesome
 		}
+	}	
+	//CommodityBatch________________________________________________________________________________________
+	public List<CommodityBatch> getCommodityBatchList(){
+		try {
+			return databaseAccess.getCommodityBatchList();
+		} catch (DALException e) {
+			return null;
+		}
+	}
+	public CommodityBatch getCommodityBatch(){
+		return getCommodityBatch();
 	}
 	
+	public void addCommodityBatch(int cbId, int commodityId, double maengde) {
+		try {
+			databaseAccess.createCommodityBatch(new CommodityBatch(cbId, commodityId, maengde));
+		} catch (DALException e) {
+			// mathias er awesome
+		}
+	}
 	
 }

@@ -46,31 +46,42 @@
 		
 		<div id='content'>
 			The content for commodity batch administration goes here
+	<table>
+				<tr>
+					<th>CommodityBatch ID</th>
+					<th>CommodityBatch ID</th>
+					<th>Meangde</th>	
+				</tr>
+				<%
+					for(CommodityBatch commodityBatch : s.getCommodityBatchList()) {
+				%>
+				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
+					<input type="hidden" value="<%= commodityBatch.getCbId()  %>" name="commodityBatchId">
+					<tr>
+						<td><%= commodityBatch.getCbId() %> </td>
+						<td><input type="text" value="<%= commodityBatch.getCommodityId() %>" name="CommodityId"></td>
+						<td><input type="text" value="<%= commodityBatch.getMaengde() %>" name="Maengde"></td>
+						<td><input type="submit" value="Update" name="button"></td>
+					</tr>
+				</form>
+				<% 
+					}
+				%>
+				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
+					<input type="hidden" value="0" name="CommodityBatch ID">
+					<tr>
+						<td><input type="text" name="CommodityBatch ID"></td>
+						<td><input type="text" name="Commodity ID"></td>
+						<td><input type="text" name="Meagde"></td>
+						<td><input type="submit" value="Add"></td>
+					</tr>	
+				</form>
+			</table>
+	
+	
 			<h2>Printing some status messages</h2>
 			
-	<table id="list">
-	<tr class="info">
-		<th class="nr">Cb id nummer</th>
-		<th class="nr"> id vare nummer</th>
-		<th class="nr">mængde</th>
-	</tr>
-	<%
-		
-		java.util.List<CommodityBatch> CommodityBatch; //commodityId.getCommodityBatch();
-		
-		for(CommodityBatch commoditybatch :CommodityBatch) {
-			%>
-	<tr class="item">
-		<td class="nr"><%= commoditybatch.getCbId() %></td>
-		<td class="nr"><%= commoditybatch.getCommodityId() %></td>
-		<td class="nr"><%= commoditybatch.getMaengde() %></td>
-		
-		
-	 </tr>
 	
-	<% 
-	} %>
-	</table>
 			
 		</div>
 		<form action="Login.jsp" method="post">
