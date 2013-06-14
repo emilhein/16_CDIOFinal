@@ -13,7 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="TabStyle.css">
 	</head>
 	<body>
-		<h2>You're logged in as: Admin</h2>
+		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
 		<div id='tabs'>
 			<ul>
 				<%
@@ -60,7 +60,7 @@
 					<td><input type="text" value="<%= operator.getCpr() %>" name="CPR"></td>
 					<td><input type="text" value="<%= operator.getPassword() %>" name="Password"></td>
 					<td><input type="text" value="<%= operator.getRights() %>" name="Rigths"></td>
-					<td><input type="submit" value="Opdater" name="button"></td>
+					<td><input type="submit" value="Update" name="button"></td>
 					
 				</tr>
 			</form> 
@@ -76,8 +76,8 @@
 					<td><input type="text" name="cpr"></td>
 					<td><input type="text" name="Password"></td>
 					<td><input type="text" name="Rights"></td>
-					<td><input type="submit" value="Tilføj"></td>
-					</tr>
+					<td><input type="submit" value="Add"></td>
+				</tr>
 			</form>
 		</table>
 			

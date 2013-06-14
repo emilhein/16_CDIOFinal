@@ -1,4 +1,6 @@
-import controller.*;
+import controller.ASE;
+import controller.Boundary;
+import controller.Simulator;
 import database.DALException;
 import database.DatabaseAccess;
 

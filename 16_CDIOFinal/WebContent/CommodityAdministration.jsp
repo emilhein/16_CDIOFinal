@@ -1,3 +1,8 @@
+<jsp:useBean id="s" class="web.Session" scope="session" />
+<jsp:setProperty name="s" property="*" />
+<%@page import="database_objects.Commodity" %>
+<%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -9,11 +14,11 @@
 		
 	</head>
 	<body>
-		<h2>You're logged in as: Admin</h2>
+		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
 		<div id='tabs'>
 			<ul>
-				<% int userType = Integer.parseInt(session.getAttribute("user").toString());
-				switch(userType) {
+				<% 
+				switch(s.getOperator().getRights()) {
 					case 1: %>
 						<li><a href='Home.jsp'>Home</a>
 						<li><a href='UserAdministration.jsp'>User Administration</a>
@@ -39,6 +44,40 @@
 		
 		<div id='content'>
 			The content for Commodity Administration goes here
+			
+			<table>
+				<tr>
+					<th>Commodity ID</th>
+					<th>Commodity name</th>
+					<th>Supplier</th>	
+				</tr>
+				<%
+					for(Commodity commodity : s.getCommodityList()) {
+				%>
+				<form action="ChangeCommodity.jsp" method="post" style="display:inline">
+					<input type="hidden" value="<%= commodity.getCommodityId()  %>" name="commodityId">
+					<tr>
+						<td><%= commodity.getCommodityId() %> </td>
+						<td><input type="text" value="<%= commodity.getCommodityName() %>" name="Name"></td>
+						<td><input type="text" value="<%= commodity.getSupplier() %>" name="Supplier"></td>
+						<td><input type="submit" value="Update" name="button"></td>
+					</tr>
+				</form>
+				<% 
+					}
+				%>
+				<form action="ChangeCommodity.jsp" method="post" style="display:inline">
+					<input type="hidden" value="0" name="Commodity ID">
+					<tr>
+						<td><input type="text" name="Commodity ID"></td>
+						<td><input type="text" name="Commodity name"></td>
+						<td><input type="text" name="Supplier"></td>
+						<td><input type="submit" value="Add"></td>
+					</tr>	
+				</form>
+			</table>
+			
+			
 			<h2>Printing some status messages</h2>
 			
 		</div>
