@@ -184,7 +184,7 @@ public class DatabaseAccess {
 	//CommodityBatch__________________________________________________________________________________
 	public void createCommodityBatch(CommodityBatch cb)throws DALException {
 		connector.doUpdate(
-				"INSERT INTO commodityBatch(cbId,commodityId, quantity real) VALUES " +
+				"INSERT INTO commodityBatch(cbId, commodityId, quantity) VALUES " +
 						"(" + cb.getCbId() + ", " + cb.getCommodityId() + ", " + cb.getMaengde() + ")");
 
 	}
