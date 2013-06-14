@@ -279,7 +279,35 @@ public class Session {
 				return null;
 
 	}
-	
+	public static String addRecipe(String recipeId, String recipeName) {
+		// recipeid
+		
+		int parsedId;
+		try {
+			parsedId = Integer.parseInt(recipeId);
+		} catch (Exception e) {
+			return "Id must be a number.";
+		}
+
+		if (parsedId < 1 || parsedId > 99999999) {
+			return "Id must between 1 and 99999999.";
+		}
+		// recipeName
+
+		if (!recipeName.matches("^.{2,20}$")) {
+			return "Name length must be between 2 and 20 characters.";
+		}
+
+
+		try {
+			databaseAccess.createRecipe(new Recipe(parsedId, recipeName));
+		} catch (Exception e) {
+			return "Could not add recipe (" + e.getMessage() + ").";
+		}
+				
+				return null;
+
+	}	
 // Operator_____________________________________________________________________________________________
 	public Operator getOperator() {
 		return operator;

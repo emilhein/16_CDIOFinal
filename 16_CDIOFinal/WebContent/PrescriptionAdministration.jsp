@@ -13,6 +13,28 @@
 		<link rel="stylesheet" type="text/css" href="TabStyle.css">
 	</head>
 	<body>
+		<%
+			if (!s.loggedIn()) {
+				response.sendRedirect("Login.jsp");
+			} 
+			if (s.getRights() >= 2) {
+				response.sendRedirect("Home.jsp");
+			}
+			
+			String message = null;
+			
+			if (request.getMethod().equalsIgnoreCase("post")) {
+				if (request.getParameter("add") != null) {
+
+					// Add operator
+					
+					message = s.addRecipe(request.getParameter("recipeId"), request.getParameter("recipeName"));
+					
+				}
+					
+				}
+			
+		%>
 		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
 		<div id='tabs'>
 			<ul>
@@ -42,7 +64,15 @@
 		</div>
 		
 		<div id='content'>
-			The content for prescription administration goes here.			
+			The content for prescription administration goes here.	
+			<%
+				if (message != null) {
+			%>
+			<span style="color: red"><%= message %></span>
+			<br><br>
+			<%
+				}
+			%>		
 			<table>
 				<tr>
 					<th>Recipe ID</th>
@@ -65,10 +95,11 @@
 					}
 				%>
 				<form method="post" style="display:inline">
-					<input type="hidden" value="0" name="ProductBatch ID">
+					<input type="hidden" value="0" name="recipeId">
+					<input type="hidden" value="true" name="add">
 					<tr>
-						<td><input type="text" name="Recipe ID"></td>
-						<td><input type="text" name="Recipe name"></td>
+						<td><input type="text" name="recipeId"></td>
+						<td><input type="text" name="recipeName"></td>
 						
 					<td><input type="submit" value="Add" name="button"></td>
 					</tr>	
