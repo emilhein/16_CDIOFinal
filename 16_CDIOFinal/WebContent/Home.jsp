@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
-<%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -10,6 +9,11 @@
 		<title>Home Page</title>
 	</head>
 	<body>
+		<%
+			if (!s.loggedIn()) {
+				response.sendRedirect("Login.jsp");
+			}
+		%>
 		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
 		<div id='tabs'>
 			<ul>
@@ -50,9 +54,10 @@
 			</ul>
 		</div>
 		<div id='content'>
-			My main content goes here!
 			<h2>Printing some status messages</h2>
+			My main content goes here!
 		</div>
+		<br>
 		<form action="Login.jsp" method="post">
 			<input type="hidden" name="logout" value="true">
 			<input type="submit" value="Logout">

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
-<%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -25,15 +24,14 @@
 			
 			response.sendRedirect("Home.jsp");
 			
-		} else if (request.getMethod().equalsIgnoreCase("POST")) {
+		} else if (request.getMethod().equalsIgnoreCase("post")) {
 			
 			// Log in
 			
-			if (s.login(request.getParameter("id"), request.getParameter("password"))){		
+			message = s.login(request.getParameter("id"), request.getParameter("password"));
+			
+			if (message == null){
 				response.sendRedirect("Home.jsp");
-			} else {
-				s.logout();
-				message = "User id or password is wrong.";
 			}
 			
 		}
@@ -44,11 +42,11 @@
 				<table>
 					<tr>
 						<td>User id:</td>
-						<td><input type="text" name="id"></td>
+						<td><input type="text" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
 					</tr>
 					<tr>
 						<td>Password:</td>
-						<td><input type="password" name="password"></td>
+						<td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
 					</tr>
 				</table>
 				<br>
