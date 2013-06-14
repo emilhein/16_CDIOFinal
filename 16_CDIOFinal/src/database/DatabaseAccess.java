@@ -301,6 +301,32 @@ public class DatabaseAccess {
 		catch (SQLException e) {throw new DALException(e);}
 	}
 
+	public List<ProductBatchComp> getProductBatchComp() throws DALException {
+		List<ProductBatchComp> list = new ArrayList<ProductBatchComp>();
+		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent");
+		try {
+			while (rs.next()) {
+				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+
+	public List<ProductBatchComp> getProductBatchCompList(int pbId) throws DALException {
+		List<ProductBatchComp> list = new ArrayList<ProductBatchComp>();
+		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent where pbId = " + pbId);
+		try {
+			while (rs.next()) {
+				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
 	//Recipe______________________________________________________________________________
 	public void createRecipe(Recipe recipe)throws DALException {
 		connector.doUpdate(
