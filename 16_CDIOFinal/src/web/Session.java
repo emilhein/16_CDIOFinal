@@ -35,6 +35,14 @@ public class Session {
 		
 		return operator != null;
 	}
+	public String getName() {
+		
+		return operator.getOprName();
+	}
+	public int getRights() {
+		
+		return operator.getRights();
+	}
 	
 	//# Functions
 
