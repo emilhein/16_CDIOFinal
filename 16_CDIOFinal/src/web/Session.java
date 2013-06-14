@@ -22,6 +22,7 @@ public class Session {
 			try {
 				databaseAccess = new DatabaseAccess();
 			} catch (DALException e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -44,6 +45,17 @@ public class Session {
 	
 	//# Functions
 
+
+//	public boolean login(String id, String password) {
+//
+//		try {
+//			operator = databaseAccess.getOperator(Integer.parseInt(id));
+//			return operator.getPassword().equals(password);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+
 	public String login(String id, String password) {
 		
 		// User id
@@ -51,6 +63,7 @@ public class Session {
 		if (id == null || id.length() < 1) {
 			logout();
 			return "You must enter a user id.";
+
 		}
 
 		int userId;
@@ -160,6 +173,7 @@ public class Session {
 		try {
 			return databaseAccess.getOperatorList();
 		} catch (DALException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -168,7 +182,7 @@ public class Session {
 		try {
 			databaseAccess.createOperator(new Operator(oprId, oprName, ini, cpr, password, rights));
 		} catch (DALException e) {
-		 //TODO
+			e.printStackTrace();
 		}
 	}
 	
@@ -177,7 +191,7 @@ public class Session {
 		try {
 			databaseAccess.updateOperator(new Operator(oprId, oprName, ini, cpr, password, rights));
 		} catch (DALException e) {
-		 //TODO
+			e.printStackTrace();
 		}
 	}
 	//Commodity_______________________________________________________________________________________
@@ -187,6 +201,7 @@ public class Session {
 		try {
 			return databaseAccess.getCommodityList();
 		} catch (DALException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -195,7 +210,7 @@ public class Session {
 		try {
 			databaseAccess.createCommodity(new Commodity(commodityId, commodityName, supplier));
 		} catch (DALException e) {
-			// mathias er awesome
+			e.printStackTrace();
 		}
 	}	
 	//CommodityBatch________________________________________________________________________________________
@@ -203,7 +218,9 @@ public class Session {
 		try {
 			return databaseAccess.getCommodityBatchList();
 		} catch (DALException e) {
+			e.printStackTrace();
 			return null;
+			
 		}
 	}
 	
@@ -212,7 +229,7 @@ public class Session {
 		try {
 			databaseAccess.createCommodityBatch(new CommodityBatch(cbId, commodityId, maengde));
 		} catch (DALException e) {
-			// mathias er awesome
+			e.printStackTrace();
 		}
 	}
 	//ProductBathch___________________________________________________________________________________________
@@ -220,6 +237,7 @@ public class Session {
 		try {
 			return databaseAccess.getProductBatchList();
 		} catch (DALException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -229,7 +247,7 @@ public class Session {
 		try {
 			databaseAccess.createProductBatch(new ProductBatch(pbId, receptId, timeStamp, status));
 		} catch (DALException e) {
-			// mathias er awesome
+			e.printStackTrace();
 		}
 	}
 	
@@ -238,6 +256,7 @@ public class Session {
 		try {
 			return databaseAccess.getRecipeList();
 		} catch (DALException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -247,7 +266,7 @@ public class Session {
 		try {
 			databaseAccess.createRecipe(new Recipe(recipeId, recipeName));
 		} catch (DALException e) {
-			// mathias er awesome
+			e.printStackTrace();
 		}
 	}
 	
