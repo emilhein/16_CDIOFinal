@@ -7,6 +7,7 @@ import database_objects.CommodityBatch;
 import database_objects.Operator;
 import database_objects.Commodity;
 import database_objects.ProductBatch;
+import database_objects.Recipe;
 
 public class Session {
 
@@ -109,9 +110,7 @@ public class Session {
 			return null;
 		}
 	}
-	public CommodityBatch getCommodityBatch(){
-		return getCommodityBatch();
-	}
+	
 	
 	public void addCommodityBatch(int cbId, int commodityId, double maengde) {
 		try {
@@ -128,9 +127,7 @@ public class Session {
 			return null;
 		}
 	}
-	public ProductBatch getProductBatch(){
-		return getProductBatch();
-	}
+
 	
 	public void addProductBatch(int pbId, int  receptId, String timeStamp, int status) {
 		try {
@@ -141,5 +138,21 @@ public class Session {
 	}
 	
 	//Recipe___________________________________________________________________________________________________
+	public List<Recipe> getRecipeList(){
+		try {
+			return databaseAccess.getRecipeList();
+		} catch (DALException e) {
+			return null;
+		}
+	}
+
+	
+	public void addRecipe(int recipeId, String  recipeName) {
+		try {
+			databaseAccess.createRecipe(new Recipe(recipeId, recipeName));
+		} catch (DALException e) {
+			// mathias er awesome
+		}
+	}
 	
 }

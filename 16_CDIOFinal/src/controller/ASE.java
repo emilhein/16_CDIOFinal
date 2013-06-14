@@ -363,7 +363,7 @@ public class ASE {
 				check:
 				while (true) {
 					for (RecipeComp recipeComp : procedure.recipeComps) {
-						if (recipeComp.getRaavareId() == procedure.commodityBatch.getCommodityId()) {
+						if (recipeComp.getCommodityId() == procedure.commodityBatch.getCommodityId()) {
 							procedure.recipeComp = recipeComp;
 							break check;
 						}
