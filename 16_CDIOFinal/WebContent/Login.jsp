@@ -9,7 +9,7 @@
 	</head>
 	<body>
 	<%
-		String message = "";
+		String message = null;
 	
 		if (s.loggedIn()) {
 			
@@ -27,8 +27,6 @@
 	%>
 		<center>
 			<h2>Login</h2>
-			<span style="color: red"><%= message %></span>
-			<br><br>
 			<form method="post">
 				<table>
 					<tr>
@@ -43,6 +41,14 @@
 				<br>
 				<input type="submit" value="Login">
 			</form>
+			<%
+				if (message != null) {
+			%>
+			<br>
+			<span style="color: red"><%= message %></span>
+			<%
+				}
+			%>
 		</center>
 	</body>
 </html>
