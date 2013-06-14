@@ -49,31 +49,33 @@
 			
 			<table>
 				<tr>
-					<th>CommodityBatch ID</th>
-					<th>CommodityBatch ID</th>
-					<th>Meangde</th>	
+					<th>ProductBatch ID</th>
+					<th>Recept ID</th>
+					<th>Timestamp</th>
+					<th>Status</th>
 				</tr>
 				<%
-					for(ProductBatch productBatch : s.getCommodityBatchList()) {
+					for(ProductBatch productBatch : s.getProductBatchList()) {
 				%>
-				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
-					<input type="hidden" value="<%= commodityBatch.getCbId()  %>" name="commodityBatchId">
+				<form action="ChangeProBatch.jsp" method="post" style="display:inline">
+					<input type="hidden" value="<%= productBatch.getPbId()  %>" name="pbId">
 					<tr>
-						<td><%= commodityBatch.getCbId() %> </td>
-						<td><input type="text" value="<%= commodityBatch.getCommodityId() %>" name="CommodityId"></td>
-						<td><input type="text" value="<%= commodityBatch.getMaengde() %>" name="Maengde"></td>
+						<td><%= productBatch.getPbId() %> </td>
+						<td><input type="text" value="<%= productBatch.getReceptId() %>" name="CommodityId"></td>
+						<td><input type="text" value="<%= productBatch.getTimeStamp() %>" name="Maengde"></td>
+						<td><input type="text" value="<%= productBatch.getStatus() %>" name="Maengde"></td>
 						<td><input type="submit" value="Update" name="button"></td>
 					</tr>
 				</form>
 				<% 
 					}
 				%>
-				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
-					<input type="hidden" value="0" name="CommodityBatch ID">
+				<form action="ChangeProBatch.jsp" method="post" style="display:inline">
+					<input type="hidden" value="0" name="ProductBatch ID">
 					<tr>
-						<td><input type="text" name="CommodityBatch ID"></td>
-						<td><input type="text" name="Commodity ID"></td>
-						<td><input type="text" name="Meagde"></td>
+						<td><input type="text" name="Recept ID"></td>
+						<td><input type="text" name="Timestamp"></td>
+						<td><input type="text" name="Status"></td>
 						<td><input type="submit" value="Add"></td>
 					</tr>	
 				</form>

@@ -7,13 +7,14 @@ import database.DatabaseAccess;
 import database_objects.CommodityBatch;
 import database_objects.Operator;
 import database_objects.Commodity;
+import database_objects.ProductBatch;
 
 public class Session {
 
 	private static DatabaseAccess databaseAccess;
 	private Operator operator = null;
 	
-	Commodity commodity;
+
 
 	//# New
 	
@@ -78,9 +79,7 @@ public class Session {
 		}
 	}
 	//Commodity_______________________________________________________________________________________
-	public Commodity getCommodity(){
-		return commodity;
-	}
+	
 	
 	public List<Commodity> getCommodityList(){
 		try {
@@ -117,5 +116,25 @@ public class Session {
 		}
 	}
 	//ProductBathch___________________________________________________________________________________________
+	public List<ProductBatch> getProductBatchList(){
+		try {
+			return databaseAccess.getProductBatchList();
+		} catch (DALException e) {
+			return null;
+		}
+	}
+	public ProductBatch getProductBatch(){
+		return getProductBatch();
+	}
+	
+	public void addProductBatch(int pbId, int  receptId, String timeStamp, int status) {
+		try {
+			databaseAccess.createProductBatch(new ProductBatch(pbId, receptId, timeStamp, status));
+		} catch (DALException e) {
+			// mathias er awesome
+		}
+	}
+	
+	//Recipe___________________________________________________________________________________________________
 	
 }
