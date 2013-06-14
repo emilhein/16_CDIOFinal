@@ -9,7 +9,8 @@
 	<body>
 	<%
 		java.util.ArrayList<String> errors = new java.util.ArrayList<String>();
-
+		//Integer oprID = null;
+		
 		try {
 			int oprId = s.getOperator().getOprId();
 			if (oprId < 1) {
@@ -45,13 +46,13 @@
 			if (request.getParameter("button").equals("Add")) {
 				s.addOperator(oprId, oprName, ini, cpr, password, rights);
 			}
-
+		
 			if (request.getParameter("button").equals("Update")) {
 				s.updateOperator(oprId, oprName, ini, cpr, password, rights);
 			}
 		}
 		response.sendRedirect("UserAdministration.jsp");
-
+		
 		for (String line : errors) {
 	%>
 		<p><%= line %></p>
