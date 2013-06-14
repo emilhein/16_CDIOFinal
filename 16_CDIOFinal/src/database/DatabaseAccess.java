@@ -376,7 +376,7 @@ public class DatabaseAccess {
 	
 	public List<RecipeComp> getRestRecipeComp(int pbId) throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
-		ResultSet rs = connector.doQuery("	Select recipeId, commodityId, nomNetto, tolerance from recipeComponent natural join productbatch WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
+		ResultSet rs = connector.doQuery("	Select recipeId, commodityId, nomNetto, tolerance from recipeComponent natural join productBatch WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
 		try {
 			while (rs.next()) {
 				list.add(new RecipeComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4)));
