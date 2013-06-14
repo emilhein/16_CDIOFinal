@@ -1,5 +1,7 @@
 <jsp:useBean id="s" class="web.Session" scope="session" />
 <jsp:setProperty name="s" property="*" />
+<%@page import="database_objects.ProductBatchComp"%>
+<%@page import="database_objects.ProductBatch"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -44,7 +46,41 @@
 		
 		<div id='content'>
 			My main content goes here!
-			bla bla bla
+			
+			<table>
+				<tr>
+					<th>CommodityBatch ID</th>
+					<th>CommodityBatch ID</th>
+					<th>Meangde</th>	
+				</tr>
+				<%
+					for(ProductBatch productBatch : s.getCommodityBatchList()) {
+				%>
+				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
+					<input type="hidden" value="<%= commodityBatch.getCbId()  %>" name="commodityBatchId">
+					<tr>
+						<td><%= commodityBatch.getCbId() %> </td>
+						<td><input type="text" value="<%= commodityBatch.getCommodityId() %>" name="CommodityId"></td>
+						<td><input type="text" value="<%= commodityBatch.getMaengde() %>" name="Maengde"></td>
+						<td><input type="submit" value="Update" name="button"></td>
+					</tr>
+				</form>
+				<% 
+					}
+				%>
+				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
+					<input type="hidden" value="0" name="CommodityBatch ID">
+					<tr>
+						<td><input type="text" name="CommodityBatch ID"></td>
+						<td><input type="text" name="Commodity ID"></td>
+						<td><input type="text" name="Meagde"></td>
+						<td><input type="submit" value="Add"></td>
+					</tr>	
+				</form>
+			</table>
+			
+			
+			
 			
 			<h2>Printing some status messages</h2>
 			
