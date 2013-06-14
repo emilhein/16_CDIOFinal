@@ -9,11 +9,11 @@
 		<title>Home Page</title>
 	</head>
 	<body>
-		<%
-			if (!s.loggedIn()) {
-				response.sendRedirect("Login.jsp");
-			}
-		%>
+	<%
+		if (!s.loggedIn()) {
+			response.sendRedirect("Login.jsp");
+		}
+	%>
 		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
 		<div id='tabs'>
 			<ul>

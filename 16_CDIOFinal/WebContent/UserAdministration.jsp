@@ -10,32 +10,32 @@
 		<title>User Administration</title>
 	</head>
 	<body>
-		<%
-			if (!s.loggedIn()) {
-				response.sendRedirect("Login.jsp");
-			} 
-			if (s.getRights() != 1) {
-				response.sendRedirect("Home.jsp");
-			}
-			
-			String message = null;
-			
-			if (request.getMethod().equalsIgnoreCase("post")) {
-				if (request.getParameter("update") != null) {
+	<%
+		if (!s.loggedIn()) {
+			response.sendRedirect("Login.jsp");
+		} 
+		if (s.getRights() != 1) {
+			response.sendRedirect("Home.jsp");
+		}
+		
+		String message = null;
+		
+		if (request.getMethod().equalsIgnoreCase("post")) {
+			if (request.getParameter("update") != null) {
 
-					// Update operator
+				// Update operator
+				
+				message = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rights"));
 					
-					message = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rights"));
-					
-				} else if (request.getParameter("add") != null) {
+			} else if (request.getParameter("add") != null) {
 
-					// Add operator
+				// Add operator
 					
-					message = s.addOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rights"));
+				message = s.addOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rights"));
 					
-				}
 			}
-		%>
+		}
+	%>
 		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
 		<div id='tabs'>
 			<ul>

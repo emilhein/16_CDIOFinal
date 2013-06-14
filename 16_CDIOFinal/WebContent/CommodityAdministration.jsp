@@ -1,42 +1,36 @@
-<jsp:useBean id="s" class="web.Session" scope="session" />
-<jsp:setProperty name="s" property="*" />
-<%@page import="database_objects.Commodity" %>
-<%@page import="java.util.List"%>
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page import="database_objects.Commodity" %>
+<jsp:useBean id="s" class="web.Session" scope="session"/>
+<jsp:setProperty name="s" property="*"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Commodity Administration</title>
 		<link rel="stylesheet" type="text/css" href="TabStyle.css">
-		
+		<title>Commodity Administration</title>
 	</head>
 	<body>
 	<%
-			if (!s.loggedIn()) {
-				response.sendRedirect("Login.jsp");
-			} 
-			if (s.getRights() != 1) {
-				response.sendRedirect("Home.jsp");
-			}
+		if (!s.loggedIn()) {
+			response.sendRedirect("Login.jsp");
+		} 
+		if (s.getRights() != 1) {
+			response.sendRedirect("Home.jsp");
+		}
 			
-			String message = null;
+		String message = null;
 			
-			if (request.getMethod().equalsIgnoreCase("post")) {
-				if (request.getParameter("add") != null) {
+		if (request.getMethod().equalsIgnoreCase("post")) {
+			if (request.getParameter("add") != null) {
 
-					// Add operator
+				// Add commodity
 					
-					message = s.addCommodity(request.getParameter("commodityId"), request.getParameter("commodityName"), request.getParameter("supplier"));
-					
-				}
-					
-				}
-			
-		%>
-		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
+				message = s.addCommodity(request.getParameter("id"), request.getParameter("name"), request.getParameter("supplier"));
+				
+			}				
+		}
+	%>
+		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
 		<div id='tabs'>
 			<ul>
 				<% 
@@ -102,8 +96,8 @@
 					<input type="hidden" value="0" name="Commodity ID">
 					<input type="hidden" value="true" name="add">
 					<tr>
-						<td><input type="text" name="commodityId"></td>
-						<td><input type="text" name="commodityName"></td>
+						<td><input type="text" name="id"></td>
+						<td><input type="text" name="name"></td>
 						<td><input type="text" name="supplier"></td>
 						<td><input type="submit" value="Add"></td>
 					</tr>	
