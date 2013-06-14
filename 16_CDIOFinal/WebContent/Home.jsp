@@ -53,7 +53,8 @@
 		</div>
 		
 		<form action="Login.jsp" method="post">
-			<br/> <input type="submit" value="Log out">
+			<input type="hidden" name="logout" value="true">
+			<input type="submit" value="Logout">
 		</form>
 	</body>
 </html>

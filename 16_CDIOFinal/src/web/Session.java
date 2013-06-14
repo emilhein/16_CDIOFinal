@@ -48,6 +48,13 @@ public class Session {
 		}
 
 	}
+	public void logout() {
+		
+		operator = null;
+		
+	}
+	
+	
 // Operator_____________________________________________________________________________________________
 	public Operator getOperator() {
 		return operator;

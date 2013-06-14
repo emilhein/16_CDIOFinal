@@ -11,15 +11,27 @@
 	<%
 		String message = null;
 	
-		if (s.loggedIn()) {
+		if (request.getParameter("logout") != null) {
+			
+			// Log out
+			
+			s.logout();
+			message = "You are now logged out";
+			
+		} else if (s.loggedIn()) {
+			
+			// Already logged in
 			
 			response.sendRedirect("Home.jsp");
 			
 		} else if (request.getMethod().equalsIgnoreCase("POST")) {
 			
+			// Log in
+			
 			if (s.login(request.getParameter("id"), request.getParameter("password"))){		
 				response.sendRedirect("Home.jsp");
 			} else {
+				s.logout();
 				message = "User id or password is wrong.";
 			}
 			
