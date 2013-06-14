@@ -52,7 +52,7 @@
 				<%
 					for(Recipe recipe : s.getRecipeList()) {
 				%>
-				<form action="ChangeProBatch.jsp" method="post" style="display:inline">
+				<form  method="post" style="display:inline">
 					<input type="hidden" value="<%= recipe.getRecipeId()  %>" name="recipeId">
 					<td><input type="hidden" value="<%= recipe.getRecipeName() %>" name="recipeName"></td>
 					<tr>
@@ -64,7 +64,7 @@
 				<% 
 					}
 				%>
-				<form action="ChangeProBatch.jsp" method="post" style="display:inline">
+				<form method="post" style="display:inline">
 					<input type="hidden" value="0" name="ProductBatch ID">
 					<tr>
 						<td><input type="text" name="Recipe ID"></td>

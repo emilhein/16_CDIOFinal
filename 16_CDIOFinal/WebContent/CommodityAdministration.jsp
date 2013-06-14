@@ -29,7 +29,7 @@
 
 					// Add operator
 					
-					message = s.addCommodity1(request.getParameter("commodityId"), request.getParameter("commodityName"), request.getParameter("supplier"));
+					message = s.addCommodity(request.getParameter("commodityId"), request.getParameter("commodityName"), request.getParameter("supplier"));
 					
 				}
 					
@@ -66,17 +66,26 @@
 		
 		<div id='content'>
 			The content for Commodity Administration goes here
-			
+			<%
+				if (message != null) {
+			%>
+			<span style="color: red"><%= message %></span>
+			<br><br>
+			<%
+				}
+			%>
 			<table>
 				<tr>
 					<th>Commodity ID</th>
 					<th>Commodity name</th>
 					<th>Supplier</th>	
 				</tr>
+				
 				<%
 					for(Commodity commodity : s.getCommodityList()) {
 				%>
-				<form action="ChangeCommodity.jsp" method="post" style="display:inline">
+				
+				<form method="post" style="display:inline">
 					<input type="hidden" value="<%= commodity.getCommodityId()  %>" name="commodityId">
 					<td><input type="hidden" value="<%= commodity.getCommodityName() %>" name="Name"></td>
 					<td><input type="hidden" value="<%= commodity.getSupplier() %>" name="Supplier"></td>
@@ -89,12 +98,13 @@
 				<% 
 					}
 				%>
-				<form action="ChangeCommodity.jsp" method="post" style="display:inline">
+				<form method="post" style="display:inline">
 					<input type="hidden" value="0" name="Commodity ID">
+					<input type="hidden" value="true" name="add">
 					<tr>
-						<td><input type="text" name="Commodity ID"></td>
-						<td><input type="text" name="Commodity name"></td>
-						<td><input type="text" name="Supplier"></td>
+						<td><input type="text" name="commodityId"></td>
+						<td><input type="text" name="commodityName"></td>
+						<td><input type="text" name="supplier"></td>
 						<td><input type="submit" value="Add"></td>
 					</tr>	
 				</form>

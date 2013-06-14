@@ -58,7 +58,7 @@
 				<%
 					for(ProductBatch productBatch : s.getProductBatchList()) {
 				%>
-				<form action="ChangeProBatch.jsp" method="post" style="display:inline">
+				<form  method="post" style="display:inline">
 					<input type="hidden" value="<%= productBatch.getPbId()  %>" name="pbId">
 					<td><input type="hidden" value="<%= productBatch.getReceptId() %>" name="ReceptId"></td>
 					<td><input type="hidden" value="<%= productBatch.getTimeStamp() %>" name="Timestamp"></td>
@@ -75,7 +75,7 @@
 				<% 
 					}
 				%>
-				<form action="ChangeProBatch.jsp" method="post" style="display:inline">
+				<form  method="post" style="display:inline">
 					<input type="hidden" value="0" name="ProductBatch ID">
 					<tr>
 						<td><input type="text" name="Recept ID"></td>

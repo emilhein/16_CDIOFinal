@@ -243,8 +243,41 @@ public class Session {
 		return null;
 	}
 	public static String addCommodity(String commodityId, String commodityName, String supplier) {
+		// Commodityid
 		
-		return "TODO";
+		int parsedId;
+		try {
+			parsedId = Integer.parseInt(commodityId);
+		} catch (Exception e) {
+			return "Id must be a number.";
+		}
+
+		if (parsedId < 1 || parsedId > 99999999) {
+			return "Id must between 1 and 99999999.";
+		}
+		// Name
+
+		if (!commodityName.matches("^.{2,20}$")) {
+			return "Name length must be between 2 and 20 characters.";
+		}
+
+		// supplier
+
+		if (!supplier.matches("^.{2,20}$")) {
+			return "Name length must be between 2 and 20 characters.";
+		}
+				
+	
+
+		try {
+			databaseAccess.createCommodity(new Commodity(parsedId, commodityName,
+					supplier));
+		} catch (Exception e) {
+			return "Could not at commodity (" + e.getMessage() + ").";
+		}
+				
+				return null;
+
 	}
 	
 // Operator_____________________________________________________________________________________________

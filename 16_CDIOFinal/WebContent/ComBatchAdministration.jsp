@@ -56,7 +56,7 @@
 				<%
 					for(CommodityBatch commodityBatch : s.getCommodityBatchList()) {
 				%>
-				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
+				<form method="post" style="display:inline">
 					<input type="hidden" value="<%= commodityBatch.getCbId()  %>" name="commodityBatchId">
 					<td><input type="hidden" value="<%= commodityBatch.getCommodityId() %>" name="CommodityId"></td>
 					<tr>
@@ -69,7 +69,7 @@
 				<% 
 					}
 				%>
-				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
+				<form  method="post" style="display:inline">
 					<input type="hidden" value="0" name="CommodityBatch ID">
 					<tr>
 						<td><input type="text" name="CommodityBatch ID"></td>
