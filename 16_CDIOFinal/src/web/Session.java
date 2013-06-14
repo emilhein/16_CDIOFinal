@@ -308,7 +308,53 @@ public class Session {
 				return null;
 
 	}	
-// Operator_____________________________________________________________________________________________
+	public static String addCommodityBatch(String cbId, String commodityId, String maengde) {
+		// cbid
+		
+		int parsedId;
+		try {
+			parsedId = Integer.parseInt(cbId);
+		} catch (Exception e) {
+			return "Id must be a number.";
+		}
+
+		if (parsedId < 1 || parsedId > 99999999) {
+			return "Id must between 1 and 99999999.";
+		}
+		// commodityId
+		int parsedId1;
+		try {
+			parsedId1 = Integer.parseInt(commodityId);
+		} catch (Exception e) {
+			return "Id must be a number.";
+		}
+
+		if (parsedId1 < 1 || parsedId > 99999999) {
+			return "Id must between 1 and 99999999.";
+		}
+		int parsedId2;
+		//maengde
+		try {
+			parsedId2 = Integer.parseInt(maengde);
+		} catch (Exception e) {
+			return "Id must be a number.";
+		}
+
+		if (parsedId2 < 1 || parsedId > 99999999) {
+			return "Id must between 1 and 99999999.";
+		}
+
+
+		try {
+			databaseAccess.createCommodityBatch(new CommodityBatch(parsedId, parsedId1, parsedId2));
+		} catch (Exception e) {
+			return "Could not add a new commodityBatch (" + e.getMessage() + ").";
+		}
+				
+				return null;
+
+	}	
+	// Operator_____________________________________________________________________________________________
 	public Operator getOperator() {
 		return operator;
 	}

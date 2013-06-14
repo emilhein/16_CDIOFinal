@@ -13,6 +13,28 @@
 		<link rel="stylesheet" type="text/css" href="TabStyle.css">
 	</head>
 	<body>
+	<%
+			if (!s.loggedIn()) {
+				response.sendRedirect("Login.jsp");
+			} 
+			if (s.getRights() > 2) {
+				response.sendRedirect("Home.jsp");
+			}
+			
+			String message = null;
+			
+			if (request.getMethod().equalsIgnoreCase("post")) {
+				if (request.getParameter("add") != null) {
+
+					// Add operator
+					
+					message = s.addCommodityBatch(request.getParameter("cbId"), request.getParameter("commodityId"), request.getParameter("maengde"));
+					
+				}
+					
+				}
+			
+		%>
 		<h2>Welcome! You're logged in as: <label> <%= s.getOperator().getOprName() %> </label> </h2>
 		<div id='tabs'>
 			<ul>
@@ -46,11 +68,19 @@
 		</div>
 		
 		<div id='content'>
+		<%
+				if (message != null) {
+			%>
+			<span style="color: red"><%= message %></span>
+			<br><br>
+			<%
+				}
+			%>		
 			The content for commodity batch administration goes here
 	<table>
 				<tr>
 					<th>CommodityBatch ID</th>
-					<th>CommodityBatch ID</th>
+					<th>Commodity ID</th>
 					<th>Meangde</th>	
 				</tr>
 				<%
@@ -71,10 +101,11 @@
 				%>
 				<form  method="post" style="display:inline">
 					<input type="hidden" value="0" name="CommodityBatch ID">
+					<input type="hidden" value="true" name="add">
 					<tr>
-						<td><input type="text" name="CommodityBatch ID"></td>
-						<td><input type="text" name="Commodity ID"></td>
-						<td><input type="text" name="Meagde"></td>
+						<td><input type="text" name="cbId"></td>
+						<td><input type="text" name="commodityId"></td>
+						<td><input type="text" name="maengde"></td>
 						<td><input type="submit" value="Add"></td>
 					</tr>	
 				</form>

@@ -17,7 +17,7 @@
 			if (!s.loggedIn()) {
 				response.sendRedirect("Login.jsp");
 			} 
-			if (s.getRights() >= 2) {
+			if (s.getRights() > 3) {
 				response.sendRedirect("Home.jsp");
 			}
 			
