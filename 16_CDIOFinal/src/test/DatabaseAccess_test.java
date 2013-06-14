@@ -11,7 +11,7 @@ public class DatabaseAccess_test {
 			
 			//Commodity_________________________________________________________________________
 			System.out.println("Commodity Start");
-			Commodity com1 = new Commodity(666, "Pandekage", "Kitchen");
+			Commodity com1 = new Commodity(666, "Pandekage", "kitchen");
 			try{
 				db.createCommodity(com1);
 			}
@@ -21,7 +21,8 @@ public class DatabaseAccess_test {
 			}
 			Commodity ComRet1 = db.getCommodity(com1.getCommodityId());
 			System.out.println(com1.equals(ComRet1));
-			Commodity com2 = new Commodity(666, "Diabolsk Pandekage", "Hells Kitchen");
+			Commodity com2 = new Commodity(666, "Diabolske Pandekage", "Hells Kitchen");
+			db.updateCommodity(com2);
 			Commodity ComRet2 = db.getCommodity(com2.getCommodityId());
 			System.out.println(com2.equals(ComRet2));
 			System.out.println("Commodity end");
@@ -99,7 +100,7 @@ public class DatabaseAccess_test {
 			//ProductBatch_________________________________________________________________________
 			System.out.println("ProductBatch start");
 			try{
-				ProductBatch pb1 = new ProductBatch(666, 666, "trololo", 1);
+				ProductBatch pb1 = new ProductBatch(666, 666, "Kim_Time", 1);
 				db.createProductBatch(pb1);
 				ProductBatch pbRet1 = db.getProductBatch(pb1.getPbId());
 				System.out.println(pb1.equals(pbRet1));
