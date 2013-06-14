@@ -14,8 +14,6 @@ public class Session {
 	private static DatabaseAccess databaseAccess;
 	private Operator operator = null;
 	
-
-
 	//# New
 	
 	public Session() {
@@ -91,6 +89,65 @@ public class Session {
 		
 		operator = null;
 		
+	}
+	public static String updateOperator(String id, String name, String initials, String password, String rigths) {
+		
+		// User id
+		
+		Operator operator;
+		int userId;
+		
+		try {
+			userId = Integer.parseInt(id);
+		} catch (Exception e) {
+			return "User id must be a number.";
+		}
+		
+		if (userId < 1 || userId > 99999999) {
+			return "User id must between 1 and 99999999.";
+		}
+		
+		try {
+			operator = databaseAccess.getOperator(userId);
+		} catch (Exception e) {
+			return "Could not find operator (" + e.getMessage() + ").";
+		}
+		
+		// Name
+		
+		if (!name.matches("^.{2,20}$")) {
+			return "Name length must be between 2 and 20 characters.";
+		}
+		
+		// Initials
+		
+		if (!initials.matches("^.{2,4}$")) {
+			return "Initials length must be between 2 and 4 characters.";
+		}
+		
+		// Password
+		
+		if (!password.matches("^.{5,8}$")) {
+			return "Password length must be between 5 and 8 characters.";
+		}
+		
+		// Save
+		
+		operator.setOprName(name);
+		operator.setIni(initials);
+		operator.setPassword(password);
+
+		try {
+			databaseAccess.updateOperator(operator);
+		} catch (Exception e) {
+			return "Could not update operator (" + e.getMessage() + ").";
+		}
+		
+		return null;
+	}
+	public static String addOperator(String name, String initials, String cpr, String password, String rigths) {
+		
+		return "TODO";
 	}
 	
 	

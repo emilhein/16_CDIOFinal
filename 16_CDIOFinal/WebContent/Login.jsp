@@ -32,8 +32,6 @@
 			
 			if (message == null){
 				response.sendRedirect("Home.jsp");
-			} else {
-				s.logout();
 			}
 			
 		}

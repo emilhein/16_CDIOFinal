@@ -25,15 +25,16 @@
 
 					// Update operator
 					
-					message = s.updateOperator(request.getParameter("id"), request.getParameter("password"));
+					message = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rigths"));
 					
 				} else if (request.getParameter("add") != null) {
 
 					// Add operator
 					
+					message = s.addOperator(request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rigths"));
+					
 				}
 			}
-			
 		%>
 		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
 		<div id='tabs'>
@@ -48,6 +49,15 @@
 		</div>
 		<div id='content'>
 			<h2>Add or update operators</h2>
+			<%
+				if (message != null) {
+			%>
+			<br>
+			<span style="color: red"><%= message %></span>
+			<br>
+			<%
+				}
+			%>
 			<table>
 				<tr>
 					<th>Id</th>
