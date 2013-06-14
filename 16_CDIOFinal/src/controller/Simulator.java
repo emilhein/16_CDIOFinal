@@ -32,6 +32,10 @@ public class Simulator extends Thread {
 			System.out.println();
 
 			int port = boundary.readInt("", 0, 65535);
+			
+			if (port == 0) {
+				break;
+			}
 
 			try {
 				listener = new ServerSocket(port);

@@ -54,6 +54,10 @@ public class ASE {
 			
 			int port = boundary.readInt("", 0, 65535);
 
+			if (port == 0) {
+				continue;
+			}
+			
 			System.out.println();
 			
 			try {
@@ -202,9 +206,9 @@ public class ASE {
 							databaseAccess.updateCommodityBatch(procedure.commodityBatch);
 							databaseAccess.createProductBatchComp(new ProductBatchComp(procedure.productBatch.getPbId(), procedure.commodityBatch.getCbId(), procedure.containerWeight, procedure.commodityWeight, procedure.operator.getOprId()));
 							
-							procedure.recipeComp.remove(0);
+							procedure.recipeComps.remove(procedure.recipeComp);
 							
-							if (procedure.recipeComp.size() > 0) {
+							if (procedure.recipeComps.size() > 0) {
 								step = 2;
 							} else {
 								step += 1;
@@ -294,15 +298,15 @@ public class ASE {
 				try {
 					procedure.productBatch = databaseAccess.getProductBatch(number);
 					procedure.recipe = databaseAccess.getRecipe(procedure.productBatch.getReceptId());
-					procedure.recipeComp = databaseAccess.getRestRecipeComp(procedure.productBatch.getPbId());
+					procedure.recipeComps = databaseAccess.getRestRecipeComp(procedure.productBatch.getPbId());
 				} catch (DALException e) {
 					display("Invalid");
 					continue;
 				}
 				
-				if (procedure.recipeComp.size() < 1) {
+				if (procedure.recipeComps.size() < 1) {
 					display("Done");
-					continue;			
+					continue;	
 				}
 				
 				if (readInt(procedure.recipe.getRecipeName() + "?", "1", "") != 1) {
@@ -339,19 +343,10 @@ public class ASE {
 		}
 		private boolean getCommodityBatch(Procedure procedure) throws Exception {
 			
+			loop:
 			while (true) {
 				
-				int commodityId = procedure.recipeComp.get(0).getRaavareId();
-				String commodityName;
-
-				try {
-					commodityName = databaseAccess.getCommodity(commodityId).getCommodityName();
-				} catch (DALException e) {
-					display("Error");
-					continue;
-				}
-				
-				int number = readInt("Commodity batch for " + commodityName + ":", "", "#");
+				int number = readInt("Commodity batch:", "", "#");
 				
 				if (number == 0) {
 					return false;
@@ -365,12 +360,19 @@ public class ASE {
 					continue;
 				}
 				
-				if (procedure.commodityBatch.getCommodityId() != commodityId) {
+				check:
+				while (true) {
+					for (RecipeComp recipeComp : procedure.recipeComps) {
+						if (recipeComp.getRaavareId() == procedure.commodityBatch.getCommodityId()) {
+							procedure.recipeComp = recipeComp;
+							break check;
+						}
+					}
 					display("Wrong");
-					continue;
+					continue loop;
 				}
 				
-				if (procedure.commodityBatch.getMaengde() < procedure.recipeComp.get(0).getNomNetto() - (procedure.recipeComp.get(0).getNomNetto() * procedure.recipeComp.get(0).getTolerance())) {
+				if (procedure.commodityBatch.getMaengde() < procedure.recipeComp.getNomNetto() - (procedure.recipeComp.getNomNetto() * procedure.recipeComp.getTolerance())) {
 					display("Missing");
 					continue;
 				}
@@ -386,8 +388,8 @@ public class ASE {
 		}
 		private boolean getCommodityWeight(Procedure procedure) throws Exception {
 			
-			double target = procedure.recipeComp.get(0).getNomNetto();
-			double tolerance = procedure.recipeComp.get(0).getNomNetto() * procedure.recipeComp.get(0).getTolerance();
+			double target = procedure.recipeComp.getNomNetto();
+			double tolerance = procedure.recipeComp.getNomNetto() * procedure.recipeComp.getTolerance();
 			boolean stopped = false;
 			int pause = 0;
 			
@@ -512,7 +514,8 @@ public class ASE {
 			public Operator operator = null;
 			public ProductBatch productBatch = null;
 			public Recipe recipe = null;
-			public List<RecipeComp> recipeComp = null;
+			public List<RecipeComp> recipeComps = null;
+			public RecipeComp recipeComp = null;
 			public CommodityBatch commodityBatch = null;
 			public Commodity commodity = null;
 			public double containerWeight = 0;
