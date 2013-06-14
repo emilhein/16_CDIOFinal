@@ -20,8 +20,8 @@ public class ProductBatchComp
 	
 	public int getPbId() { return pbId; }
 	public void setPbId(int pbId) { this.pbId = pbId; }
-	public int getRbId() { return oprId; }
-	public void setRbId(int cbId) { this.cbId = cbId; }
+	public int getCbId() { return cbId; }
+	public void setCbId(int cbId) { this.cbId = cbId; }
 	public double getTara() { return tara; }
 	public void setTara(double tara) { this.tara = tara; }
 	public double getNetto() { return netto; }
@@ -30,5 +30,18 @@ public class ProductBatchComp
 	public void setOprId(int oprId) { this.oprId = oprId; }
 	public String toString() { 
 		return pbId + "\t" + cbId +"\t" + tara +"\t" + netto + "\t" + oprId ; 
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		ProductBatchComp test = (ProductBatchComp)obj;
+		if(test.getPbId() == this.pbId
+				&& test.getCbId() == this.cbId
+				&& test.getNetto() == this.netto
+				&& test.getTara() == this.tara
+				&& test.getOprId() == this.oprId)
+			return true;
+		else
+			return false;
 	}
 }

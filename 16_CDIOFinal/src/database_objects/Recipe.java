@@ -25,4 +25,14 @@ public class Recipe
 	public String toString() { 
 		return recipeId + "\t" + recipeId; 
 	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		Recipe test = (Recipe)obj;
+		if(test.getRecipeId() == this.recipeId
+				&& test.getRecipeName().equals(this.recipeName))
+			return true;
+		else
+			return false;
+	}
 }

@@ -25,6 +25,10 @@ public class DatabaseAccess_test {
 			db.updateOperator(opr2);
 			Operator retur2 = db.getOperator(opr2.getOprId());
 			System.out.println(opr2.equals(retur2));
+			System.out.println("Gennem basis operator uden fejl");
+			System.out.println();
+			
+			
 		}
 		catch(DALException e)
 		{

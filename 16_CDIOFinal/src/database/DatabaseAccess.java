@@ -301,7 +301,7 @@ public class DatabaseAccess {
 	public void createProductBatchComp(ProductBatchComp pbc)throws DALException {
 		connector.doUpdate(
 				"INSERT INTO productBatchComponent(pbId, cbId, tara, netto, oprId) VALUES " +
-						"(" + pbc.getPbId() + ", " + pbc.getRbId() + "," + pbc.getTara() + "," + pbc.getNetto() + "," + pbc.getOprId() + ")");
+						"(" + pbc.getPbId() + ", " + pbc.getCbId() + "," + pbc.getTara() + "," + pbc.getNetto() + "," + pbc.getOprId() + ")");
 
 	}
 
@@ -374,7 +374,7 @@ public class DatabaseAccess {
 	public void createRecipeComp(RecipeComp RecComp)throws DALException {
 		connector.doUpdate(
 				"INSERT INTO recipeComponent(recipeId, commodityId, nomNetto, tolerance) VALUES " +
-						"(" + RecComp.getRecipeId() + ", " + RecComp.getRaavareId() + "," + RecComp.getNomNetto() + "," + RecComp.getTolerance() + ")");
+						"(" + RecComp.getRecipeId() + ", " + RecComp.getCommodityId() + "," + RecComp.getNomNetto() + "," + RecComp.getTolerance() + ")");
 
 	}
 

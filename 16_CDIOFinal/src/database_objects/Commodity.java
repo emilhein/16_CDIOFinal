@@ -10,11 +10,11 @@ package database_objects;
 public class Commodity 
 {
     /** i området 1-99999999 vælges af brugerne */
-    int commodityId;                     
+    private int commodityId;                     
     /** min. 2 max. 20 karakterer */
-    String commodityName;                
+    private String commodityName;                
     /** min. 2 max. 20 karakterer */
-    String supplier;         
+    private String supplier;         
 	
 	public Commodity(int commodityId, String commodityName, String supplier)
 	{
@@ -29,7 +29,20 @@ public class Commodity
     public void setCommodityName(String commodityName) { this.commodityName = commodityName; }
     public String getSupplier() { return supplier; }
     public void setSupplier(String supplier) { this.supplier = supplier; }
+    
+    @Override
     public String toString() { 
 		return commodityId + "\t" + commodityName +"\t" + supplier; 
 	}
+    @Override
+	public boolean equals(Object obj)
+    {
+    	Commodity test = (Commodity)obj;
+    	if(test.getCommodityId() == this.commodityId
+    			&& test.getCommodityName().equals(this.commodityName)
+    			&& test.getSupplier().equals(this.supplier))
+    		return true;
+    	else
+    		return false;
+    }
 }

@@ -45,12 +45,12 @@ public class Operator
 	public boolean equals(Object obj)
 	{
 		Operator test = (Operator)obj;
-		if(test.oprId == this.oprId
-		&& test.oprName.equals(this.oprName)
-		&& test.cpr.equals(this.cpr) 
-		&& test.ini.equals(this.ini) 
-		&& test.password.equals(this.password) 
-		&& test.rights == this.rights
+		if(test.getOprId() == this.oprId
+		&& test.getOprName().equals(this.oprName)
+		&& test.getCpr().equals(this.cpr) 
+		&& test.getIni().equals(this.ini) 
+		&& test.getPassword().equals(this.password) 
+		&& test.getRights() == this.rights
 		)
 			return true;	
 		else

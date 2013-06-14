@@ -17,13 +17,25 @@ public class RecipeComp
 
 	public int getRecipeId() { return recipeId; }
 	public void setRecipeId(int recipeId) { this.recipeId = recipeId; }
-	public int getRaavareId() { return commodityId; }
-	public void setRaavareId(int commodityId) { this.commodityId = commodityId; }
+	public int getCommodityId() { return commodityId; }
+	public void setCommodityId(int commodityId) { this.commodityId = commodityId; }
 	public double getNomNetto() { return nomNetto; }
 	public void setNomNetto(double nomNetto) { this.nomNetto = nomNetto; }
 	public double getTolerance() { return tolerance; }
 	public void setTolerance(double tolerance) { this.tolerance = tolerance; }
 	public String toString() { 
 		return recipeId + "\t" + commodityId + "\t" + nomNetto + "\t" + tolerance; 
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		RecipeComp test = (RecipeComp)obj;
+		if(test.getRecipeId() == this.recipeId
+				&& test.getCommodityId() == this.commodityId
+				&& test.getNomNetto() == this.nomNetto
+				&& test.getTolerance() == this.tolerance)
+			return true;
+		else
+			return false;
 	}
 }

@@ -2,9 +2,9 @@ package database_objects;
 
 public class CommodityBatch
 {
-	int cbId;                     // i området 1-99999999
-	int commodityId;             // i området 1-99999999
-	double maengde;             // kan være negativ 
+	private int cbId;                     // i området 1-99999999
+	private int commodityId;             // i området 1-99999999
+	private double maengde;             // kan være negativ 
 
 	public CommodityBatch(int cbId, int commodityId, double maengde)
 	{
@@ -21,5 +21,16 @@ public class CommodityBatch
 	public void setMaengde(double maengde) { this.maengde = maengde; }
 	public String toString() { 
 		return cbId + "\t" + commodityId +"\t" + maengde; 
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		CommodityBatch test = (CommodityBatch)obj;
+		if(test.getCbId() == this.cbId
+				&& test.getCommodityId() == this.commodityId
+				&& test.getMaengde() == this.maengde)
+			return true;
+		else
+			return false;
 	}
 }

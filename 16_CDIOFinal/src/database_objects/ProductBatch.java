@@ -23,6 +23,18 @@ public class ProductBatch
 	public void setReceptId(int receptId) { this.receptId = receptId; }
 	public String getTimeStamp() {return this.timeStamp;}
 	public void setTimeStamp(String timeStamp){this.timeStamp = timeStamp;}
-	public String toString() { return pbId + "\t" + status + "\t" + receptId; }
+	public String toString() { return pbId + "\t" + status + "\t" + receptId + "\t" + timeStamp; }
+	@Override
+	public boolean equals(Object obj)
+	{
+		ProductBatch test = (ProductBatch)obj;
+		if(test.getPbId() == this.pbId
+				&& test.getReceptId() == this.receptId
+				&& test.getTimeStamp().equals(this.timeStamp)
+				&& test.getStatus() == this.status)
+			return true;
+		else
+			return false;
+	}
 }
 
