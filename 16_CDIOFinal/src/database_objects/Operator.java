@@ -10,12 +10,12 @@ package database_objects;
 public class Operator
 {
 
-	int oprId;			
-	String oprName;					
-	String ini;
-	String cpr;
-	String password;         
-	int rights;
+	private int oprId;			
+	private String oprName;					
+	private String ini;
+	private String cpr;
+	private String password;         
+	private int rights;
 
 	public Operator(int oprId, String oprName, String ini, String cpr, String password, int rights)
 	{
@@ -40,4 +40,15 @@ public class Operator
 	public int getRights() { return rights; }
 	public void setRights(int rights) { this.rights = rights; }
 	public String toString() { return oprId + "\t" + oprName + "\t" + ini + "\t" + cpr + "\t" + password; }
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		Operator test = (Operator)obj;
+		if(test.oprName == this.oprName && test.oprId == this.oprId && test.cpr == this.cpr && test.ini == this.ini && test.password == this.password && test.rights == this.rights)
+		{
+			
+		}
+		return false;
+	}
 }
