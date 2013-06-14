@@ -58,9 +58,10 @@
 				%>
 				<form action="ChangeComBatch.jsp" method="post" style="display:inline">
 					<input type="hidden" value="<%= commodityBatch.getCbId()  %>" name="commodityBatchId">
+					<td><input type="hidden" value="<%= commodityBatch.getCommodityId() %>" name="CommodityId"></td>
 					<tr>
 						<td><%= commodityBatch.getCbId() %> </td>
-						<td><input type="text" value="<%= commodityBatch.getCommodityId() %>" name="CommodityId"></td>
+						<td><%= commodityBatch.getCommodityId() %> </td>
 						<td><input type="text" value="<%= commodityBatch.getMaengde() %>" name="Maengde"></td>
 						<td><input type="submit" value="Update" name="button"></td>
 					</tr>

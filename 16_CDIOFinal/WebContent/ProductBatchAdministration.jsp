@@ -60,12 +60,16 @@
 				%>
 				<form action="ChangeProBatch.jsp" method="post" style="display:inline">
 					<input type="hidden" value="<%= productBatch.getPbId()  %>" name="pbId">
+					<td><input type="hidden" value="<%= productBatch.getReceptId() %>" name="ReceptId"></td>
+					<td><input type="hidden" value="<%= productBatch.getTimeStamp() %>" name="Timestamp"></td>
+					<td><input type="hidden" value="<%= productBatch.getStatus() %>" name="Status"></td>
 					<tr>
 						<td><%= productBatch.getPbId() %> </td>
-						<td><input type="text" value="<%= productBatch.getReceptId() %>" name="CommodityId"></td>
-						<td><input type="text" value="<%= productBatch.getTimeStamp() %>" name="Maengde"></td>
-						<td><input type="text" value="<%= productBatch.getStatus() %>" name="Maengde"></td>
-						<td><input type="submit" value="Update" name="button"></td>
+						<td><%= productBatch.getReceptId() %> </td>
+						<td><%= productBatch.getTimeStamp() %> </td>
+						<td><%= productBatch.getStatus() %> </td>
+						
+												
 					</tr>
 				</form>
 				<% 
