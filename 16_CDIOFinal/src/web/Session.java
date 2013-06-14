@@ -10,10 +10,13 @@ import database_objects.Commodity;
 
 public class Session {
 
-	static DatabaseAccess databaseAccess;
-	Operator operator;
+	private static DatabaseAccess databaseAccess;
+	private Operator operator = null;
+	
 	Commodity commodity;
 
+	//# New
+	
 	public Session() {
 
 		if (databaseAccess == null) {
@@ -25,11 +28,20 @@ public class Session {
 		}
 
 	}
+	
+	//# Properties
+	
+	public boolean loggedIn() {
+		
+		return operator != null;
+	}
+	
+	//# Functions
 
-	public boolean login(String oprId, String password) {
+	public boolean login(String id, String password) {
 
 		try {
-			operator = databaseAccess.getOperator(Integer.parseInt(oprId));
+			operator = databaseAccess.getOperator(Integer.parseInt(id));
 			return operator.getPassword().equals(password);
 		} catch (Exception e) {
 			return false;
