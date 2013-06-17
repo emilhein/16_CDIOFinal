@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import database_objects.*;
+import special_objects.*;
 
 public class DatabaseAccess {
 
@@ -186,7 +187,6 @@ public class DatabaseAccess {
 		connector.doUpdate(
 				"INSERT INTO commodityBatch(cbId, commodityId, quantity) VALUES " +
 						"(" + cb.getCbId() + ", " + cb.getCommodityId() + ", " + cb.getMaengde() + ")");
-
 	}
 
 	public CommodityBatch getCommodityBatch(int cbId) throws DALException {
@@ -221,6 +221,19 @@ public class DatabaseAccess {
 		try {
 			while (rs.next()) {
 				list.add(new CommodityBatch(rs.getInt(1), rs.getInt(2), rs.getDouble(3)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
+	public List<Commodity_Sum> getLowCommodityList(int LowDefinition) throws DALException {
+		List<Commodity_Sum> list = new ArrayList<Commodity_Sum>();
+		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, SUM(quantity) FROM commodity NATURAL JOIN commodityBatch GROUP BY commodityId Having SUM(quantity) <= " + LowDefinition);
+		try {
+			while (rs.next()) {
+				list.add(new Commodity_Sum(rs.getInt(1), rs.getString(2), rs.getDouble(3)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
