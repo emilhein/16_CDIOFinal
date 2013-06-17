@@ -21,7 +21,7 @@
 		<th>Quantity</th>
 		<th>Tolerance</th>
 	</tr>
-	<% for (RecipeComp recipeComp : s.getRecipeComponents()) {	%>
+	<% for (RecipeComp recipeComp : s.getRecipeComponents(request.getParameter("RecipeId"))) {	%>
 		<tr>
 			<td><center><%= recipeComp.getRecipeId() %></center></td>
 			<td><center><%= recipeComp.getCommodityId() %></center></td>
@@ -32,11 +32,11 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><input type="text" name="recipeId"></td>
-			<td><input type="text" name="commodityId"></td>
-			<td><input type="text" name="quantity"></td>
-			<td><input type="text" name="tolerance"></td>
-			<td><input type="submit" value="Add"></td>
+			<td><br><input type="text" name="recipeId"></td>
+			<td><br><input type="text" name="commodityId"></td>
+			<td><br><input type="text" name="quantity"></td>
+			<td><br><input type="text" name="tolerance"></td>
+			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
 </table>
