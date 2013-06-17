@@ -310,6 +310,19 @@ public class DatabaseAccess {
 		return list;
 	}
 	
+	public List<ProductBatch> getProductBatchList(int recipeId) throws DALException {
+		List<ProductBatch> list = new ArrayList<ProductBatch>();
+		ResultSet rs = connector.doQuery("SELECT * FROM productBatch WHERE recipeId = " + recipeId);
+		try {
+			while (rs.next()) {
+				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
 	//ProductBatchComp___________________________________________________________________________
 	public void createProductBatchComp(ProductBatchComp pbc)throws DALException {
 		connector.doUpdate(
