@@ -106,7 +106,23 @@ public class Session {
 		}
 		
 	}
-	public List<RecipeComp> getRecipeComponents() {
+	public List<RecipeComp> getRecipeComponents(String recipeId) {
+		
+		if (recipeId != null) {
+			try {
+				
+				int parsedRecipeId = Integer.parseInt(recipeId);
+				
+				try {
+					return databaseAccess.getRecipeCompList(parsedRecipeId);
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		}
 		
 		try {
 			return databaseAccess.getRecipeCompList();
@@ -116,7 +132,7 @@ public class Session {
 		}
 		
 	}
-		
+	
 	//# Functions
 	
 	public Page getPage(String page) {

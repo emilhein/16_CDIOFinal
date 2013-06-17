@@ -23,14 +23,15 @@
 		<tr>
 			<td><center><%= recipe.getRecipeId() %></center></td>
 			<td><center><%= recipe.getRecipeName() %></center></td>
+			<td><center><a href="?page=RecipeComponents&RecipeId=<%= recipe.getRecipeId() %>">Components</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><input type="text" name="id"></td>
-			<td><input type="text" name="name"></td>
-			<td><input type="submit" value="Add"></td>
+			<td><br><input type="text" name="id"></td>
+			<td><br><input type="text" name="name"></td>
+			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
 </table>
