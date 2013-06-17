@@ -693,8 +693,8 @@ public class Session {
 			return "Tolerance must be a number.";
 		}
 		
-		if (parsedTolerance < 1 || parsedTolerance > 99999999) {
-			return "Tolerance must be between 1 and 99999999.";
+		if (parsedTolerance < 0.1 || parsedTolerance > 10) {
+			return "Tolerance must be between 0.1% and 10.0%.";
 		}
 
 		// Add
