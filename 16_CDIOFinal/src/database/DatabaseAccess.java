@@ -91,7 +91,7 @@ public class DatabaseAccess {
 			connector.doUpdate("CREATE TABLE commodityBatch(cbId INTEGER NOT NULL, commodityId INTEGER, quantity REAL NOT NULL, PRIMARY KEY(cbId), FOREIGN KEY (commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipe(recipeId INTEGER NOT NULL, recipeName VARCHAR(20), PRIMARY KEY(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipeComponent(recipeId INTEGER, commodityId INTEGER, nomNetto REAL NOT NULL, tolerance REAL NOT NULL, PRIMARY KEY(recipeId, commodityId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId), FOREIGN KEY(commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
-			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL, recipeId INTEGER, ts DATETIME DEFAULT CURRENT_TIMESTAMP, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
+			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL, recipeId INTEGER, ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
 
 			
@@ -132,7 +132,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.4)");
 			
 			// indsæt productBatch.
-			connector.doUpdate("INSERT INTO productBatch VALUES(1,1,'" + new Date().toString() + "',1)");
+			connector.doUpdate("INSERT INTO productBatch(pbId, recipeId , state) VALUES(1,1,1)");
 			
 			// indsæt productBatchComponent.
 			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
