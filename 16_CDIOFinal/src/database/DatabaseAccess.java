@@ -228,9 +228,9 @@ public class DatabaseAccess {
 		return list;
 	}
 	
-	public List<Commodity_Sum> getLowCommodityList(int LowDefinition) throws DALException {
+	public List<Commodity_Sum> getLowCommodityList(int lowDefinition) throws DALException {
 		List<Commodity_Sum> list = new ArrayList<Commodity_Sum>();
-		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, SUM(quantity) FROM commodity NATURAL JOIN commodityBatch GROUP BY commodityId Having SUM(quantity) <= " + LowDefinition);
+		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, SUM(quantity) FROM commodity NATURAL JOIN commodityBatch GROUP BY commodityId Having SUM(quantity) <= " + lowDefinition);
 		try {
 			while (rs.next()) {
 				list.add(new Commodity_Sum(rs.getInt(1), rs.getString(2), rs.getDouble(3)));

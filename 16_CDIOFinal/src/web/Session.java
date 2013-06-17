@@ -2,6 +2,8 @@ package web;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import special_objects.Commodity_Sum;
 import database.DALException;
 import database.DatabaseAccess;
 import database_objects.CommodityBatch;
@@ -97,11 +99,15 @@ public class Session {
 		
 	}
 	
-	public List<CommodityBatch> getLowCommodityBatches() {
+	public List<Commodity_Sum> getLowCommodityBatches(int lowDefinition) {
 		
 		try {
 			// TODO Kim skal lave en metode i database_access som jeg kan bruge
-		} catch (DALException) {
+			return databaseAccess.getLowCommodityList(lowDefinition);
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public List<ProductBatch> getProductBatches() {
 		
