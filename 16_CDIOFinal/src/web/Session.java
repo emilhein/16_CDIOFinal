@@ -96,6 +96,13 @@ public class Session {
 		}
 		
 	}
+	
+	public List<CommodityBatch> getLowCommodityBatches() {
+		
+		try {
+			// TODO Kim skal lave en metode i database_access som jeg kan bruge
+		} catch (DALException) {
+	}
 	public List<ProductBatch> getProductBatches() {
 		
 		try {
