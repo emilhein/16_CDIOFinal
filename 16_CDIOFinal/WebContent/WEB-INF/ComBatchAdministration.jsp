@@ -20,7 +20,7 @@
 	<tr>
 		<th>Id</th>
 		<th>Commodity Id</th>
-		<th>Mængde</th>
+		<th>Quantity</th>
 		<th></th>
 	</tr>
 	<% for (CommodityBatch commodityBatch : s.getCommodityBatches()) {	%>
