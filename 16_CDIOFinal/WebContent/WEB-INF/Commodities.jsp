@@ -3,17 +3,23 @@
 <jsp:setProperty name="s" property="*"/>
 
 <%
-	String message = null;
+	String message1 = null;
+	String message2 = null;
 	if (request.getParameter("filter") != null) {
-		message = "Filtered by commodity id: " + request.getParameter("filter");
+		message1 = "Filtered by commodity id: " + request.getParameter("filter");
 	}
 	if (request.getParameter("add") != null) {
-		message = s.addCommodity(request.getParameter("id"), request.getParameter("name"), request.getParameter("supplier"));	
+		message2 = s.addCommodity(request.getParameter("id"), request.getParameter("name"), request.getParameter("supplier"));	
 	}
 %>
 		
-<% if (message != null) { %>
-	<span style="color: red"><%= message %></span>
+<% if (message1 != null) { %>
+	<span style="color: blue"><%= message1 %></span>
+	<br>
+	<br>
+<% } %>
+<% if (message2 != null) { %>
+	<span style="color: red"><%= message2 %></span>
 	<br>
 	<br>
 <% } %>
@@ -28,6 +34,7 @@
 			<td><center><%= commodity.getCommodityId() %></center></td>
 			<td><center><%= commodity.getCommodityName() %></center></td>
 			<td><center><%= commodity.getSupplier() %></center></td>
+			<td><center><a href="?page=CommodityBatches&filter=<%= commodity.getCommodityId() %>">Commodity Batches</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">

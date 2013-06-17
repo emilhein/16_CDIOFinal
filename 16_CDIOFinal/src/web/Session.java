@@ -125,7 +125,23 @@ public class Session {
 		}
 		
 	}
-	public List<CommodityBatch> getCommodityBatches() {
+	public List<CommodityBatch> getCommodityBatches(String commodityId) {
+		
+		if (commodityId != null) {
+			try {
+				
+				int parsedCommodityId = Integer.parseInt(commodityId);
+				
+				try {
+					return databaseAccess.getCommodityBatchList(parsedCommodityId);
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		}
 		
 		try {
 			return databaseAccess.getCommodityBatchList();

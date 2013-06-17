@@ -3,16 +3,25 @@
 <jsp:setProperty name="s" property="*"/>
 
 <%
-	String message = null;
+	String message1 = null;
+	String message2 = null;
+	if (request.getParameter("filter") != null) {
+		message1 = "Filtered by commodity id: " + request.getParameter("filter");
+	}
 	if (request.getParameter("update") != null) {
-		message = s.updateCommodityBatch(request.getParameter("id"), request.getParameter("quantity"));
+		message2 = s.updateCommodityBatch(request.getParameter("id"), request.getParameter("quantity"));
 	} else if (request.getParameter("add") != null) {
-		message = s.addCommodityBatch(request.getParameter("id"), request.getParameter("commodityId"), request.getParameter("quantity"));		
+		message2 = s.addCommodityBatch(request.getParameter("id"), request.getParameter("commodityId"), request.getParameter("quantity"));		
 	}
 %>
 
-<% if (message != null) { %>
-	<span style="color: red"><%= message %></span>
+<% if (message1 != null) { %>
+	<span style="color: blue"><%= message1 %></span>
+	<br>
+	<br>
+<% } %>
+<% if (message2 != null) { %>
+	<span style="color: red"><%= message2 %></span>
 	<br>
 	<br>
 <% } %>
@@ -22,13 +31,13 @@
 		<th>Commodity Id</th>
 		<th>Quantity</th>
 	</tr>
-	<% for (CommodityBatch commodityBatch : s.getCommodityBatches()) {	%>
+	<% for (CommodityBatch commodityBatch : s.getCommodityBatches(request.getParameter("filter"))) {	%>
 		<form method="post">
 			<input type="hidden" name="update" value="true">
 			<input type="hidden" name="id" value="<%= commodityBatch.getCbId() %>">
 			<tr>
 				<td><center><%= commodityBatch.getCbId() %></center></td>
-				<td><center><%= commodityBatch.getCommodityId() %></center></td>
+				<td><center><a href="?page=Commodities&filter=<%= commodityBatch.getCommodityId() %>"><%= commodityBatch.getCommodityId() %></a></center></td>
 				<td><input type="text" name="quantity" value="<%= commodityBatch.getMaengde() %>"></td>
 				<td><input type="submit" value="Update"></td>
 			</tr>

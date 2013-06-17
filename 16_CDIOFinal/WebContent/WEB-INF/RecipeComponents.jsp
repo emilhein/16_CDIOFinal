@@ -3,17 +3,23 @@
 <jsp:setProperty name="s" property="*"/>
 
 <%
-	String message = null;
+	String message1 = null;
+	String message2 = null;
 	if (request.getParameter("filter") != null) {
-		message = "Filtered by recipe id: " + request.getParameter("filter");
+		message1 = "Filtered by recipe id: " + request.getParameter("filter");
 	}	
 	if (request.getParameter("add") != null) {
-		message = s.addRecipeComponent(request.getParameter("recipeId"), request.getParameter("commodityId"), request.getParameter("quantity"), request.getParameter("tolerance"));		
+		message2 = s.addRecipeComponent(request.getParameter("recipeId"), request.getParameter("commodityId"), request.getParameter("quantity"), request.getParameter("tolerance"));		
 	}
 %>
 
-<% if (message != null) { %>
-	<span style="color: red"><%= message %></span>
+<% if (message1 != null) { %>
+	<span style="color: blue"><%= message1 %></span>
+	<br>
+	<br>
+<% } %>
+<% if (message2 != null) { %>
+	<span style="color: red"><%= message2 %></span>
 	<br>
 	<br>
 <% } %>

@@ -3,17 +3,23 @@
 <jsp:setProperty name="s" property="*"/>
 
 <%
-	String message = null;
+	String message1 = null;
+	String message2 = null;
 	if (request.getParameter("filter") != null) {
-		message = "Filtered by recipe id: " + request.getParameter("filter");
+		message1 = "Filtered by recipe id: " + request.getParameter("filter");
 	}
 	if (request.getParameter("add") != null) {
-		message = s.addRecipe(request.getParameter("id"), request.getParameter("name"));		
+		message2 = s.addRecipe(request.getParameter("id"), request.getParameter("name"));		
 	}
 %>
 
-<% if (message != null) { %>
-	<span style="color: red"><%= message %></span>
+<% if (message1 != null) { %>
+	<span style="color: blue"><%= message1 %></span>
+	<br>
+	<br>
+<% } %>
+<% if (message2 != null) { %>
+	<span style="color: red"><%= message2 %></span>
 	<br>
 	<br>
 <% } %>
@@ -26,7 +32,7 @@
 		<tr>
 			<td><center><%= recipe.getRecipeId() %></center></td>
 			<td><center><%= recipe.getRecipeName() %></center></td>
-			<td><center><a href="?page=RecipeComponents&filter=<%= recipe.getRecipeId() %>">Components</a></center></td>
+			<td><center><a href="?page=RecipeComponents&filter=<%= recipe.getRecipeId() %>">Recipe Components</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">
