@@ -29,7 +29,7 @@
 	<% for (ProductBatchComp productBatchComp : s.getProductBatchComponents(request.getParameter("filterProductBatchId"), request.getParameter("filterCommodityBatchId"), request.getParameter("filterOperatorId"))) { %>
 		<tr>
 			<td><center><a href="?page=ProductBatches&filterProductBatchId=<%= productBatchComp.getPbId() %>"><%= productBatchComp.getPbId() %></a></center></td>
-			<td><center><a href="?page=Commodities&filterCommodityId=<%= productBatchComp.getCbId() %>"><%= productBatchComp.getCbId() %></a></center></td>
+			<td><center><a href="?page=CommodityBatches&filterCommodityId=<%= productBatchComp.getCbId() %>"><%= productBatchComp.getCbId() %></a></center></td>
 			<td><center><a href="?page=Operators&filterOperatorId=<%= productBatchComp.getOprId() %>"><%= productBatchComp.getOprId() %></a></center></td>
 			<td><center><%= productBatchComp.getNetto() %></center></td>
 			<td><center><%= productBatchComp.getTara() %></center></td>
