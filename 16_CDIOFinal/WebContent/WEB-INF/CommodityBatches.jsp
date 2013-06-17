@@ -5,8 +5,8 @@
 <%
 	String message1 = null;
 	String message2 = null;
-	if (request.getParameter("filter") != null) {
-		message1 = "Filtered by commodity id: " + request.getParameter("filter");
+	if (request.getParameter("filterCommodityId") != null) {
+		message1 = "Filtered by commodity id: " + request.getParameter("filterCommodityId");
 	}
 	if (request.getParameter("update") != null) {
 		message2 = s.updateCommodityBatch(request.getParameter("id"), request.getParameter("quantity"));
@@ -31,13 +31,13 @@
 		<th>Commodity Id</th>
 		<th>Quantity</th>
 	</tr>
-	<% for (CommodityBatch commodityBatch : s.getCommodityBatches(request.getParameter("filter"))) {	%>
+	<% for (CommodityBatch commodityBatch : s.getCommodityBatches(request.getParameter("filterCommodityId"))) {	%>
 		<form method="post">
 			<input type="hidden" name="update" value="true">
 			<input type="hidden" name="id" value="<%= commodityBatch.getCbId() %>">
 			<tr>
 				<td><center><%= commodityBatch.getCbId() %></center></td>
-				<td><center><a href="?page=Commodities&filter=<%= commodityBatch.getCommodityId() %>"><%= commodityBatch.getCommodityId() %></a></center></td>
+				<td><center><a href="?page=Commodities&filterCommodityId=<%= commodityBatch.getCommodityId() %>"><%= commodityBatch.getCommodityId() %></a></center></td>
 				<td><input type="text" name="quantity" value="<%= commodityBatch.getMaengde() %>"></td>
 				<td><input type="submit" value="Update"></td>
 			</tr>

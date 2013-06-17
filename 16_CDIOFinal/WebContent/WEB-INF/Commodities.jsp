@@ -5,8 +5,8 @@
 <%
 	String message1 = null;
 	String message2 = null;
-	if (request.getParameter("filter") != null) {
-		message1 = "Filtered by commodity id: " + request.getParameter("filter");
+	if (request.getParameter("filterCommodityId") != null) {
+		message1 = "Filtered by commodity id: " + request.getParameter("filterCommodityId");
 	}
 	if (request.getParameter("add") != null) {
 		message2 = s.addCommodity(request.getParameter("id"), request.getParameter("name"), request.getParameter("supplier"));	
@@ -29,13 +29,13 @@
 		<th>Name</th>
 		<th>Supplier</th>	
 	</tr>
-	<% for (Commodity commodity : s.getCommodities(request.getParameter("filter"))) {	%>
+	<% for (Commodity commodity : s.getCommodities(request.getParameter("filterCommodityId"))) {	%>
 		<tr>
 			<td><center><%= commodity.getCommodityId() %></center></td>
 			<td><center><%= commodity.getCommodityName() %></center></td>
 			<td><center><%= commodity.getSupplier() %></center></td>
-			<td><center><a href="?page=CommodityBatches&filter=<%= commodity.getCommodityId() %>">Commodity Batches</a></center></td>
-			<td><center><a href="?page=RecipeComponents&filter=<%= commodity.getCommodityId() %>">Recipe Components</a></center></td>
+			<td><center><a href="?page=CommodityBatches&filterCommodityId=<%= commodity.getCommodityId() %>">Commodity Batches</a></center></td>
+			<td><center><a href="?page=RecipeComponents&filterCommodityId=<%= commodity.getCommodityId() %>">Recipe Components</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">

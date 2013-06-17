@@ -5,8 +5,8 @@
 <%
 	String message1 = null;
 	String message2 = null;
-	if (request.getParameter("filter") != null) {
-		message1 = "Filtered by recipe id: " + request.getParameter("filter");
+	if (request.getParameter("filterRecipeId") != null) {
+		message1 = "Filtered by recipe id: " + request.getParameter("filterRecipeId");
 	}
 	if (request.getParameter("add") != null) {
 		message2 = s.addRecipe(request.getParameter("id"), request.getParameter("name"));		
@@ -28,11 +28,12 @@
 		<th>Id</th>
 		<th>Name</th>
 	</tr>
-	<% for (Recipe recipe : s.getRecipes(request.getParameter("filter"))) {	%>
+	<% for (Recipe recipe : s.getRecipes(request.getParameter("filterRecipeId"))) {	%>
 		<tr>
 			<td><center><%= recipe.getRecipeId() %></center></td>
 			<td><center><%= recipe.getRecipeName() %></center></td>
-			<td><center><a href="?page=RecipeComponents&filter=<%= recipe.getRecipeId() %>">Recipe Components</a></center></td>
+			<td><center><a href="?page=RecipeComponents&filterRecipeId=<%= recipe.getRecipeId() %>">Recipe Components</a></center></td>
+			<td><center><a href="?page=ProductBatches&filterRecipeId=<%= recipe.getRecipeId() %>">Product Batches</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">

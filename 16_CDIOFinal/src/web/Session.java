@@ -160,7 +160,23 @@ public class Session {
 			return null;
 		}
 	}
-	public List<ProductBatch> getProductBatches() {
+	public List<ProductBatch> getProductBatches(String recipeId) {
+		
+		if (recipeId != null) {
+			try {
+				
+				int parsedRecipeId = Integer.parseInt(recipeId);
+				
+				try {
+					return databaseAccess.getProductBatch****(parsedRecipeId);
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		}
 		
 		try {
 			return databaseAccess.getProductBatchList();
@@ -170,7 +186,7 @@ public class Session {
 		}
 		
 	}
-	public List<RecipeComp> getRecipeComponents(String recipeId) {
+	public List<RecipeComp> getRecipeComponents(String recipeId, String commodityId) {
 		
 		if (recipeId != null) {
 			try {
@@ -179,6 +195,20 @@ public class Session {
 				
 				try {
 					return databaseAccess.getRecipeCompList(parsedRecipeId);
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		} else if (commodityId != null) {
+			try {
+				
+				int parsedCommodityId = Integer.parseInt(commodityId);
+				
+				try {
+					return databaseAccess.getRecipeCompWithList(parsedCommodityId);
 				} catch (DALException e) {
 					e.printStackTrace();
 					return null;

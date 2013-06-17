@@ -3,16 +3,16 @@
 <jsp:setProperty name="s" property="*"/>
 
 <%
-	String message = null;
+	String message2 = null;
 	if (request.getParameter("update") != null) {
-		message = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rights"));
+		message2 = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rights"));
 	} else if (request.getParameter("add") != null) {
-		message = s.addOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rights"));		
+		message2 = s.addOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("cpr"), request.getParameter("password"), request.getParameter("rights"));		
 	}
 %>
 
-<% if (message != null) { %>
-	<span style="color: red"><%= message %></span>
+<% if (message2 != null) { %>
+	<span style="color: red"><%= message2 %></span>
 	<br>
 	<br>
 <% } %>

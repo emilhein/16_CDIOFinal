@@ -3,14 +3,23 @@
 <jsp:setProperty name="s" property="*"/>
 
 <%
-	String message = null;
+	String message1 = null;
+	String message2 = null;
+	if (request.getParameter("filterRecipeId") != null) {
+		message1 = "Filtered by recipe id: " + request.getParameter("filterRecipeId");
+	}
 	if (request.getParameter("add") != null) {
-		message = s.addProductBatch(request.getParameter("id"), request.getParameter("receptId"), request.getParameter("timestamp"));		
+		message2 = s.addProductBatch(request.getParameter("id"), request.getParameter("receptId"), request.getParameter("timestamp"));		
 	}
 %>
 
-<% if (message != null) { %>
-	<span style="color: red"><%= message %></span>
+<% if (message1 != null) { %>
+	<span style="color: blue"><%= message1 %></span>
+	<br>
+	<br>
+<% } %>
+<% if (message2 != null) { %>
+	<span style="color: red"><%= message2 %></span>
 	<br>
 	<br>
 <% } %>
@@ -21,10 +30,10 @@
 		<th>Timestamp</th>
 		<th>Status</th>
 	</tr>
-	<% for (ProductBatch productBatch : s.getProductBatches()) { %>
+	<% for (ProductBatch productBatch : s.getProductBatches(request.getParameter("filterRecipeId"))) { %>
 		<tr>
 			<td><center><%= productBatch.getPbId() %></center></td>
-			<td><center><%= productBatch.getReceptId() %></center></td>
+			<td><center><a href="?page=Recipes&filterRecipeId=<%= productBatch.getReceptId() %>"><%= productBatch.getReceptId() %></a></center></td>
 			<td><center><%= productBatch.getTimeStamp() %></center></td>
 			<td><center><%= productBatch.getStatus() %></center></td>
 		</tr>
