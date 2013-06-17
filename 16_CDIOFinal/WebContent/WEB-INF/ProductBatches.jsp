@@ -11,7 +11,7 @@
 		message1 = "Filtered by recipe id: " + request.getParameter("filterRecipeId");
 	}
 	if (request.getParameter("add") != null) {
-		message2 = s.addProductBatch(request.getParameter("id"), request.getParameter("receptId"), request.getParameter("timestamp"));		
+		message2 = s.addProductBatch(request.getParameter("id"), request.getParameter("receptId"));		
 	}
 %>
 
@@ -46,7 +46,7 @@
 		<tr>
 			<td><br><input type="text" name="id"></td>
 			<td><br><input type="text" name="receptId"></td>
-			<td><br><input type="text" name="timestamp"></td>
+			<td><br></td>
 			<td><br></td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>

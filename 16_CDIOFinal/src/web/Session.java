@@ -276,6 +276,22 @@ public class Session {
 	}
 	public List<ProductBatchComp> getProductBatchComponents(String productBatchId, String commodityBatchId, String operatorId) {
 		
+		if (productBatchId != null) {
+			try {
+				
+				int parsedProductBatchId = Integer.parseInt(productBatchId);
+				
+				try {
+					return databaseAccess.getProductBatchCompList(parsedProductBatchId);
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		}
+		
 		try {
 			return databaseAccess.getProductBatchCompList();
 		} catch (DALException e) {
@@ -639,7 +655,7 @@ public class Session {
 				
 		return null;
 	}
-	public static String addProductBatch(String id, String receptId, String timestamp) {
+	public static String addProductBatch(String id, String receptId) {
 		
 		// Id
 		
@@ -668,17 +684,11 @@ public class Session {
 		if (parsedReceptId < 1 || parsedReceptId > 99999999) {
 			return "Recept Id must be between 1 and 99999999.";
 		}
-				
-		// Timestamp
-
-		if (!timestamp.matches("^.{2,20}$")) {
-			return "Timestamp length must be between 2 and 20 characters.";
-		}
 		
 		// Add
 
 		try {
-			databaseAccess.createProductBatch(new ProductBatch(parsedId, parsedReceptId, timestamp, 0));
+			databaseAccess.createProductBatch(new ProductBatch(parsedId, parsedReceptId, 0));
 		} catch (Exception e) {
 			return "Could not add product batch (" + e.getMessage() + ").";
 		}
