@@ -119,7 +119,6 @@ public class Session {
 	public List<Commodity_Sum> getLowCommodityBatches(int lowDefinition) {
 		
 		try {
-			// TODO Kim skal lave en metode i database_access som jeg kan bruge
 			return databaseAccess.getLowCommodityList(lowDefinition);
 		} catch (DALException e) {
 			e.printStackTrace();
