@@ -48,6 +48,18 @@ public class Session {
 		
 		return pages;
 	}
+	public Page getPage(String page) {
+		
+		if (page != null) {
+			for (Page x : pages) {
+				if (page.equalsIgnoreCase(x.getName()) && getRights() <= x.getRightsRequired()) {
+					return x;
+				}
+			}
+		}
+		
+		return pages.get(0);
+	}
 	public boolean isLoggedIn() {
 		
 		return operator != null;
@@ -275,18 +287,6 @@ public class Session {
 	
 	//# Functions
 	
-	public Page getPage(String page) {
-		
-		if (page != null) {
-			for (Page x : pages) {
-				if (page.equalsIgnoreCase(x.getName()) && getRights() <= x.getRightsRequired()) {
-					return x;
-				}
-			}
-		}
-		
-		return pages.get(0);
-	}
 	public String login(String id, String password) {
 		
 		logout();

@@ -47,7 +47,7 @@
 			<td><input type="text" name="id"></td>
 			<td><input type="text" name="receptId"></td>
 			<td><input type="text" name="timestamp"></td>
-			<td><center>0</center></td>
+			<td></td>
 			<td><input type="submit" value="Add"></td>
 		</tr>
 	</form>
