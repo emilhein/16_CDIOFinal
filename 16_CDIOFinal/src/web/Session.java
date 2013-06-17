@@ -1,6 +1,7 @@
 package web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import special_objects.Commodity_Sum;
@@ -763,5 +764,9 @@ public class Session {
 				
 		return null;
 	}
-	
+	public static String getdate(){
+	Date d = new Date();
+	String date = d.toString();
+	return "Udskrevet: " + date;
+		}
 }
