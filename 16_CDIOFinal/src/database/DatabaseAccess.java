@@ -45,6 +45,7 @@ public class DatabaseAccess {
 			try {
 				connector.Close();
 			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 			
 			throw new DALException(e);
@@ -59,6 +60,7 @@ public class DatabaseAccess {
 		try {
 			connector.Close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -79,6 +81,7 @@ public class DatabaseAccess {
 				try {
 					connector.doUpdate("DROP TABLE " + table + ";");
 				} catch (DALException e) {
+					e.printStackTrace();
 				}
 			}
 						
@@ -141,6 +144,7 @@ public class DatabaseAccess {
 			try {
 				connector.Close();
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 		}
