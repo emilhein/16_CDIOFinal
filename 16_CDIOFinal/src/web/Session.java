@@ -68,8 +68,27 @@ public class Session {
 		}
 		
 	}
-	public List<Commodity> getCommodities() {
+	public List<Commodity> getCommodities(String commodityId) {
 	
+		if (commodityId != null) {
+			try {
+				
+				int parsedCommodityId = Integer.parseInt(commodityId);
+				
+				try {
+					List<Commodity> temp = new ArrayList<Commodity>();
+					temp.add(databaseAccess.getCommodity(parsedCommodityId));
+					return temp;
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		}
+		
+		
 		try {
 			return databaseAccess.getCommodityList();
 		} catch (DALException e) {

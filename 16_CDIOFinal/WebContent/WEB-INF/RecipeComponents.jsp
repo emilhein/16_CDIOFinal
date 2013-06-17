@@ -4,8 +4,8 @@
 
 <%
 	String message = null;
-	if (request.getParameter("recipeId") != null) {
-		message = "Filtered by recipe id: " + request.getParameter("recipeId");
+	if (request.getParameter("filter") != null) {
+		message = "Filtered by recipe id: " + request.getParameter("filter");
 	}	
 	if (request.getParameter("add") != null) {
 		message = s.addRecipeComponent(request.getParameter("recipeId"), request.getParameter("commodityId"), request.getParameter("quantity"), request.getParameter("tolerance"));		
@@ -24,10 +24,10 @@
 		<th>Quantity</th>
 		<th>Tolerance</th>
 	</tr>
-	<% for (RecipeComp recipeComp : s.getRecipeComponents(request.getParameter("recipeId"))) {	%>
+	<% for (RecipeComp recipeComp : s.getRecipeComponents(request.getParameter("filter"))) {	%>
 		<tr>
-			<td><center><a href="?page=Recipes&recipeId=<%= recipeComp.getRecipeId() %>"><%= recipeComp.getRecipeId() %></a></center></td>
-			<td><center><%= recipeComp.getCommodityId() %></center></td>
+			<td><center><a href="?page=Recipes&filter=<%= recipeComp.getRecipeId() %>"><%= recipeComp.getRecipeId() %></a></center></td>
+			<td><center><a href="?page=Commodities&filter=<%= recipeComp.getCommodityId() %>"><%= recipeComp.getCommodityId() %></a></center></td>
 			<td><center><%= recipeComp.getNomNetto() %></center></td>
 			<td><center><%= recipeComp.getTolerance() %></center></td>
 		</tr>

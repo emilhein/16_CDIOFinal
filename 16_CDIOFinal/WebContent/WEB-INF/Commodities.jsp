@@ -4,6 +4,9 @@
 
 <%
 	String message = null;
+	if (request.getParameter("filter") != null) {
+		message = "Filtered by commodity id: " + request.getParameter("filter");
+	}
 	if (request.getParameter("add") != null) {
 		message = s.addCommodity(request.getParameter("id"), request.getParameter("name"), request.getParameter("supplier"));	
 	}
@@ -20,7 +23,7 @@
 		<th>Name</th>
 		<th>Supplier</th>	
 	</tr>
-	<% for (Commodity commodity : s.getCommodities()) {	%>
+	<% for (Commodity commodity : s.getCommodities(request.getParameter("filter"))) {	%>
 		<tr>
 			<td><center><%= commodity.getCommodityId() %></center></td>
 			<td><center><%= commodity.getCommodityName() %></center></td>
@@ -30,10 +33,10 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><input type="text" name="id"></td>
-			<td><input type="text" name="name"></td>
-			<td><input type="text" name="supplier"></td>
-			<td><input type="submit" value="Add"></td>
+			<td><br><input type="text" name="id"></td>
+			<td><br><input type="text" name="name"></td>
+			<td><br><input type="text" name="supplier"></td>
+			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
 </table>
