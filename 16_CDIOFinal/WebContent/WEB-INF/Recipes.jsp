@@ -23,7 +23,7 @@
 		<tr>
 			<td><center><%= recipe.getRecipeId() %></center></td>
 			<td><center><%= recipe.getRecipeName() %></center></td>
-			<td><center><a href="?page=RecipeComponents&RecipeId=<%= recipe.getRecipeId() %>">Components</a></center></td>
+			<td><center><a href="?page=RecipeComponents&recipeId=<%= recipe.getRecipeId() %>">Components</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">

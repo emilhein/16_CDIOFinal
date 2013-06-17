@@ -7,6 +7,9 @@
 	if (request.getParameter("add") != null) {
 		message = s.addRecipeComponent(request.getParameter("recipeId"), request.getParameter("commodityId"), request.getParameter("quantity"), request.getParameter("tolerance"));		
 	}
+	if (request.getParameter("recipeId") != null) {
+		message = "Filtered by recipe id: " + request.getParameter("recipeId");
+	}
 %>
 
 <% if (message != null) { %>
@@ -21,7 +24,7 @@
 		<th>Quantity</th>
 		<th>Tolerance</th>
 	</tr>
-	<% for (RecipeComp recipeComp : s.getRecipeComponents(request.getParameter("RecipeId"))) {	%>
+	<% for (RecipeComp recipeComp : s.getRecipeComponents(request.getParameter("recipeId"))) {	%>
 		<tr>
 			<td><center><%= recipeComp.getRecipeId() %></center></td>
 			<td><center><%= recipeComp.getCommodityId() %></center></td>
