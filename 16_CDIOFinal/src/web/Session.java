@@ -27,11 +27,11 @@ public class Session {
 				e.printStackTrace();
 			}
 			pages.add(new Page("Home", "Home", 4));
-			pages.add(new Page("User Administration", "UserAdministration", 1));
-			pages.add(new Page("Commodity Administration", "CommodityAdministration", 2));
-			pages.add(new Page("Prescription Administration", "PrescriptionAdministration", 2));
-			pages.add(new Page("Com Batch Administration", "ComBatchAdministration", 3));
-			pages.add(new Page("Product Batch Administration", "ProductBatchAdministration", 3));
+			pages.add(new Page("Operators", "Operators", 1));
+			pages.add(new Page("Commodities", "Commodities", 2));
+			pages.add(new Page("Recipes", "Recipes", 2));
+			pages.add(new Page("Commodity Batches", "CommodityBatches", 3));
+			pages.add(new Page("Product Batches", "ProductBatches", 3));
 		}
 
 	}
