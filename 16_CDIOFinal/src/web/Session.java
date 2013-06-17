@@ -10,6 +10,7 @@ import database_objects.CommodityBatch;
 import database_objects.Operator;
 import database_objects.Commodity;
 import database_objects.ProductBatch;
+import database_objects.ProductBatchComp;
 import database_objects.Recipe;
 import database_objects.RecipeComp;
 
@@ -36,6 +37,7 @@ public class Session {
 			pages.add(new Page("Recipes", "Recipes", 2));
 			pages.add(new Page("Recipe Components", "RecipeComponents", 2));
 			pages.add(new Page("Product Batches", "ProductBatches", 3));
+			pages.add(new Page("Product Batch Components", "ProductBatchComponents", 3));
 		}
 
 	}
@@ -58,7 +60,25 @@ public class Session {
 		
 		return operator.getRights();
 	}
-	public List<Operator> getOperators() {
+	public List<Operator> getOperators(String operatorId) {
+		
+		if (operatorId != null) {
+			try {
+				
+				int parsedOperatorId = Integer.parseInt(operatorId);
+				
+				try {
+					List<Operator> temp = new ArrayList<Operator>();
+					temp.add(databaseAccess.getOperator(parsedOperatorId));
+					return temp;
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		}
 		
 		try {
 			return databaseAccess.getOperatorList();
@@ -160,9 +180,25 @@ public class Session {
 			return null;
 		}
 	}
-	public List<ProductBatch> getProductBatches(String recipeId) {
+	public List<ProductBatch> getProductBatches(String productBatchId, String recipeId) {
 		
-		if (recipeId != null) {
+		if (productBatchId != null) {
+			try {
+				
+				int parsedProductBatchId = Integer.parseInt(productBatchId);
+				
+				try {
+					List<ProductBatch> temp = new ArrayList<ProductBatch>();
+					temp.add(databaseAccess.getProductBatch(parsedProductBatchId));
+					return temp;
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		} else if (recipeId != null) {
 			try {
 				
 				int parsedRecipeId = Integer.parseInt(recipeId);
@@ -220,6 +256,16 @@ public class Session {
 		
 		try {
 			return databaseAccess.getRecipeCompList();
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public List<ProductBatchComp> getProductBatchComponents() {
+		
+		try {
+			return databaseAccess.getProductBatchCompList();
 		} catch (DALException e) {
 			e.printStackTrace();
 			return null;

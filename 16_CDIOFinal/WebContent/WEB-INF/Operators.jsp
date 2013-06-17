@@ -3,7 +3,11 @@
 <jsp:setProperty name="s" property="*"/>
 
 <%
+	String message1 = null;
 	String message2 = null;
+	if (request.getParameter("filterOperatorId") != null) {
+		message1 = "Filtered by operator id: " + request.getParameter("filterOperatorId");
+	}
 	if (request.getParameter("update") != null) {
 		message2 = s.updateOperator(request.getParameter("id"), request.getParameter("name"), request.getParameter("initials"), request.getParameter("password"), request.getParameter("rights"));
 	} else if (request.getParameter("add") != null) {
@@ -11,6 +15,11 @@
 	}
 %>
 
+<% if (message1 != null) { %>
+	<span style="color: blue"><%= message1 %></span>
+	<br>
+	<br>
+<% } %>
 <% if (message2 != null) { %>
 	<span style="color: red"><%= message2 %></span>
 	<br>
@@ -25,7 +34,7 @@
 		<th>Password</th>
 		<th>Rights</th>
 	</tr>
-	<% for (Operator operator : s.getOperators()) {	%>
+	<% for (Operator operator : s.getOperators(request.getParameter("filterOperatorId"))) {	%>
 		<form method="post">
 			<input type="hidden" name="update" value="true">
 			<input type="hidden" name="id" value="<%= operator.getOprId() %>">

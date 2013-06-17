@@ -5,7 +5,9 @@
 <%
 	String message1 = null;
 	String message2 = null;
-	if (request.getParameter("filterRecipeId") != null) {
+	if (request.getParameter("filterProductBatchId") != null) {
+		message1 = "Filtered by product batch id: " + request.getParameter("filterProductBatchId");
+	} else if (request.getParameter("filterRecipeId") != null) {
 		message1 = "Filtered by recipe id: " + request.getParameter("filterRecipeId");
 	}
 	if (request.getParameter("add") != null) {
@@ -30,7 +32,7 @@
 		<th>Timestamp</th>
 		<th>Status</th>
 	</tr>
-	<% for (ProductBatch productBatch : s.getProductBatches(request.getParameter("filterRecipeId"))) { %>
+	<% for (ProductBatch productBatch : s.getProductBatches(request.getParameter("filterProductBatchId"), request.getParameter("filterRecipeId"))) { %>
 		<tr>
 			<td><center><%= productBatch.getPbId() %></center></td>
 			<td><center><a href="?page=Recipes&filterRecipeId=<%= productBatch.getReceptId() %>"><%= productBatch.getReceptId() %></a></center></td>

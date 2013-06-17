@@ -132,7 +132,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO productBatch VALUES(1,1,'" + new Date().toString() + "',1)");
 			
 			// indsæt productBatchComponent.
-			//connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
+			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1,1, 12.2,12.0,1)");
 			
 			
 		} finally {
