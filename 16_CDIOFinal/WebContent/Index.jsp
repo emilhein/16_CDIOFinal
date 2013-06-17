@@ -65,7 +65,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" value="Sign in"></td>
+					<td><br><input type="submit" value="Sign in"></td>
 				</tr>
 			</table>
 		</form>
