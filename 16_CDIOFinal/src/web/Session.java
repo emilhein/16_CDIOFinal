@@ -78,7 +78,25 @@ public class Session {
 		}
 		
 	}
-	public List<Recipe> getRecipes() {
+	public List<Recipe> getRecipes(String recipeId) {
+		
+		if (recipeId != null) {
+			try {
+				
+				int parsedRecipeId = Integer.parseInt(recipeId);
+				
+				try {
+					List<Recipe> temp = new ArrayList<Recipe>();
+					temp.add(databaseAccess.getRecipe(parsedRecipeId));
+					return temp;
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		}
 		
 		try {
 			return databaseAccess.getRecipeList();
@@ -98,7 +116,6 @@ public class Session {
 		}
 		
 	}
-	
 	public List<Commodity_Sum> getLowCommodityBatches(int lowDefinition) {
 		
 		try {

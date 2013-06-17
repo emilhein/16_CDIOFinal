@@ -4,6 +4,9 @@
 
 <%
 	String message = null;
+	if (request.getParameter("recipeId") != null) {
+		message = "Filtered by recipe id: " + request.getParameter("recipeId");
+	}
 	if (request.getParameter("add") != null) {
 		message = s.addRecipe(request.getParameter("id"), request.getParameter("name"));		
 	}
@@ -19,7 +22,7 @@
 		<th>Id</th>
 		<th>Name</th>
 	</tr>
-	<% for (Recipe recipe : s.getRecipes()) {	%>
+	<% for (Recipe recipe : s.getRecipes(request.getParameter("recipeId"))) {	%>
 		<tr>
 			<td><center><%= recipe.getRecipeId() %></center></td>
 			<td><center><%= recipe.getRecipeName() %></center></td>
