@@ -33,7 +33,7 @@
 					for (Page x : s.getPages()) {
 						if (s.getRights() <= x.getRightsRequired()) {
 				%>
-							<li><a href="?page=<%= x.getName() %>"<%= x == p ? "class=\"active\"" : "" %>><%= x.getName() %></a>
+							<li><a href="?page=<%= x.getName() %>"<%= x == p ? "class=\"active\"" : "" %>><%= x.getTitle() %></a>
 				<%
 						}
 					}

@@ -26,12 +26,12 @@ public class Session {
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-			pages.add(new Page("Home", 4));
-			pages.add(new Page("UserAdministration", 1));
-			pages.add(new Page("CommodityAdministration", 2));
-			pages.add(new Page("PrescriptionAdministration", 2));
-			pages.add(new Page("ComBatchAdministration", 3));
-			pages.add(new Page("ProductBatchAdministration", 3));
+			pages.add(new Page("Home", "Home", 4));
+			pages.add(new Page("User Administration", "UserAdministration", 1));
+			pages.add(new Page("Commodity Administration", "CommodityAdministration", 2));
+			pages.add(new Page("Prescription Administration", "PrescriptionAdministration", 2));
+			pages.add(new Page("Com Batch Administration", "ComBatchAdministration", 3));
+			pages.add(new Page("Product Batch Administration", "ProductBatchAdministration", 3));
 		}
 
 	}
