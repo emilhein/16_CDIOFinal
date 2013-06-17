@@ -44,11 +44,11 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><input type="text" name="id"></td>
-			<td><input type="text" name="receptId"></td>
-			<td><input type="text" name="timestamp"></td>
-			<td></td>
-			<td><input type="submit" value="Add"></td>
+			<td><br><input type="text" name="id"></td>
+			<td><br><input type="text" name="receptId"></td>
+			<td><br><input type="text" name="timestamp"></td>
+			<td><br></td>
+			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
 </table>

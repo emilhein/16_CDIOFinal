@@ -53,13 +53,13 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><input type="text" name="id"></td>
-			<td><input type="text" name="name"></td>
-			<td><input type="text" name="initials"></td>
-			<td><input type="text" name="cpr"></td>
-			<td><input type="text" name="password"></td>
-			<td><input type="text" name="rights"></td>
-			<td><input type="submit" value="Add"></td>
+			<td><br><input type="text" name="id"></td>
+			<td><br><input type="text" name="name"></td>
+			<td><br><input type="text" name="initials"></td>
+			<td><br><input type="text" name="cpr"></td>
+			<td><br><input type="text" name="password"></td>
+			<td><br><input type="text" name="rights"></td>
+			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
 </table>
