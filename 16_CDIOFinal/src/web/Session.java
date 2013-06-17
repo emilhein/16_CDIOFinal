@@ -290,6 +290,34 @@ public class Session {
 				
 			} catch (Exception e) {
 			}
+		} else if (commodityBatchId != null) {
+			try {
+				
+				int parsedCommodityBatchId = Integer.parseInt(commodityBatchId);
+				
+				try {
+					return databaseAccess.getProductBatchCompListCbId(parsedCommodityBatchId);
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
+		} else if (operatorId != null) {
+			try {
+				
+				int parsedOperatorId = Integer.parseInt(operatorId);
+				
+				try {
+					return databaseAccess.getProductBatchCompListOprId(parsedOperatorId);
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} catch (Exception e) {
+			}
 		}
 		
 		try {
