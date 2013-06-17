@@ -4,8 +4,12 @@
 
 <%
 	String message1 = null;
-	if (request.getParameter("filterRecipeId") != null) {
-		//message1 = "Filtered by recipe id: " + request.getParameter("filterRecipeId");
+	if (request.getParameter("filterProductBatchId") != null) {
+		message1 = "Filtered by product batch id: " + request.getParameter("filterProductBatchId");
+	} else if (request.getParameter("filterCommodityBatchId") != null) {
+		message1 = "Filtered by commodity batch id: " + request.getParameter("filterCommodityBatchId");
+	} else if (request.getParameter("filterOperatorId") != null) {
+		message1 = "Filtered by operator id: " + request.getParameter("filterOperatorId");
 	}
 %>
 
@@ -22,7 +26,7 @@
 		<th>Netto</th>
 		<th>Tara</th>
 	</tr>
-	<% for (ProductBatchComp productBatchComp : s.getProductBatchComponents()) { %>
+	<% for (ProductBatchComp productBatchComp : s.getProductBatchComponents(request.getParameter("filterProductBatchId"), request.getParameter("filterCommodityBatchId"), request.getParameter("filterOperatorId"))) { %>
 		<tr>
 			<td><center><a href="?page=ProductBatches&filterProductBatchId=<%= productBatchComp.getPbId() %>"><%= productBatchComp.getPbId() %></a></center></td>
 			<td><center><a href="?page=Commodities&filterCommodityId=<%= productBatchComp.getCbId() %>"><%= productBatchComp.getCbId() %></a></center></td>

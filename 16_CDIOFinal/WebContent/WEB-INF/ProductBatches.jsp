@@ -38,6 +38,7 @@
 			<td><center><a href="?page=Recipes&filterRecipeId=<%= productBatch.getReceptId() %>"><%= productBatch.getReceptId() %></a></center></td>
 			<td><center><%= productBatch.getTimeStamp() %></center></td>
 			<td><center><%= productBatch.getStatus() %></center></td>
+			<td><center><a href="?page=ProductBatchComponents&filterProductBatchId=<%= productBatch.getPbId() %>">Product Batch Components</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">

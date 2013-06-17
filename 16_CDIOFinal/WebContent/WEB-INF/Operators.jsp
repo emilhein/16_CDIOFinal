@@ -46,6 +46,7 @@
 				<td><input type="text" name="password" value="<%= operator.getPassword() %>"></td>
 				<td><input type="text" name="rights" value="<%= operator.getRights() %>"></td>
 				<td><input type="submit" value="Update"></td>
+				<td><center><a href="?page=ProductBatchComponents&filterOperatorId=<%= operator.getOprId() %>">Product Batch Components</a></center></td>
 			</tr>
 		</form>
 	<% } %>

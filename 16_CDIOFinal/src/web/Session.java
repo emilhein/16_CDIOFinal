@@ -204,7 +204,7 @@ public class Session {
 				int parsedRecipeId = Integer.parseInt(recipeId);
 				
 				try {
-					return databaseAccess.getProductBatch****(parsedRecipeId);
+					return databaseAccess.getProductBatchList(parsedRecipeId);
 				} catch (DALException e) {
 					e.printStackTrace();
 					return null;
@@ -262,7 +262,7 @@ public class Session {
 		}
 		
 	}
-	public List<ProductBatchComp> getProductBatchComponents() {
+	public List<ProductBatchComp> getProductBatchComponents(String productBatchId, String commodityBatchId, String operatorId) {
 		
 		try {
 			return databaseAccess.getProductBatchCompList();
