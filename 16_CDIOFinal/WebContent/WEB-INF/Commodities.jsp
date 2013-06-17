@@ -35,6 +35,7 @@
 			<td><center><%= commodity.getCommodityName() %></center></td>
 			<td><center><%= commodity.getSupplier() %></center></td>
 			<td><center><a href="?page=CommodityBatches&filter=<%= commodity.getCommodityId() %>">Commodity Batches</a></center></td>
+			<td><center><a href="?page=RecipeComponents&filter=<%= commodity.getCommodityId() %>">Recipe Components</a></center></td>
 		</tr>
 	<% } %>
 	<form method="post">
