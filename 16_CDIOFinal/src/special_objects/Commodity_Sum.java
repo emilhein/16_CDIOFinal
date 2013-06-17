@@ -4,11 +4,8 @@ import database_objects.Commodity;
 
 public class Commodity_Sum {
 
-	/** i området 1-99999999 vælges af brugerne */
 	private int commodityId;                     
-	/** min. 2 max. 20 karakterer */
 	private String commodityName;                
-	/** min. 2 max. 20 karakterer */
 	private double sum;         
 
 	public Commodity_Sum(int commodityId, String commodityName, double sum)
