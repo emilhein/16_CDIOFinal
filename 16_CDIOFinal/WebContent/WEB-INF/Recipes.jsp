@@ -18,7 +18,6 @@
 	<tr>
 		<th>Id</th>
 		<th>Name</th>
-		<th></th>
 	</tr>
 	<% for (Recipe recipe : s.getRecipes()) {	%>
 		<tr>

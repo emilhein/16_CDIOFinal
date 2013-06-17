@@ -9,6 +9,7 @@ import database_objects.Operator;
 import database_objects.Commodity;
 import database_objects.ProductBatch;
 import database_objects.Recipe;
+import database_objects.RecipeComp;
 
 public class Session {
 
@@ -29,8 +30,9 @@ public class Session {
 			pages.add(new Page("Home", "Home", 4));
 			pages.add(new Page("Operators", "Operators", 1));
 			pages.add(new Page("Commodities", "Commodities", 2));
-			pages.add(new Page("Recipes", "Recipes", 2));
 			pages.add(new Page("Commodity Batches", "CommodityBatches", 3));
+			pages.add(new Page("Recipes", "Recipes", 2));
+			pages.add(new Page("Recipe Components", "RecipeComponents", 2));
 			pages.add(new Page("Product Batches", "ProductBatches", 3));
 		}
 
@@ -104,7 +106,17 @@ public class Session {
 		}
 		
 	}
-	
+	public List<RecipeComp> getRecipeComponents() {
+		
+		try {
+			return databaseAccess.getRecipeCompList();
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+		
 	//# Functions
 	
 	public Page getPage(String page) {
@@ -513,6 +525,74 @@ public class Session {
 			databaseAccess.createProductBatch(new ProductBatch(parsedId, parsedReceptId, timestamp, 0));
 		} catch (Exception e) {
 			return "Could not add product batch (" + e.getMessage() + ").";
+		}
+				
+		return null;
+	}
+	public static String addRecipeComponent(String recipeId, String commodityId, String quantity, String tolerance) {
+		
+		// Recipe Id
+		
+		int parsedRecipeId;
+			
+		try {
+			parsedRecipeId = Integer.parseInt(recipeId);
+		} catch (Exception e) {
+			return "Recipe Id must be a number.";
+		}
+				
+		if (parsedRecipeId < 1 || parsedRecipeId > 99999999) {
+			return "Recipe Id must be between 1 and 99999999.";
+		}
+					
+		// Commodity Id
+				
+		int parsedCommodityId;
+
+		try {
+			parsedCommodityId = Integer.parseInt(commodityId);
+		} catch (Exception e) {
+			return "Commodity Id must be a number.";
+		}
+				
+		if (parsedCommodityId < 1 || parsedCommodityId > 99999999) {
+			return "Commodity Id must be between 1 and 99999999.";
+		}
+				
+		// Quantity
+		
+		double parsedQuantity;
+
+		try {
+			parsedQuantity = Double.parseDouble(quantity);
+		} catch (Exception e) {
+			return "Quantity must be a number.";
+		}
+				
+		if (parsedQuantity < 1 || parsedQuantity > 99999999) {
+			return "Quantity must be between 1 and 99999999.";
+		}
+					
+		// Tolerance
+		
+		double parsedTolerance;
+
+		try {
+			parsedTolerance = Double.parseDouble(tolerance);
+		} catch (Exception e) {
+			return "Tolerance must be a number.";
+		}
+		
+		if (parsedTolerance < 1 || parsedTolerance > 99999999) {
+			return "Tolerance must be between 1 and 99999999.";
+		}
+
+		// Add
+		
+		try {
+			databaseAccess.createRecipeComp(new RecipeComp(parsedRecipeId, parsedCommodityId, parsedQuantity, parsedTolerance));
+		} catch (Exception e) {
+			return "Could not add recipe component (" + e.getMessage() + ").";
 		}
 				
 		return null;

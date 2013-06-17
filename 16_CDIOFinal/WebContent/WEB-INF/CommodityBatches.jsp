@@ -21,7 +21,6 @@
 		<th>Id</th>
 		<th>Commodity Id</th>
 		<th>Quantity</th>
-		<th></th>
 	</tr>
 	<% for (CommodityBatch commodityBatch : s.getCommodityBatches()) {	%>
 		<form method="post">

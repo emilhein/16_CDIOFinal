@@ -20,7 +20,6 @@
 		<th>Recept Id</th>
 		<th>Timestamp</th>
 		<th>Status</th>
-		<th></th>
 	</tr>
 	<% for (ProductBatch productBatch : s.getProductBatches()) { %>
 		<tr>

@@ -24,7 +24,6 @@
 		<th>CPR</th>
 		<th>Password</th>
 		<th>Rights</th>
-		<th></th>
 	</tr>
 	<% for (Operator operator : s.getOperators()) {	%>
 		<form method="post">
