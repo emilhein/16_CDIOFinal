@@ -19,9 +19,11 @@
 			Produkt Batch nr. <%= productBatch.getPbId()%><br>
 			Recept nr. <%= productBatch.getReceptId() %>
 		</div>
-		<% for (FullBatchList fullbatchlist : s.getFullBatchListNotMade(productBatch.getPbId())) { %>
+		<br>
+		<center>Produceret</center>
+		<% for (FullBatchList fullbatchlist : s.getFullBatchListMade(productBatch.getPbId())) { %>
 			<br>
-			<div style="border-bottom: 1px black solid; width: 80%">
+			<div style="border-bottom: 1px black solid">
 				Commodity Id: <%= fullbatchlist.getCommodityId() %><br>
 				Commodity Name: <%= fullbatchlist.getCommodityName() %><br>
 			</div>
@@ -36,6 +38,19 @@
 				netto += fullbatchlist.getNetto();
 			%>
 		<% } %>
+		<br>
+		<center>Mangler</center>
+		<% for (FullBatchList fullbatchlist : s.getFullBatchListNotMade(productBatch.getPbId())) { %>
+			<br>
+			<div style="border-bottom: 1px black solid">
+				Commodity Id: <%= fullbatchlist.getCommodityId() %><br>
+				Commodity Name: <%= fullbatchlist.getCommodityName() %><br>
+			</div>
+			NomNetto: <%= fullbatchlist.getNomNetto() %><br>
+			Tolerance: <%= fullbatchlist.getTolerance() %><br>
+		<% } %>
+		<br>
+		<center>Opsummering</center>
 		<br>
 		<div style="border-bottom: 1px black solid; margin-left: auto; margin-rigth: auto">
 			Sum Tara: <%= tara %><br>
