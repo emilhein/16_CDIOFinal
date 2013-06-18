@@ -19,12 +19,14 @@
 				<th>Name</th>
 				<th>Quantity</th>
 			</tr>
-			<% for(Commodity_Sum commoditySum : lowCommodityBatches) { %>
+			<% for(Commodity_Sum commoditySum : lowCommodityBatches) { 
+			if (commoditySum.getSum() != 0) {%>
 				<tr>
 					<td><center><%= commoditySum.getCommodityId() %></center></td>
 					<td><center><%= commoditySum.getCommodityName() %></center></td>
 					<td><center><%= commoditySum.getSum() %></center></td>
 				</tr>
+				<% } %>
 			<% } %>
 		</table>
 	<% } %>
