@@ -792,12 +792,9 @@ public class Session {
 				
 		return null;
 	}
-
-	
-
 	public static String getDate() {
 	
-		return "Udskrevet: " + new Date().toString();
+		return new Date().toString();
 	}
 	
 
