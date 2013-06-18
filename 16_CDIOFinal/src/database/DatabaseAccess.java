@@ -133,7 +133,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(6,6,1.4)");
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(7,7,6.5)");
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(8,8,10)");
-			connector.doUpdate("INSERT INTO commodityBatch VALUES(9,2,3");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(9,2,3)");
 			
 			// indsæt recipe.
 			connector.doUpdate("INSERT INTO recipe VALUES(1,'LemonJuice')");
