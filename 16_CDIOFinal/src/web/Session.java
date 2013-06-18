@@ -507,7 +507,7 @@ public class Session {
 						
 		// Update
 		
-		commodityBatch.setMaengde(Integer.parseInt(quantity));
+		commodityBatch.setMaengde(Double.parseDouble(quantity));
 		
 		try {
 			databaseAccess.updateCommodityBatch(commodityBatch);
@@ -532,7 +532,7 @@ public class Session {
 		// Add
 
 		try {
-			databaseAccess.createCommodityBatch(new CommodityBatch(Integer.parseInt(id), Integer.parseInt(commodityId), Integer.parseInt(quantity)));
+			databaseAccess.createCommodityBatch(new CommodityBatch(Integer.parseInt(id), Integer.parseInt(commodityId), Double.parseDouble(quantity)));
 		} catch (Exception e) {
 			return "Could not add commodity batch (" + e.getMessage() + ").";
 		}
@@ -541,38 +541,17 @@ public class Session {
 	}
 	public static String addProductBatch(String id, String receptId) {
 		
-		// Id
-		
-		int parsedId;
-			
-		try {
-			parsedId = Integer.parseInt(id);
-		} catch (Exception e) {
-			return "Id must be a number.";
+		if (id == null || !id.matches("^[0-9]{1,8}$")) {
+			return "Id must be a number between 1 and 99999999.";
 		}
-				
-		if (parsedId < 1 || parsedId > 99999999) {
-			return "Id must be between 1 and 99999999.";
-		}
-					
-		// Recept Id
-				
-		int parsedReceptId;
-
-		try {
-			parsedReceptId = Integer.parseInt(receptId);
-		} catch (Exception e) {
-			return "Recept Id must be a number.";
-		}
-				
-		if (parsedReceptId < 1 || parsedReceptId > 99999999) {
-			return "Recept Id must be between 1 and 99999999.";
+		if (receptId == null || !receptId.matches("^[0-9]{1,8}$")) {
+			return "Recept id must be a number between 1 and 99999999.";
 		}
 		
 		// Add
 
 		try {
-			databaseAccess.createProductBatch(new ProductBatch(parsedId, parsedReceptId, null, null, 0));
+			databaseAccess.createProductBatch(new ProductBatch(Integer.parseInt(id), Integer.parseInt(receptId), null, null, 0));
 		} catch (Exception e) {
 			return "Could not add product batch (" + e.getMessage() + ").";
 		}
@@ -581,66 +560,23 @@ public class Session {
 	}
 	public static String addRecipeComponent(String recipeId, String commodityId, String quantity, String tolerance) {
 		
-		// Recipe Id
-		
-		int parsedRecipeId;
-			
-		try {
-			parsedRecipeId = Integer.parseInt(recipeId);
-		} catch (Exception e) {
-			return "Recipe Id must be a number.";
+		if (recipeId == null || !recipeId.matches("^[0-9]{1,8}$")) {
+			return "Recipe id must be a number between 1 and 99999999.";
 		}
-				
-		if (parsedRecipeId < 1 || parsedRecipeId > 99999999) {
-			return "Recipe Id must be between 1 and 99999999.";
+		if (commodityId == null || !commodityId.matches("^[0-9]{1,8}$")) {
+			return "Commodity id must be a number between 1 and 99999999.";
 		}
-					
-		// Commodity Id
-				
-		int parsedCommodityId;
-
-		try {
-			parsedCommodityId = Integer.parseInt(commodityId);
-		} catch (Exception e) {
-			return "Commodity Id must be a number.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$") || Double.parseDouble(quantity) < 0.05 || Double.parseDouble(quantity) > 20) {
+			return "Quantity must be a decimal number between 0.05 and 20.";
 		}
-				
-		if (parsedCommodityId < 1 || parsedCommodityId > 99999999) {
-			return "Commodity Id must be between 1 and 99999999.";
-		}
-				
-		// Quantity
-		
-		double parsedQuantity;
-
-		try {
-			parsedQuantity = Double.parseDouble(quantity);
-		} catch (Exception e) {
-			return "Quantity must be a number.";
-		}
-				
-		if (parsedQuantity < 1 || parsedQuantity > 99999999) {
-			return "Quantity must be between 1 and 99999999.";
-		}
-					
-		// Tolerance
-		
-		double parsedTolerance;
-
-		try {
-			parsedTolerance = Double.parseDouble(tolerance);
-		} catch (Exception e) {
-			return "Tolerance must be a number.";
-		}
-		
-		if (parsedTolerance < 0.1 || parsedTolerance > 10) {
-			return "Tolerance must be between 0.1% and 10.0%.";
+		if (tolerance == null || !tolerance.matches("^[0-9]+\\.?[0-9]*$") || Double.parseDouble(tolerance) < 0.1 || Double.parseDouble(tolerance) > 10) {
+			return "Tolerance must be a decimal number between 0.1 and 10.";
 		}
 
 		// Add
 		
 		try {
-			databaseAccess.createRecipeComp(new RecipeComp(parsedRecipeId, parsedCommodityId, parsedQuantity, parsedTolerance));
+			databaseAccess.createRecipeComp(new RecipeComp(Integer.parseInt(recipeId), Integer.parseInt(commodityId), Double.parseDouble(quantity), Double.parseDouble(tolerance)));
 		} catch (Exception e) {
 			return "Could not add recipe component (" + e.getMessage() + ").";
 		}
