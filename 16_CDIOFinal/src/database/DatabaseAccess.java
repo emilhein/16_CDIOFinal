@@ -89,7 +89,7 @@ public class DatabaseAccess {
 			connector.doUpdate("CREATE TABLE commodityBatch(cbId INTEGER NOT NULL, commodityId INTEGER, quantity REAL NOT NULL, PRIMARY KEY(cbId), FOREIGN KEY (commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipe(recipeId INTEGER NOT NULL, recipeName VARCHAR(20), PRIMARY KEY(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipeComponent(recipeId INTEGER, commodityId INTEGER, nomNetto REAL NOT NULL, tolerance REAL NOT NULL, PRIMARY KEY(recipeId, commodityId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId), FOREIGN KEY(commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
-			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL, recipeId INTEGER, ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
+			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL, recipeId INTEGER, startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, endTime TIMESTAMP, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, terminal INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
 
 			
@@ -99,8 +99,8 @@ public class DatabaseAccess {
 			//commoditybatch --- cbId: int, commodityId: int, quantity: real.
 			//recipe --- recipeId: int, recipeName: varchar, 
 			//recipeComponent --- recipeId: int, commodityId int, nomNetto: Real, Tolerance: real.
-			//productbatch --- pbId: int, recipeId: int, ts: VARCHAR(30), state: int.
-			//productsbatchComponent --- pbId: int, cbId: int, tara: real, netto: real, oprId: int.
+			//productbatch --- pbId: int, recipeId: int, startTime: TIMESTAMP, state: int.
+			//productsbatchComponent --- pbId: int, cbId: int, tara: real, netto: real, oprId: int, terminal: int.
 			
 			
 			// indsæt operatoere.
@@ -240,19 +240,6 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
-	public List<Commodity_Sum> getLowCommodityList(int lowDefinition) throws DALException {
-		List<Commodity_Sum> list = new ArrayList<Commodity_Sum>();
-		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, SUM(quantity) FROM commodity NATURAL JOIN commodityBatch GROUP BY commodityId Having SUM(quantity) <= " + lowDefinition);
-		try {
-			while (rs.next()) {
-				list.add(new Commodity_Sum(rs.getInt(1), rs.getString(2), rs.getDouble(3)));
-			}
-		} catch (SQLException e) {
-			throw new DALException(e);
-		}
-		return list;
-	}
 
 	//Operator_______________________________________________________________________________________
 	public void createOperator(Operator opr)throws DALException {
@@ -301,7 +288,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatch WHERE pbId = " + pbId);
 		try {
 			if (!rs.first()) throw new DALException("The productbatch " + pbId + " doesn't exist");
-			return new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4));
+			return new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5));
 		}
 		catch (SQLException e) {throw new DALException(e);}
 	}
@@ -310,12 +297,16 @@ public class DatabaseAccess {
 		connector.doUpdate("UPDATE productBatch SET state = " + pb.getStatus() + " where pbId = " + pb.getPbId());
 	}
 	
+	public void setEndTimeStamp(ProductBatch pb) throws DALException{
+		connector.doUpdate("UPDATE productBatch SET endTime = CURRENT_TIMESTAMP" + " where pbId = " + pb.getPbId());
+	}
+	
 	public List<ProductBatch> getProductBatchList() throws DALException {
 		List<ProductBatch> list = new ArrayList<ProductBatch>();
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatch");
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4)));
+				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -328,7 +319,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatch WHERE recipeId = " + recipeId);
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4)));
+				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -337,7 +328,6 @@ public class DatabaseAccess {
 	}
 	
 	//ProductBatchComp___________________________________________________________________________
-	//productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, terminal INTEGER,
 	public void createProductBatchComp(ProductBatchComp pbc)throws DALException {
 		connector.doUpdate(
 				"INSERT INTO productBatchComponent(pbId, cbId, tara, netto, oprId, terminal) VALUES " +
@@ -491,7 +481,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+		
 	public List<RecipeComp> getRestRecipeComp(int pbId) throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
 		ResultSet rs = connector.doQuery("	Select recipeId, commodityId, nomNetto, tolerance from recipeComponent natural join productBatch WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
@@ -504,4 +494,34 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
+	
+	//Special_commands__________________________________________________________________________________
+	public List<Commodity_Sum> getLowCommodityList(int lowDefinition) throws DALException {
+		List<Commodity_Sum> list = new ArrayList<Commodity_Sum>();
+		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, SUM(quantity) FROM commodity NATURAL JOIN commodityBatch GROUP BY commodityId Having SUM(quantity) <= " + lowDefinition);
+		try {
+			while (rs.next()) {
+				list.add(new Commodity_Sum(rs.getInt(1), rs.getString(2), rs.getDouble(3)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	public List<FullBatchList> getFullBatchList(int pbId) throws DALException
+	{
+		List<FullBatchList> list = new ArrayList<FullBatchList>();
+		//int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, int oprId
+		ResultSet rs = connector.doQuery("SELECT commodityId, nomNetto FROM productBatchComponent NATURAL JOIN recipeComponent NATURAL JOIN");
+		try {
+			while (rs.next()) {
+				list.add(new FullBatchList(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getInt(7), rs.getInt(8)));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
+	
 }

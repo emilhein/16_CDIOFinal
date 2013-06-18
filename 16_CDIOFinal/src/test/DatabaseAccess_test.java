@@ -100,14 +100,14 @@ public class DatabaseAccess_test {
 			//ProductBatch_________________________________________________________________________
 			System.out.println("ProductBatch start");
 			try{
-				ProductBatch pb1 = new ProductBatch(666, 666, "Kim_Time", 1);
+				ProductBatch pb1 = new ProductBatch(666, 666, "Kim_Time", null, 1);
 				db.createProductBatch(pb1);
 				ProductBatch pbRet1 = db.getProductBatch(pb1.getPbId());
 				System.out.println(pb1.equals(pbRet1));
 			}
 			catch(DALException f){
 			}
-			ProductBatch pb2 = new ProductBatch(666, 666, "Kim_Time", 3);
+			ProductBatch pb2 = new ProductBatch(666, 666, "Kim_Time", "Tea_Time", 3);
 			db.updateProductBatch(pb2);
 			ProductBatch pbRet2 = db.getProductBatch(pb2.getPbId());
 			System.out.println(pb2.equals(pbRet2));

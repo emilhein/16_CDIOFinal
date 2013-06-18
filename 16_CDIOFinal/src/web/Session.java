@@ -721,7 +721,7 @@ public class Session {
 		// Add
 
 		try {
-			databaseAccess.createProductBatch(new ProductBatch(parsedId, parsedReceptId, null, 0));
+			databaseAccess.createProductBatch(new ProductBatch(parsedId, parsedReceptId, null, null, 0));
 		} catch (Exception e) {
 			return "Could not add product batch (" + e.getMessage() + ").";
 		}
