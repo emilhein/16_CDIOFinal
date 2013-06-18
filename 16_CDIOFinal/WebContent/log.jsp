@@ -13,14 +13,24 @@
 <title>Produktion</title>
 </head>
 
+<% String pbId = "1";
+ProductBatch pb = s.getProductBatches(pbId, null).get(0);
+
+%>
+
+
 <body>
 <div style="border:1px dashed black; width: 600px;">
 <div style="border-bottom: 1px black solid; width: 80%; margin-left: auto; margin-right: auto;">
 	Udskrevet: <%= s.getDate() %><br>
-	Produkt Batch nr. <%= s.getProductBatches(null, null)%><br>
-	Recept nr. <%= s.getDate() %>
+	Produkt Batch nr. <%= pb.getPbId()%><br>
+	Recept nr. <%= pb.getReceptId() %>
 </div>
-
+	<%
+	double tara =0.0;
+	double netto = 0.0;
+	
+	%>
 
 
 
@@ -32,19 +42,20 @@
 	%>
 
 	<br>
-	<div style="border-bottom: 1px black solid; width: 80%; margin-left: auto; margin-rigth: auto;">
+	<div style="border-bottom: 1px black solid; width: 80%;">
 	Commodity Id: <%=fullbatchlist.getCommodityId()%><br>
 	Commodity Name:  <%=fullbatchlist.getCommodityName()%><br>
 	</div>
 	
 	
-	<%= fullbatchlist.getNomNetto() %>
-	<%= fullbatchlist.getTolerance()%>
-	<%= fullbatchlist.getTara()%>
-		<%= fullbatchlist.getNetto()%>
-		<%= fullbatchlist.getCommodityId()%>
-		<%= fullbatchlist.getOprId()%>
-		<%= fullbatchlist.getTerminal()%>
+	<auto>NomNetto: <%= fullbatchlist.getNomNetto() %></auto><br>
+	<auto>Tolerance: <%= fullbatchlist.getTolerance()%></auto><br>
+	<auto>Tara: <%= fullbatchlist.getTara()%></auto><br>
+	<auto>Netto: <%= fullbatchlist.getNetto()%></auto><br>
+	<auto>Opr: <%= fullbatchlist.getOprId()%></auto><br>
+	<auto>Terminal : <%= fullbatchlist.getTerminal()%></auto><br>
+	<% tara = tara + fullbatchlist.getTara();  %>
+	<% netto = netto + fullbatchlist.getNetto();  %>
 		
 	<%
 		}
@@ -52,14 +63,14 @@
 	
 	<br>
 	<div style="border-bottom: 1px black solid;  margin-left: auto; margin-rigth: auto;">
-	Sum Tara:  test<br>
-	Sum Netto:  test1<br>
+	Sum Tara:  <%= tara%><br>
+	Sum Netto:  <%= netto %><br>
 	
 	
 	<br>
-	Produktion Status: test<br>
-	Produktion Startet: test1 <br>
-	Produktion Slut:	test2 <br>
+	Produktion Status:  <%= pb.getStatus() == 0?"ikke påbegyndt": pb.getStatus() == 1?"under produktion":"Afsluttet"%><br>
+	Produktion Startet: <%= pb.getStartTime() %> <br>
+	Produktion Slut:	<%= pb.getEndTime() == null?" - ": pb.getEndTime() %> <br>
 	</div>
 	</div>
 </body>
