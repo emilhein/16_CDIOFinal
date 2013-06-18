@@ -90,7 +90,7 @@ public class DatabaseAccess {
 			connector.doUpdate("CREATE TABLE recipe(recipeId INTEGER NOT NULL, recipeName VARCHAR(20), PRIMARY KEY(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE recipeComponent(recipeId INTEGER, commodityId INTEGER, nomNetto REAL NOT NULL, tolerance REAL NOT NULL, PRIMARY KEY(recipeId, commodityId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId), FOREIGN KEY(commodityId) REFERENCES commodity(commodityId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL, recipeId INTEGER, ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
-			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
+			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, terminal INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
 
 			
 			
@@ -326,10 +326,11 @@ public class DatabaseAccess {
 	}
 	
 	//ProductBatchComp___________________________________________________________________________
+	//productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, terminal INTEGER,
 	public void createProductBatchComp(ProductBatchComp pbc)throws DALException {
 		connector.doUpdate(
-				"INSERT INTO productBatchComponent(pbId, cbId, tara, netto, oprId) VALUES " +
-						"(" + pbc.getPbId() + ", " + pbc.getCbId() + "," + pbc.getTara() + "," + pbc.getNetto() + "," + pbc.getOprId() + ")");
+				"INSERT INTO productBatchComponent(pbId, cbId, tara, netto, oprId, terminal) VALUES " +
+						"(" + pbc.getPbId() + ", " + pbc.getCbId() + "," + pbc.getTara() + "," + pbc.getNetto() + "," + pbc.getOprId() + "," + pbc.getTerminal() +")");
 
 	}
 
@@ -337,7 +338,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent WHERE pbId = " + pbId + " AND cbId = " + cbId);
 		try {
 			if (!rs.first()) throw new DALException("The productBatchComponent " + pbId + " , " + cbId + " doesn't exist");
-			return new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5));
+			return new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6));
 		}
 		catch (SQLException e) {throw new DALException(e);}
 	}
@@ -347,7 +348,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent");
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5)));
+				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -360,7 +361,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent where pbId = " + pbId);
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5)));
+				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -373,7 +374,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent where cbId = " + cbId);
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5)));
+				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -386,7 +387,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent where oprId = " + oprId);
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5)));
+				list.add(new ProductBatchComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);

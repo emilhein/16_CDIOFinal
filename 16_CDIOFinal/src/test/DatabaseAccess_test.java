@@ -118,7 +118,7 @@ public class DatabaseAccess_test {
 			//ProductBatchComponent________________________________________________________________
 			System.out.println("ProductBatchComponent start");
 			try{
-				ProductBatchComp pbc1 = new ProductBatchComp(666, 666, 666.1, 666.2, 666);
+				ProductBatchComp pbc1 = new ProductBatchComp(666, 666, 666.1, 666.2, 666, 1);
 				db.createProductBatchComp(pbc1);
 				ProductBatchComp pbcRet1 = db.getProductBatchComp(pbc1.getPbId(), pbc1.getCbId());
 				System.out.println(pbc1.equals(pbcRet1));
