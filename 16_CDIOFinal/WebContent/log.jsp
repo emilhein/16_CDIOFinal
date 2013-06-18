@@ -28,7 +28,7 @@
 
 
 	<%
-		for (FullBatchList fullbatchlist : s.getFullBatchListNotMade(1)) {
+		for (FullBatchList fullbatchlist : s.getFullBatchListMade(1)) {
 	%>
 
 	<br>
@@ -36,20 +36,30 @@
 	Commodity Id: <%=fullbatchlist.getCommodityId()%><br>
 	Commodity Name:  <%=fullbatchlist.getCommodityName()%><br>
 	</div>
+	
+	
+	<%= fullbatchlist.getNomNetto() %>
+	<%= fullbatchlist.getTolerance()%>
+	<%= fullbatchlist.getTara()%>
+		<%= fullbatchlist.getNetto()%>
+		<%= fullbatchlist.getCommodityId()%>
+		<%= fullbatchlist.getOprId()%>
+		<%= fullbatchlist.getTerminal()%>
+		
 	<%
 		}
 	%>
 	
 	<br>
 	<div style="border-bottom: 1px black solid;  margin-left: auto; margin-rigth: auto;">
-	Sum Tara:  test<% %><br>
-	Sum Netto:  test1<% %><br>
+	Sum Tara:  test<br>
+	Sum Netto:  test1<br>
 	
 	
 	<br>
 	Produktion Status: test<br>
-	Produktion Startet: test1 <%  %><br>
-	Produktion Slut:	test2 <% %><br>
+	Produktion Startet: test1 <br>
+	Produktion Slut:	test2 <br>
 	</div>
 	</div>
 </body>

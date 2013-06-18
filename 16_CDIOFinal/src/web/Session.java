@@ -815,5 +815,19 @@ public class Session {
 				}
 				
 			} 
+	
+	public List<FullBatchList> getFullBatchListMade(int pbId) {
+		
+		
+		try {
+			List<FullBatchList> temp = new ArrayList<FullBatchList>();
+			temp = databaseAccess.getFullBatchListMade(pbId);
+			return temp;
+		} catch (DALException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 				
 }
