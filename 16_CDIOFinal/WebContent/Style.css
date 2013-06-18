@@ -46,6 +46,7 @@
 	color: #000000;
 	padding: 10px;
 	font-family: Arial, Helvetica neue, sans-serif;
+	border-bottom-left-radius:2em;
 }
 #login {
 	width: 250px;
