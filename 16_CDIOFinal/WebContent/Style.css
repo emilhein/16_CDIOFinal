@@ -20,10 +20,10 @@
 #tabs ul li a {
 	padding: 5px 16px;
 	color: #FFFFFF;
-	background: #E7A272;
+	background: #003366;
 	float: left;
 	text-decoration: none;
-	border: 1px solid #D17B40;
+	border: 1px solid #000;
 	border-left: 0;
 	margin: 0;
 	text-transform: capitalize;
@@ -49,7 +49,7 @@
 }
 #login {
 	width: 250px;
-	background: #E7A272;
+	background: #003366;
 	font-size: 13px;
 	color: #FFFFFF;
 	padding-top: 25px;
@@ -57,7 +57,10 @@
 	padding-right: 50px;
 	padding-left: 50px;
 	font-family: Arial, Helvetica neue, sans-serif;
+	margin-top: 100px;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 15px;
+	border: 1px solid #000
 }
+
