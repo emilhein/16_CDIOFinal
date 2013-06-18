@@ -38,7 +38,7 @@
 			<td><center><%= productBatch.getPbId() %></center></td>
 			<td><center><a href="?page=Recipes&filterRecipeId=<%= productBatch.getReceptId() %>"><%= productBatch.getReceptId() %></a></center></td>
 			<td><center><%= productBatch.getStartTime() %></center></td>
-			<td><center><%= productBatch.getEndTime() %></center></td>
+			<td><center><%= productBatch.getEndTime() == null ? "-" : productBatch.getEndTime() %></center></td>
 			<td><center><%= productBatch.getStatus() %></center></td>
 			<td><center><a href="?page=ProductBatchComponents&filterProductBatchId=<%= productBatch.getPbId() %>">Product Batch Components</a></center></td>
 		</tr>
