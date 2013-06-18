@@ -795,6 +795,6 @@ public class Session {
 	public static String getdate(){
 	Date d = new Date();
 	String date = d.toString();
-	return "Udskrevet: " + date;
+	return "Udskrevet:             " + date;
 		}
 }
