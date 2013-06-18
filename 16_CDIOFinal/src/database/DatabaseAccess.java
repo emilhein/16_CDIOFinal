@@ -145,17 +145,20 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO recipe VALUES(4,'WhiskeyCola')");
 			connector.doUpdate("INSERT INTO recipe VALUES(5,'RumAndCola')");
 			connector.doUpdate("INSERT INTO recipe VALUES(6,'LemonJuiceWithVodka')");
+			connector.doUpdate("INSERT INTO recipe VALUES(10,'Isvand')");
 
 			// indsæt recipeComponent.
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 4)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.03)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 4.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 3.0)");
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,3, 12.2, 1.5)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,6, 12.2, 0.1)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,1, 12.2, 0.4)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,2, 12.2, 4)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,6, 12.2, 1.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,1, 12.2, 4.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,2, 12.2, 4.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(10,3, 1, 4.0)");
 
 			// indsæt productBatch.
 			connector.doUpdate("INSERT INTO productBatch(pbId, recipeId , state) VALUES(1,1,1)");
+			connector.doUpdate("INSERT INTO productBatch(pbId, recipeId , state) VALUES(10,10,0)");
 
 			// indsæt productBatchComponent.
 			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1, 1, 12.2, 12.0, 1, 1)");

@@ -19,7 +19,7 @@
 			Produkt Batch nr. <%= productBatch.getPbId()%><br>
 			Recept nr. <%= productBatch.getReceptId() %>
 		</div>
-		<% for (FullBatchList fullbatchlist : s.getFullBatchListMade(productBatch.getPbId())) { %>
+		<% for (FullBatchList fullbatchlist : s.getFullBatchListNotMade(productBatch.getPbId())) { %>
 			<br>
 			<div style="border-bottom: 1px black solid; width: 80%">
 				Commodity Id: <%= fullbatchlist.getCommodityId() %><br>
