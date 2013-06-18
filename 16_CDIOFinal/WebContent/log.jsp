@@ -13,9 +13,22 @@
 <body>
 
 <div style="border-bottom: 1px black solid; width: 50%; margin-left: 25%;">
+<<<<<<< HEAD
 <%= s.getDate()%><br>
 Produkt Batch nr. <%=s.getProductBatches("Lemon", "Salt")%><br/>
 Recept nr. <%=s.getRecipes("saltwater")%>
+=======
+<<<<<<< HEAD
+Udskrevet: <%= s.getDate() %>
+<br>
+Produkt Batch nr. <%= s.getProductBatches("Citron", "Salt") %><br/>
+Recept nr. <%= s.getRecipes("saltvand") %>
+=======
+<%=s.getDate()%><br>
+Produkt Batch nr. <%=s.getProductBatches("Citron", "Salt")%><br/>
+Recept nr. <%=s.getRecipes("saltvand")%>
+>>>>>>> a007c8e2192be4a76c89f1ee928d2341f85888b8
+>>>>>>> branch 'master' of https://github.com/emilhein/16_CDIOFinal.git
 </div>
 
 
