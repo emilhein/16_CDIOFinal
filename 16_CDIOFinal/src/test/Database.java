@@ -182,9 +182,10 @@ public class Database {
 	@Test
 	public void updateProductBatch(){
 		try{
-			ProductBatch pb2 = new ProductBatch(666, 666, "Kim_Time", "Tea_Time", 3);
+			ProductBatch pb2 = new ProductBatch(666, 666, "Kim_Time", "Tea_Time", 2);
 			DatabaseAccess db = new DatabaseAccess();
 			db.updateProductBatch(pb2);
+			db.setEndTimeStamp(pb2);
 			ProductBatch pbRet2 = db.getProductBatch(pb2.getPbId());
 			if(!(pb2.getPbId() == pbRet2.getPbId()))
 				fail();
