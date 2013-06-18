@@ -113,7 +113,7 @@ public class Database {
 		try{
 			Operator opr2 = new Operator(666, "kimi", "k", "6666666666", "..!.", 3);
 			DatabaseAccess db = new DatabaseAccess();
-			db.createOperator(opr2);
+			db.updateOperator(opr2);
 			Operator OpeRetur2 = db.getOperator(opr2.getOprId());
 			if(!opr2.equals(OpeRetur2))
 				fail();
