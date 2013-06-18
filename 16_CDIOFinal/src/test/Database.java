@@ -26,6 +26,7 @@ public class Database {
 	
 	
 	//Commodity_________________________________________________________
+	@Test
 	public void createCommodity(){
 		Commodity com1 = new Commodity(666, "Pandekage", "kitchen");
 		try{
@@ -41,6 +42,7 @@ public class Database {
 		}
 	}
 	
+	@Test
 	public void updateCommodity(){
 		Commodity com2 = new Commodity(666, "Diabolske Pandekage", "Hells Kitchen");
 		try{
@@ -57,6 +59,7 @@ public class Database {
 	}
 	
 	//commoditybatch________________________________________________________________________________
+	@Test
 	public void createCommodityBatch(){
 		try{
 			CommodityBatch cb1 = new CommodityBatch(666, 666, 1);
@@ -71,6 +74,8 @@ public class Database {
 			fail();
 		}
 	}
+
+	@Test
 	public void updateCommodityBatch(){
 		try{
 			CommodityBatch cb2 = new CommodityBatch(666, 666, 10);
@@ -87,6 +92,7 @@ public class Database {
 	}
 	
 	//Operators___________________________________________________________________________
+	@Test
 	public void createOperator(){
 		try{
 			Operator opr1 = new Operator(666, "kim", "krr", "3333333333", "The_Kim", 1);
@@ -102,6 +108,7 @@ public class Database {
 		}
 	}
 	
+	@Test
 	public void updateOperator(){
 		try{
 			Operator opr2 = new Operator(666, "kimi", "k", "6666666666", "..!.", 3);
@@ -118,6 +125,7 @@ public class Database {
 	}
 	
 	//Recipe_______________________________________________________________________________
+	@Test
 	public void createRecipe(){
 		try{
 			Recipe rec = new Recipe(666, "Diabolic Vodka");
@@ -134,6 +142,7 @@ public class Database {
 	}
 	
 	//RecipeComponent_____________________________________________________________________
+	@Test
 	public void createRecipeComp(){
 		try{
 			RecipeComp rc = new RecipeComp(666, 666, 10, 10);
@@ -150,6 +159,7 @@ public class Database {
 	}
 	
 	//ProductBatch_________________________________________________________________________
+	@Test
 	public void createProductBatch(){
 		try{
 			ProductBatch pb1 = new ProductBatch(666, 666, "Kim_Time", null, 1);
@@ -169,6 +179,7 @@ public class Database {
 		}
 	}
 	
+	@Test
 	public void updateProductBatch(){
 		try{
 			ProductBatch pb2 = new ProductBatch(666, 666, "Kim_Time", "Tea_Time", 3);
@@ -187,7 +198,9 @@ public class Database {
 			fail();
 		}
 	}
+	
 	//ProductBatchComponent________________________________________________________________
+	@Test
 	public void createProductBatchComp(){
 		try{
 			ProductBatchComp pbc1 = new ProductBatchComp(666, 666, 666.1, 666.2, 666, 1);
