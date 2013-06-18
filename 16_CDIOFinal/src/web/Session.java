@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import special_objects.Commodity_Sum;
+import special_objects.FullBatchList;
 import database.DALException;
 import database.DatabaseAccess;
 import database_objects.CommodityBatch;
@@ -801,5 +802,18 @@ public class Session {
 		return new Date().toString();
 	}
 	
-
+	public List<FullBatchList> getFullBatchListNotMade(int pbId) {
+		
+							
+				try {
+					List<FullBatchList> temp = new ArrayList<FullBatchList>();
+					temp = databaseAccess.getFullBatchListNotMade(pbId);
+					return temp;
+				} catch (DALException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			} 
+				
 }
