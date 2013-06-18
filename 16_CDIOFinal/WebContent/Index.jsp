@@ -50,7 +50,7 @@
 			</form>
 
 	<% } else {	%>
-
+		<div id="content2">
 		<h2>Login</h2>
 		<form method="post">
 			<input type="hidden" name="login" value="true">
@@ -69,6 +69,7 @@
 				</tr>
 			</table>
 		</form>
+		</div>
 		<% if (message != null) { %>
 			<br>
 			<span style="color: red"><%= message %></span>
