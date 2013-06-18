@@ -495,7 +495,7 @@ public class DatabaseAccess {
 		
 	public List<RecipeComp> getRestRecipeComp(int pbId) throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
-		ResultSet rs = connector.doQuery("	Select recipeId, commodityId, nomNetto, tolerance from recipeComponent natural join productBatch WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
+		ResultSet rs = connector.doQuery("Select recipeId, commodityId, nomNetto, tolerance from recipeComponent natural join productBatch WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
 		try {
 			while (rs.next()) {
 				list.add(new RecipeComp(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4)));
@@ -519,11 +519,12 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	public List<FullBatchList> getFullBatchList(int pbId) throws DALException
+	
+	public List<FullBatchList> getFullBatchListMade(int pbId) throws DALException
 	{
 		List<FullBatchList> list = new ArrayList<FullBatchList>();
 		//int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, int oprId
-		ResultSet rs = connector.doQuery("SELECT commodityId, nomNetto FROM productBatchComponent NATURAL JOIN recipeComponent NATURAL JOIN");
+		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, nomNetto, tolerance, tara, netto, cbId, oprId FROM productBatchComponent NATURAL JOIN productBatch NATURAL JOIN recipeComponent NATURAL JOIN commodity WHERE pbId = " + pbId);
 		try {
 			while (rs.next()) {
 				list.add(new FullBatchList(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getInt(7), rs.getInt(8)));
@@ -534,5 +535,19 @@ public class DatabaseAccess {
 		return list;
 	}
 	
+	public List<FullBatchList> getFullBatchListNotMade(int pbId) throws DALException
+	{
+		List<FullBatchList> list = new ArrayList<FullBatchList>();
+		//int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, int oprId
+		ResultSet rs = connector.doQuery("Select commodityId, commodityName, nomNetto, tolerance from recipeComponent natural join productBatch natural join commodity WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
+		try {
+			while (rs.next()) {
+				list.add(new FullBatchList(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), 0, 0, 0, 0));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
 	
 }
