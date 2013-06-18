@@ -40,6 +40,7 @@ public class Session {
 			pages.add(new Page("Recipe Components", "RecipeComponents", 2));
 			pages.add(new Page("Product Batches", "ProductBatches", 3));
 			pages.add(new Page("Product Batch Components", "ProductBatchComponents", 3));
+			pages.add(new Page("", "Print", 3));
 		}
 
 	}
