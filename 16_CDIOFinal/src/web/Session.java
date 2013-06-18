@@ -185,7 +185,7 @@ public class Session {
 		}
 		
 	}
-	public List<Commodity_Sum> getLowCommodityBatches(int lowDefinition) {
+	public List<Commodity_Sum> getLowCommodityBatches(double lowDefinition) {
 		
 		try {
 			return databaseAccess.getLowCommodityList(lowDefinition);
