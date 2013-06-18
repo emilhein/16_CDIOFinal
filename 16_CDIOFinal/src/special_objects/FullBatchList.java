@@ -9,8 +9,9 @@ public class FullBatchList {
 	double netto;
 	int cbId;
 	int oprId;
+	int terminal;
 	
-	public FullBatchList(int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, int oprId) {
+	public FullBatchList(int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, int oprId, int terminal) {
 		CommodityId = commodityId;
 		CommodityName = commodityName;
 		this.nomNetto = nomNetto;
@@ -19,6 +20,7 @@ public class FullBatchList {
 		this.netto = netto;
 		this.cbId = cbId;
 		this.oprId = oprId;
+		this.terminal = terminal;
 	}
 	
 	public int getCommodityId() {
@@ -69,12 +71,19 @@ public class FullBatchList {
 	public void setOprId(int oprId) {
 		this.oprId = oprId;
 	}
+	public int getTerminal() {
+		return terminal;
+	}
+	public void setTerminal(int terminal) {
+		this.terminal = terminal;
+	}
+	
 	@Override
 	public String toString() {
 		return "FullBatchList [CommodityId=" + CommodityId + ", CommodityName="
 				+ CommodityName + ", nomNetto=" + nomNetto + ", tolerance="
 				+ tolerance + ", tara=" + tara + ", netto=" + netto + ", cbId="
-				+ cbId + ", oprId=" + oprId + "]";
+				+ cbId + ", oprId=" + oprId + ", terminal=" + terminal + "]";
 	}
 	
 }
