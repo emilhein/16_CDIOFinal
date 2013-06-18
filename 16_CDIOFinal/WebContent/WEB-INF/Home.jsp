@@ -4,7 +4,7 @@
 <jsp:setProperty name="s" property="*"/>
 
 <h2>Messages just for you!</h2>
-<% if (s.getLowCommodityBatches(6) != null) { %>
+<% if (s.getRights() <= 3 && s.getLowCommodityBatches(6) != null) { %>
 	<h3>Low quantity commodities</h3>
 	<table>
 		<tr>
