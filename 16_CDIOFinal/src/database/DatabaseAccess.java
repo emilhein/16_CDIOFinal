@@ -539,10 +539,10 @@ public class DatabaseAccess {
 	{
 		List<FullBatchList> list = new ArrayList<FullBatchList>();
 		//int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, int oprId
-		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, nomNetto, tolerance, tara, netto, cbId, oprId, terminal FROM productBatchComponent NATURAL JOIN productBatch NATURAL JOIN recipeComponent NATURAL JOIN commodity WHERE pbId = " + pbId);
+		ResultSet rs = connector.doQuery("SELECT commodityId, commodityName, nomNetto, tolerance, tara, netto, cbId, ini, terminal FROM productBatchComponent NATURAL JOIN productBatch NATURAL JOIN recipeComponent NATURAL JOIN commodity NATURAL JOIN operator WHERE pbId = " + pbId);
 		try {
 			while (rs.next()) {
-				list.add(new FullBatchList(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getInt(7), rs.getInt(8), rs.getInt(9)));
+				list.add(new FullBatchList(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getInt(7), rs.getString(8), rs.getInt(9)));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -557,7 +557,7 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("Select commodityId, commodityName, nomNetto, tolerance from recipeComponent natural join productBatch natural join commodity WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
 		try {
 			while (rs.next()) {
-				list.add(new FullBatchList(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), 0, 0, 0, 0, 0));
+				list.add(new FullBatchList(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4), 0, 0, 0, null, 0));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);

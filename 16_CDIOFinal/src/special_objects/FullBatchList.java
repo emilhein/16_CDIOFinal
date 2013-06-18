@@ -8,10 +8,10 @@ public class FullBatchList {
 	double tara;
 	double netto;
 	int cbId;
-	int oprId;
+	String oprIni;
 	int terminal;
 	
-	public FullBatchList(int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, int oprId, int terminal) {
+	public FullBatchList(int commodityId, String commodityName, double nomNetto, double tolerance, double tara, double netto, int cbId, String oprIni, int terminal) {
 		CommodityId = commodityId;
 		CommodityName = commodityName;
 		this.nomNetto = nomNetto;
@@ -19,7 +19,7 @@ public class FullBatchList {
 		this.tara = tara;
 		this.netto = netto;
 		this.cbId = cbId;
-		this.oprId = oprId;
+		this.oprIni = oprIni;
 		this.terminal = terminal;
 	}
 	
@@ -65,11 +65,11 @@ public class FullBatchList {
 	public void setCbId(int cbId) {
 		this.cbId = cbId;
 	}
-	public int getOprId() {
-		return oprId;
+	public String getOprId() {
+		return oprIni;
 	}
-	public void setOprId(int oprId) {
-		this.oprId = oprId;
+	public void setOprId(String oprIni) {
+		this.oprIni = oprIni;
 	}
 	public int getTerminal() {
 		return terminal;
@@ -83,7 +83,7 @@ public class FullBatchList {
 		return "FullBatchList [CommodityId=" + CommodityId + ", CommodityName="
 				+ CommodityName + ", nomNetto=" + nomNetto + ", tolerance="
 				+ tolerance + ", tara=" + tara + ", netto=" + netto + ", cbId="
-				+ cbId + ", oprId=" + oprId + ", terminal=" + terminal + "]";
+				+ cbId + ", oprIni=" + oprIni + ", terminal=" + terminal + "]";
 	}
 	
 }
