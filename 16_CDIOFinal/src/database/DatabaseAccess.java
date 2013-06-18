@@ -109,6 +109,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO operator VALUES(3,'Jens','JWN','2404922559','123456',3)");
 			connector.doUpdate("INSERT INTO operator VALUES(4,'Khan','KN','2404922559','123456',4)");
 			connector.doUpdate("INSERT INTO operator VALUES(5,'Kim','KIM','2404922559','123456',1)");
+			connector.doUpdate("INSERT INTO operator VALUES(6,'Hans Henrik','HH','2404922559','123456',5)");
 			
 			// indsæt commodity.
 			connector.doUpdate("INSERT INTO commodity VALUES(1,'Lemon','Spain')");
@@ -120,25 +121,35 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO commodity VALUES(7,'Cola','USA')");
 			connector.doUpdate("INSERT INTO commodity VALUES(8,'Vodka','Russia')");
 			connector.doUpdate("INSERT INTO commodity VALUES(9,'Whiskey','Scotland')");
-			
+			connector.doUpdate("INSERT INTO commodity VALUES(10,'Flour','Germany')");
+			connector.doUpdate("INSERT INTO commodity VALUES(11,'Ham','Denmark')");
 			
 			// indsæt commodityBatch.
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(1,1,2.3)");
-			connector.doUpdate("INSERT INTO commodityBatch VALUES(2,3,25.3)");
-			connector.doUpdate("INSERT INTO commodityBatch VALUES(3,2,1.0)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(2,2,2.8)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(3,3,50)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(4,4,10)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(5,5,5.5)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(6,6,1.4)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(7,7,6.5)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(8,8,10)");
+			connector.doUpdate("INSERT INTO commodityBatch VALUES(9,2,3");
 			
 			// indsæt recipe.
 			connector.doUpdate("INSERT INTO recipe VALUES(1,'LemonJuice')");
 			connector.doUpdate("INSERT INTO recipe VALUES(2,'LemonSalt')");
-			connector.doUpdate("INSERT INTO recipe VALUES(3,'LemonWithSalt')");
-			connector.doUpdate("INSERT INTO recipe VALUES(4,'CoffeeWithMilk')");
-			connector.doUpdate("INSERT INTO recipe VALUES(5,'WhiskeyCola')");
-			connector.doUpdate("INSERT INTO recipe VALUES(6,'RumAndCola')");
-			connector.doUpdate("INSERT INTO recipe VALUES(7,'LemonJuiceWithVodka')");
+			connector.doUpdate("INSERT INTO recipe VALUES(3,'CoffeeWithMilk')");
+			connector.doUpdate("INSERT INTO recipe VALUES(4,'WhiskeyCola')");
+			connector.doUpdate("INSERT INTO recipe VALUES(5,'RumAndCola')");
+			connector.doUpdate("INSERT INTO recipe VALUES(6,'LemonJuiceWithVodka')");
 			
 			// indsæt recipeComponent.
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 0.7)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.4)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 4)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.03)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,3, 12.2, 1.5)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,6, 12.2, 0.1)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,1, 12.2, 0.4)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,2, 12.2, 4)");
 			
 			// indsæt productBatch.
 			connector.doUpdate("INSERT INTO productBatch(pbId, recipeId , state) VALUES(1,1,1)");
