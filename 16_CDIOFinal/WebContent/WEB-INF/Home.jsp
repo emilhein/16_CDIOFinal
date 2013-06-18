@@ -9,7 +9,7 @@
 	List<Commodity_Sum> emptyCommodityBatches = s.getLowCommodityBatches(0.0001);
 %>
 
-<h2>Messages for you!</h2>
+<h2><%= s.getDate() %></h2>
 <% if (s.getRights() <= 3 && lowCommodityBatches != null) { %>
 	<% if (s.getLowCommodityBatches(3) != null) { %>
 		<h3>Low quantity commodities</h3>
