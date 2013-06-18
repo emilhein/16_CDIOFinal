@@ -233,6 +233,7 @@ public class ASE {
 							procedure.productBatch.setStatus(2);
 							
 							databaseAccess.updateProductBatch(procedure.productBatch);
+							databaseAccess.setEndTimeStamp(procedure.productBatch);
 							
 							step += 1;
 							break;

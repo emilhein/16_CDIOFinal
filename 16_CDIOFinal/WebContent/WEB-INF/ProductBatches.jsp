@@ -29,14 +29,16 @@
 	<tr>
 		<th>Id</th>
 		<th>Recept Id</th>
-		<th>Timestamp</th>
+		<th>Begin</th>
+		<th>End</th>
 		<th>Status</th>
 	</tr>
 	<% for (ProductBatch productBatch : s.getProductBatches(request.getParameter("filterProductBatchId"), request.getParameter("filterRecipeId"))) { %>
 		<tr>
 			<td><center><%= productBatch.getPbId() %></center></td>
 			<td><center><a href="?page=Recipes&filterRecipeId=<%= productBatch.getReceptId() %>"><%= productBatch.getReceptId() %></a></center></td>
-			<td><center><%= productBatch.getTimeStamp() %></center></td>
+			<td><center><%= productBatch.getStartTime() %></center></td>
+			<td><center><%= productBatch.getEndTime() %></center></td>
 			<td><center><%= productBatch.getStatus() %></center></td>
 			<td><center><a href="?page=ProductBatchComponents&filterProductBatchId=<%= productBatch.getPbId() %>">Product Batch Components</a></center></td>
 		</tr>
@@ -46,6 +48,7 @@
 		<tr>
 			<td><br><input type="text" name="id"></td>
 			<td><br><input type="text" name="receptId"></td>
+			<td><br></td>
 			<td><br></td>
 			<td><br></td>
 			<td><br><input type="submit" value="Add"></td>
