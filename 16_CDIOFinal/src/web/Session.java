@@ -449,35 +449,20 @@ public class Session {
 	}
 	public static String addCommodity(String id, String name, String supplier) {
 
-		// Id
-		
-		int parsedId;
-		try {
-			parsedId = Integer.parseInt(id);
-		} catch (Exception e) {
-			return "Id must be a number.";
+		if (id == null || !id.matches("^[0-9]{1,8}$")) {
+			return "Id must be a number between 1 and 99999999.";
 		}
-
-		if (parsedId < 1 || parsedId > 99999999) {
-			return "Id must between 1 and 99999999.";
-		}
-		
-		// Name
-
-		if (!name.matches("^.{2,20}$")) {
+		if (name == null || !name.matches("^.{2,20}$")) {
 			return "Name length must be between 2 and 20 characters.";
 		}
-
-		// Supplier
-
-		if (!supplier.matches("^.{2,20}$")) {
+		if (supplier == null || !supplier.matches("^.{2,20}$")) {
 			return "Supplier length must be between 2 and 20 characters.";
 		}
 		
 		// Add
 		
 		try {
-			databaseAccess.createCommodity(new Commodity(parsedId, name, supplier));
+			databaseAccess.createCommodity(new Commodity(Integer.parseInt(id), name, supplier));
 		} catch (Exception e) {
 			return "Could not add commodity (" + e.getMessage() + ").";
 		}
@@ -486,29 +471,17 @@ public class Session {
 	}
 	public static String addRecipe(String id, String name) {
 		
-		// Id
-		
-		int parsedId;
-		try {
-			parsedId = Integer.parseInt(id);
-		} catch (Exception e) {
-			return "Id must be a number.";
+		if (id == null || !id.matches("^[0-9]{1,8}$")) {
+			return "Id must be a number between 1 and 99999999.";
 		}
-
-		if (parsedId < 1 || parsedId > 99999999) {
-			return "Id must between 1 and 99999999.";
-		}
-		
-		// Name
-
-		if (!name.matches("^.{2,20}$")) {
+		if (name == null || !name.matches("^.{2,20}$")) {
 			return "Name length must be between 2 and 20 characters.";
 		}
 
 		// Add
 
 		try {
-			databaseAccess.createRecipe(new Recipe(parsedId, name));
+			databaseAccess.createRecipe(new Recipe(Integer.parseInt(id), name));
 		} catch (Exception e) {
 			return "Could not add recipe (" + e.getMessage() + ").";
 		}
@@ -517,40 +490,24 @@ public class Session {
 	}
 	public static String updateCommodityBatch(String id, String quantity) {
 		
-		// Id
-		
-		CommodityBatch commodityBatch;
-		int parsedId;
-		
-		try {
-			parsedId = Integer.parseInt(id);
-		} catch (Exception e) {
-			return "Id must be a number.";
+		if (id == null || !id.matches("^[0-9]{1,8}$")) {
+			return "Id must be a number between 1 and 99999999.";
+		}
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$")) {
+			return "Quantity must be a decimal number greater than or equal to 0.";
 		}
 		
+		CommodityBatch commodityBatch;
+		
 		try {
-			commodityBatch = databaseAccess.getCommodityBatch(parsedId);
+			commodityBatch = databaseAccess.getCommodityBatch(Integer.parseInt(id));
 		} catch (Exception e) {
 			return "Could not find commodity batch (" + e.getMessage() + ").";
 		}
-		
-		// Quantity
-		
-		double parsedQuantity;
-
-		try {
-			parsedQuantity = Double.parseDouble(quantity);
-		} catch (Exception e) {
-			return "Quantity must be a number.";
-		}
-		
-		if (parsedQuantity < 1 || parsedQuantity > 99999999) {
-			return "Quantity must be between 1 and 99999999.";
-		}
-				
+						
 		// Update
 		
-		commodityBatch.setMaengde(parsedQuantity);
+		commodityBatch.setMaengde(Integer.parseInt(quantity));
 		
 		try {
 			databaseAccess.updateCommodityBatch(commodityBatch);
@@ -562,52 +519,20 @@ public class Session {
 	}
 	public static String addCommodityBatch(String id, String commodityId, String quantity) {
 	
-		// Id
-		
-		int parsedId;
-				
-		try {
-			parsedId = Integer.parseInt(id);
-		} catch (Exception e) {
-			return "Id must be a number.";
+		if (id == null || !id.matches("^[0-9]{1,8}$")) {
+			return "Id must be a number between 1 and 99999999.";
 		}
-				
-		if (parsedId < 1 || parsedId > 99999999) {
-			return "Id must be between 1 and 99999999.";
+		if (commodityId == null || !commodityId.matches("^[0-9]{1,8}$")) {
+			return "Commodity id must be a number between 1 and 99999999.";
 		}
-					
-		// Commodity Id
-				
-		int parsedCommodityId;
-
-		try {
-			parsedCommodityId = Integer.parseInt(commodityId);
-		} catch (Exception e) {
-			return "Commodity Id must be a number.";
-		}
-				
-		if (parsedCommodityId < 1 || parsedCommodityId > 99999999) {
-			return "Commodity Id must be between 1 and 99999999.";
-		}
-				
-		// Quantity
-				
-		double parsedQuantity;
-
-		try {
-			parsedQuantity = Double.parseDouble(quantity);
-		} catch (Exception e) {
-			return "Quantity must be a number.";
-		}
-				
-		if (parsedQuantity < 1 || parsedQuantity > 99999999) {
-			return "Quantity must be between 1 and 99999999.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$")) {
+			return "Quantity must be a decimal number greater than or equal to 0.";
 		}
 		
 		// Add
 
 		try {
-			databaseAccess.createCommodityBatch(new CommodityBatch(parsedId, parsedCommodityId, parsedQuantity));
+			databaseAccess.createCommodityBatch(new CommodityBatch(Integer.parseInt(id), Integer.parseInt(commodityId), Integer.parseInt(quantity)));
 		} catch (Exception e) {
 			return "Could not add commodity batch (" + e.getMessage() + ").";
 		}
