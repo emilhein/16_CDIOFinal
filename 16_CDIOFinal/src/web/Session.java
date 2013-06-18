@@ -250,6 +250,7 @@ public class Session {
 				}
 				
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		} else if (commodityId != null) {
 			try {
@@ -264,6 +265,7 @@ public class Session {
 				}
 				
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
@@ -304,6 +306,7 @@ public class Session {
 				}
 				
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		} else if (operatorId != null) {
 			try {
@@ -318,6 +321,7 @@ public class Session {
 				}
 				
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
