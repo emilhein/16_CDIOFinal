@@ -9,7 +9,7 @@ import special_objects.*;
 
 public class DatabaseAccess {
 
-	private static final String[] tables = new String[] {"productBatchComponent", "productBatch", "recipeComponent","recipe", "commodityBatch", "commodity","operator"};
+	private static final String[] tables = new String[] {"productBatchComponent", "productBatch", "recipeComponent", "recipe", "commodityBatch", "commodity", "operator"};
 	private Connector connector;
 
 	//# New
