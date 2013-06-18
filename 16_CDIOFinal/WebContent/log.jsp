@@ -13,9 +13,9 @@
 <body>
 
 <div style="border-bottom: 1px black solid; width: 50%; margin-left: 25%;">
-<%=s.getDate()%><br>
-Produkt Batch nr. <%=s.getProductBatches("Citron", "Salt")%><br/>
-Recept nr. <%=s.getRecipes("saltvand")%>
+<%= s.getDate()%><br>
+Produkt Batch nr. <%=s.getProductBatches("Lemon", "Salt")%><br/>
+Recept nr. <%=s.getRecipes("saltwater")%>
 </div>
 
 
