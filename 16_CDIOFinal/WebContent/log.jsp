@@ -10,15 +10,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Produktion</title>
 </head>
-
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Produktion</title>
+<body>
 
 <div style="border-bottom: 1px black solid; width: 50%; margin-left: 25%;">
-<%=s.getDate()%>
-<br>
+<%=s.getDate()%><br>
 Produkt Batch nr. <%=s.getProductBatches("Citron", "Salt")%><br/>
 Recept nr. <%=s.getRecipes("saltvand")%>
 </div>
@@ -28,7 +23,7 @@ Recept nr. <%=s.getRecipes("saltvand")%>
 
 <br>
 
-<body>
+
 	<%
 		for (Recipe recipe : s.getRecipes(request.getParameter("filterCommodityId"))) {
 	%>
