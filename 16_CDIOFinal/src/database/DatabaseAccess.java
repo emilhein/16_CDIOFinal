@@ -45,7 +45,7 @@ public class DatabaseAccess {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			
+
 			throw new DALException(e);
 		}
 
@@ -82,7 +82,7 @@ public class DatabaseAccess {
 					e.printStackTrace();
 				}
 			}
-						
+
 			// Create
 			connector.doUpdate("CREATE TABLE operator(oprId INTEGER NOT NULL, oprName VARCHAR(20), ini VARCHAR(4), cpr VARCHAR(10) NOT NULL, oprPassword VARCHAR(10) NOT NULL, rights INTEGER NOT NULL, PRIMARY KEY(oprId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE commodity(commodityId INTEGER NOT NULL, commodityName VARCHAR(20), supplier VARCHAR(20), PRIMARY KEY(commodityId)) ENGINE=innoDB;");
@@ -92,8 +92,8 @@ public class DatabaseAccess {
 			connector.doUpdate("CREATE TABLE productBatch(pbId INTEGER NOT NULL, recipeId INTEGER, startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, endTime TIMESTAMP, state INTEGER NOT NULL, PRIMARY KEY(pbId), FOREIGN KEY(recipeId) REFERENCES recipe(recipeId)) ENGINE=innoDB;");
 			connector.doUpdate("CREATE TABLE productBatchComponent(pbId INTEGER, cbId INTEGER, tara REAL NOT NULL, netto REAL NOT NULL, oprId INTEGER, terminal INTEGER, PRIMARY KEY(pbId, cbId), FOREIGN KEY(pbId) REFERENCES productBatch(pbId), FOREIGN KEY(cbId) REFERENCES commodityBatch(cbId), FOREIGN KEY(oprId) REFERENCES operator(oprId)) ENGINE=innoDB;");
 
-			
-			
+
+
 			//operator --- oprId: int, oprName: varchar, initialer: varchar, cpr: varchar, password: varchar, rights: int.
 			//commodity --- commodityID: int, commodityName: Varchar, supplier: varchar. 
 			//commoditybatch --- cbId: int, commodityId: int, quantity: real.
@@ -101,8 +101,8 @@ public class DatabaseAccess {
 			//recipeComponent --- recipeId: int, commodityId int, nomNetto: Real, Tolerance: real.
 			//productbatch --- pbId: int, recipeId: int, startTime: TIMESTAMP, state: int.
 			//productsbatchComponent --- pbId: int, cbId: int, tara: real, netto: real, oprId: int, terminal: int.
-			
-			
+
+
 			// indsæt operatoere.
 			connector.doUpdate("INSERT INTO operator VALUES(1,'Mathias','MEL','2404922559','123456',1)");
 			connector.doUpdate("INSERT INTO operator VALUES(2,'Emil','EHE','2404922559','123456',2)");
@@ -110,7 +110,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO operator VALUES(4,'Khan','KN','2404922559','123456',4)");
 			connector.doUpdate("INSERT INTO operator VALUES(5,'Kim','KIM','2404922559','123456',1)");
 			connector.doUpdate("INSERT INTO operator VALUES(6,'Hans Henrik','HH','2404922559','123456',5)");
-			
+
 			// indsæt commodity.
 			connector.doUpdate("INSERT INTO commodity VALUES(1,'Lemon','Spain')");
 			connector.doUpdate("INSERT INTO commodity VALUES(2,'Salt','Samsoe')");
@@ -123,7 +123,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO commodity VALUES(9,'Whiskey','Scotland')");
 			connector.doUpdate("INSERT INTO commodity VALUES(10,'Flour','Germany')");
 			connector.doUpdate("INSERT INTO commodity VALUES(11,'Ham','Denmark')");
-			
+
 			// indsæt commodityBatch.
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(1,1,2.3)");
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(2,2,2.8)");
@@ -134,7 +134,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(7,7,6.5)");
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(8,8,10)");
 			connector.doUpdate("INSERT INTO commodityBatch VALUES(9,2,3)");
-			
+
 			// indsæt recipe.
 			connector.doUpdate("INSERT INTO recipe VALUES(1,'LemonJuice')");
 			connector.doUpdate("INSERT INTO recipe VALUES(2,'LemonSalt')");
@@ -142,7 +142,7 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO recipe VALUES(4,'WhiskeyCola')");
 			connector.doUpdate("INSERT INTO recipe VALUES(5,'RumAndCola')");
 			connector.doUpdate("INSERT INTO recipe VALUES(6,'LemonJuiceWithVodka')");
-			
+
 			// indsæt recipeComponent.
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 4)");
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 0.03)");
@@ -150,14 +150,14 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,6, 12.2, 0.1)");
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,1, 12.2, 0.4)");
 			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,2, 12.2, 4)");
-			
+
 			// indsæt productBatch.
 			connector.doUpdate("INSERT INTO productBatch(pbId, recipeId , state) VALUES(1,1,1)");
-			
+
 			// indsæt productBatchComponent.
 			connector.doUpdate("INSERT INTO productBatchComponent VALUES(1, 1, 12.2, 12.0, 1, 1)");
-			
-			
+
+
 		} finally {
 
 			// Close
@@ -299,7 +299,12 @@ public class DatabaseAccess {
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatch WHERE pbId = " + pbId);
 		try {
 			if (!rs.first()) throw new DALException("The productbatch " + pbId + " doesn't exist");
-			return new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+			try{
+				return new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+			}
+			catch (SQLException e) {
+				return new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), null, rs.getInt(5));
+			}
 		}
 		catch (SQLException e) {throw new DALException(e);}
 	}
@@ -307,37 +312,47 @@ public class DatabaseAccess {
 	public void updateProductBatch(ProductBatch pb) throws DALException{
 		connector.doUpdate("UPDATE productBatch SET state = " + pb.getStatus() + " where pbId = " + pb.getPbId());
 	}
-	
+
 	public void setEndTimeStamp(ProductBatch pb) throws DALException{
 		connector.doUpdate("UPDATE productBatch SET endTime = CURRENT_TIMESTAMP" + " where pbId = " + pb.getPbId());
 	}
-	
+
 	public List<ProductBatch> getProductBatchList() throws DALException {
 		List<ProductBatch> list = new ArrayList<ProductBatch>();
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatch");
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+				try{
+					list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+				}
+				catch (SQLException e) {
+					list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), null, rs.getInt(5)));
+				}
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}
 		return list;
 	}
-	
+
 	public List<ProductBatch> getProductBatchList(int recipeId) throws DALException {
 		List<ProductBatch> list = new ArrayList<ProductBatch>();
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatch WHERE recipeId = " + recipeId);
 		try {
 			while (rs.next()) {
-				list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+				try{
+					list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+				}
+				catch (SQLException e) {
+					list.add(new ProductBatch(rs.getInt(1), rs.getInt(2), rs.getString(3), null, rs.getInt(5)));
+				}
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}
 		return list;
 	}
-	
+
 	//ProductBatchComp___________________________________________________________________________
 	public void createProductBatchComp(ProductBatchComp pbc)throws DALException {
 		connector.doUpdate(
@@ -380,7 +395,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 	public List<ProductBatchComp> getProductBatchCompListCbId(int cbId) throws DALException {
 		List<ProductBatchComp> list = new ArrayList<ProductBatchComp>();
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent where cbId = " + cbId);
@@ -393,7 +408,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 	public List<ProductBatchComp> getProductBatchCompListOprId(int oprId) throws DALException {
 		List<ProductBatchComp> list = new ArrayList<ProductBatchComp>();
 		ResultSet rs = connector.doQuery("SELECT * FROM productBatchComponent where oprId = " + oprId);
@@ -406,7 +421,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 	//Recipe______________________________________________________________________________
 	public void createRecipe(Recipe recipe)throws DALException {
 		connector.doUpdate(
@@ -453,7 +468,7 @@ public class DatabaseAccess {
 		}
 		catch (SQLException e) {throw new DALException(e);}
 	}
-	
+
 	public List<RecipeComp> getRecipeCompList() throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
 		ResultSet rs = connector.doQuery("SELECT * FROM recipeComponent");
@@ -479,7 +494,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 	public List<RecipeComp> getRecipeCompWithList(int commodityId) throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
 		ResultSet rs = connector.doQuery("SELECT * FROM recipeComponent where commodityId = " + commodityId);
@@ -492,7 +507,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-		
+
 	public List<RecipeComp> getRestRecipeComp(int pbId) throws DALException {
 		List<RecipeComp> list = new ArrayList<RecipeComp>();
 		ResultSet rs = connector.doQuery("Select recipeId, commodityId, nomNetto, tolerance from recipeComponent natural join productBatch WHERE pbId = "+ pbId +" AND commodityId <> ALL ( Select commodityId from commodityBatch NATURAL JOIN productBatchComponent WHERE pbId = " + pbId + " )");
@@ -505,7 +520,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 	//Special_commands__________________________________________________________________________________
 	public List<Commodity_Sum> getLowCommodityList(int lowDefinition) throws DALException {
 		List<Commodity_Sum> list = new ArrayList<Commodity_Sum>();
@@ -519,7 +534,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 	public List<FullBatchList> getFullBatchListMade(int pbId) throws DALException
 	{
 		List<FullBatchList> list = new ArrayList<FullBatchList>();
@@ -534,7 +549,7 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 	public List<FullBatchList> getFullBatchListNotMade(int pbId) throws DALException
 	{
 		List<FullBatchList> list = new ArrayList<FullBatchList>();
@@ -549,5 +564,5 @@ public class DatabaseAccess {
 		}
 		return list;
 	}
-	
+
 }
