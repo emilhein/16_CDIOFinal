@@ -78,25 +78,18 @@ public class Session {
 		
 		if (operatorId != null) {
 			try {
-				
-				int parsedOperatorId = Integer.parseInt(operatorId);
-				
-				try {
-					List<Operator> temp = new ArrayList<Operator>();
-					temp.add(databaseAccess.getOperator(parsedOperatorId));
-					return temp;
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				List<Operator> temp = new ArrayList<Operator>();
+				temp.add(databaseAccess.getOperator(Integer.parseInt(operatorId)));
+				return temp;
 			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		}
 		
 		try {
 			return databaseAccess.getOperatorList();
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -106,26 +99,19 @@ public class Session {
 	
 		if (commodityId != null) {
 			try {
-				
-				int parsedCommodityId = Integer.parseInt(commodityId);
-				
-				try {
-					List<Commodity> temp = new ArrayList<Commodity>();
-					temp.add(databaseAccess.getCommodity(parsedCommodityId));
-					return temp;
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				List<Commodity> temp = new ArrayList<Commodity>();
+				temp.add(databaseAccess.getCommodity(Integer.parseInt(commodityId)));
+				return temp;
 			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		}
 		
 		
 		try {
 			return databaseAccess.getCommodityList();
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -135,25 +121,18 @@ public class Session {
 		
 		if (recipeId != null) {
 			try {
-				
-				int parsedRecipeId = Integer.parseInt(recipeId);
-				
-				try {
-					List<Recipe> temp = new ArrayList<Recipe>();
-					temp.add(databaseAccess.getRecipe(parsedRecipeId));
-					return temp;
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				List<Recipe> temp = new ArrayList<Recipe>();
+				temp.add(databaseAccess.getRecipe(Integer.parseInt(recipeId)));
+				return temp;
 			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		}
 		
 		try {
 			return databaseAccess.getRecipeList();
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -163,23 +142,16 @@ public class Session {
 		
 		if (commodityId != null) {
 			try {
-				
-				int parsedCommodityId = Integer.parseInt(commodityId);
-				
-				try {
-					return databaseAccess.getCommodityBatchList(parsedCommodityId);
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				return databaseAccess.getCommodityBatchList(Integer.parseInt(commodityId));
 			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		}
 		
 		try {
 			return databaseAccess.getCommodityBatchList();
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -189,7 +161,7 @@ public class Session {
 		
 		try {
 			return databaseAccess.getLowCommodityList(lowDefinition);
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -198,39 +170,25 @@ public class Session {
 		
 		if (productBatchId != null) {
 			try {
-				
-				int parsedProductBatchId = Integer.parseInt(productBatchId);
-				
-				try {
-					List<ProductBatch> temp = new ArrayList<ProductBatch>();
-					temp.add(databaseAccess.getProductBatch(parsedProductBatchId));
-					return temp;
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				List<ProductBatch> temp = new ArrayList<ProductBatch>();
+				temp.add(databaseAccess.getProductBatch(Integer.parseInt(productBatchId)));
+				return temp;
 			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		} else if (recipeId != null) {
 			try {
-				
-				int parsedRecipeId = Integer.parseInt(recipeId);
-				
-				try {
-					return databaseAccess.getProductBatchList(parsedRecipeId);
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				return databaseAccess.getProductBatchList(Integer.parseInt(recipeId));
 			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		}
 		
 		try {
 			return databaseAccess.getProductBatchList();
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -240,39 +198,23 @@ public class Session {
 		
 		if (recipeId != null) {
 			try {
-				
-				int parsedRecipeId = Integer.parseInt(recipeId);
-				
-				try {
-					return databaseAccess.getRecipeCompList(parsedRecipeId);
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				return databaseAccess.getRecipeCompList(Integer.parseInt(recipeId));
 			} catch (Exception e) {
 				e.printStackTrace();
+				return null;
 			}
 		} else if (commodityId != null) {
 			try {
-				
-				int parsedCommodityId = Integer.parseInt(commodityId);
-				
-				try {
-					return databaseAccess.getRecipeCompWithList(parsedCommodityId);
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				return databaseAccess.getRecipeCompWithList(Integer.parseInt(commodityId));
 			} catch (Exception e) {
 				e.printStackTrace();
+				return null;
 			}
 		}
 		
 		try {
 			return databaseAccess.getRecipeCompList();
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -282,53 +224,30 @@ public class Session {
 		
 		if (productBatchId != null) {
 			try {
-				
-				int parsedProductBatchId = Integer.parseInt(productBatchId);
-				
-				try {
-					return databaseAccess.getProductBatchCompList(parsedProductBatchId);
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				return databaseAccess.getProductBatchCompList(Integer.parseInt(productBatchId));
 			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
 			}
 		} else if (commodityBatchId != null) {
 			try {
-				
-				int parsedCommodityBatchId = Integer.parseInt(commodityBatchId);
-				
-				try {
-					return databaseAccess.getProductBatchCompListCbId(parsedCommodityBatchId);
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				return databaseAccess.getProductBatchCompListCbId(Integer.parseInt(commodityBatchId));
 			} catch (Exception e) {
 				e.printStackTrace();
+				return null;
 			}
 		} else if (operatorId != null) {
 			try {
-				
-				int parsedOperatorId = Integer.parseInt(operatorId);
-				
-				try {
-					return databaseAccess.getProductBatchCompListOprId(parsedOperatorId);
-				} catch (DALException e) {
-					e.printStackTrace();
-					return null;
-				}
-				
+				return databaseAccess.getProductBatchCompListOprId(Integer.parseInt(operatorId));
 			} catch (Exception e) {
 				e.printStackTrace();
+				return null;
 			}
 		}
 		
 		try {
 			return databaseAccess.getProductBatchCompList();
-		} catch (DALException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}

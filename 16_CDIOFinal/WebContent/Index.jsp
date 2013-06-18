@@ -21,33 +21,37 @@
 		if (request.getParameter("login") != null) {
 			message = s.login(request.getParameter("id"), request.getParameter("password"));
 		}
-
-		if (s.isLoggedIn()) {
+	%>
+	
+	<% if (s.isLoggedIn()) { %>
+	
+		<%
 			Page p = s.getPage(request.getParameter("page"));
 			String file = "WEB-INF/" + p.getName() + ".jsp";
-	%>
-			<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
-			<div id='tabs'>
-				<ul>
-				<%
-					for (Page x : s.getPages()) {
-						if (s.getRights() <= x.getRightsRequired()) {
-				%>
-							<li><a href="?page=<%= x.getName() %>"<%= x == p ? "class=\"active\"" : "" %>><%= x.getTitle() %></a>
-				<%
-						}
+		%>
+	
+		<h2>Welcome! You're logged in as: <%= s.getName() %></h2>
+		<div id='tabs'>
+			<ul>
+			<%
+				for (Page x : s.getPages()) {
+					if (s.getRights() <= x.getRightsRequired()) {
+			%>
+						<li><a href="?page=<%= x.getName() %>"<%= x == p ? "class=\"active\"" : "" %>><%= x.getTitle() %></a>
+			<%
 					}
-				%>
-				</ul>
-			</div>
-			<div id='content'>
-				<jsp:include page="<%= file %>"/>
-			</div>
-			<br>
-			<form action="Index.jsp" method="post">
-				<input type="hidden" name="logout" value="true">
-				<input type="submit" value="Sign out">
-			</form>
+				}
+			%>
+			</ul>
+		</div>
+		<div id='content'>
+			<jsp:include page="<%= file %>"/>
+		</div>
+		<br>
+		<form action="Index.jsp" method="post">
+			<input type="hidden" name="logout" value="true">
+			<input type="submit" value="Sign out">
+		</form>
 
 	<% } else {	%>
 	
