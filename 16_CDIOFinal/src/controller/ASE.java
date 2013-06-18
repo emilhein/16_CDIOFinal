@@ -59,9 +59,19 @@ public class ASE {
 			}
 			
 			System.out.println();
+			System.out.println("Terminal:");
+			System.out.println();
+			
+			int terminal = boundary.readInt("", 0, Integer.MAX_VALUE);
+
+			if (terminal == 0) {
+				continue;
+			}
+			
+			System.out.println();
 			
 			try {
-				new Weight(address, port);
+				new Weight(address, port, terminal);
 				System.out.println("Connected to weight.");
 			} catch (Exception e) {
 				System.err.println("Cannot connect to weight (" + e.getMessage() + ").");
@@ -82,13 +92,15 @@ public class ASE {
 		
 		private String address;
 		private int port;
+		private int terminal;
 		
 		//# New
 		
-		public Weight(String address, int port) throws Exception {
+		public Weight(String address, int port, int terminal) throws Exception {
 			
 			this.address = address;
 			this.port = port;
+			this.terminal = terminal;
 			
 			try {
 
@@ -204,7 +216,7 @@ public class ASE {
 							
 							databaseAccess.updateProductBatch(procedure.productBatch);
 							databaseAccess.updateCommodityBatch(procedure.commodityBatch);
-							databaseAccess.createProductBatchComp(new ProductBatchComp(procedure.productBatch.getPbId(), procedure.commodityBatch.getCbId(), procedure.containerWeight, procedure.commodityWeight, procedure.operator.getOprId()));
+							databaseAccess.createProductBatchComp(new ProductBatchComp(procedure.productBatch.getPbId(), procedure.commodityBatch.getCbId(), procedure.containerWeight, procedure.commodityWeight, procedure.operator.getOprId(), terminal));
 							
 							procedure.recipeComps.remove(procedure.recipeComp);
 							

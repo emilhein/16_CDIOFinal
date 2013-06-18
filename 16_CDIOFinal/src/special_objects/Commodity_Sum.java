@@ -1,7 +1,5 @@
 package special_objects;
 
-import database_objects.Commodity;
-
 public class Commodity_Sum {
 
 	private int commodityId;                     

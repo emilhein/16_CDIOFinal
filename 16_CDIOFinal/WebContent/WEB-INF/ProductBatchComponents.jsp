@@ -23,6 +23,7 @@
 		<th>Product Batch Id</th>
 		<th>Commodity Batch Id</th>
 		<th>Operator Id</th>
+		<th>Terminal</th>
 		<th>Netto</th>
 		<th>Tara</th>
 	</tr>
@@ -31,6 +32,7 @@
 			<td><center><a href="?page=ProductBatches&filterProductBatchId=<%= productBatchComp.getPbId() %>"><%= productBatchComp.getPbId() %></a></center></td>
 			<td><center><a href="?page=CommodityBatches&filterCommodityId=<%= productBatchComp.getCbId() %>"><%= productBatchComp.getCbId() %></a></center></td>
 			<td><center><a href="?page=Operators&filterOperatorId=<%= productBatchComp.getOprId() %>"><%= productBatchComp.getOprId() %></a></center></td>
+			<td><center><%= productBatchComp.getTerminal() %></center></td>
 			<td><center><%= productBatchComp.getNetto() %></center></td>
 			<td><center><%= productBatchComp.getTara() %></center></td>
 		</tr>

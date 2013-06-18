@@ -7,15 +7,17 @@ public class ProductBatchComp
 	double tara;
 	double netto;
 	int oprId;					// operatør nummer
+	int terminal;
 
 	
-	public ProductBatchComp(int pbId, int cbId, double tara, double netto, int oprId)
+	public ProductBatchComp(int pbId, int cbId, double tara, double netto, int oprId, int terminal)
 	{
 		this.pbId = pbId;
 		this.cbId = cbId;
 		this.tara = tara;
 		this.netto = netto;
 		this.oprId = oprId;
+		this.terminal = terminal;
 	}
 	
 	public int getPbId() { return pbId; }
@@ -28,6 +30,8 @@ public class ProductBatchComp
 	public void setNetto(double netto) { this.netto = netto; }
 	public int getOprId() { return oprId; }
 	public void setOprId(int oprId) { this.oprId = oprId; }
+	public int getTerminal(){return terminal;}
+	public void setTerminal(int terminal){this.terminal = terminal;}
 	public String toString() { 
 		return pbId + "\t" + cbId +"\t" + tara +"\t" + netto + "\t" + oprId ; 
 	}
