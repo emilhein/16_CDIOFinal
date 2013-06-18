@@ -16,11 +16,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Produktion</title>
 
-<%=s.getdate()%>
+<div style="border-bottom: 1px black solid; width: 50%; margin-left: 25%;">
+<%=s.getDate()%>
 <br>
 Produkt Batch nr. <%=s.getProductBatches("Citron", "Salt")%><br/>
 Recept nr. <%=s.getRecipes("saltvand")%>
-
+</div>
 
 
 
@@ -33,21 +34,24 @@ Recept nr. <%=s.getRecipes("saltvand")%>
 	%>
 
 	<br>
+	<div style="border-bottom: 1px black solid; width: 50%; margin-left: 25%;">
 	Recept id: <%=recipe.getRecipeId()%><br>
 	Recept name:  <%=recipe.getRecipeName()%><br>
-
+	</div>
 	<%
 		}
 	%>
 	
 	<br>
-	Sum Tara: <%= s.toString() %><br>
-	Sum Netto: <%= s.toString() %><br>
+	<div style="border-bottom: 1px black solid; width: 50%; margin-left: 25%;">
+	Sum Tara:  test<% %><br>
+	Sum Netto:  test1<% %><br>
+	
 	
 	<br>
-	
-	Produktion Startet: <%= s.getdate() %><br>
-	Produktion Slut:	<%= s.getdate() %><br>
-	
+	Produktion Status: test<br>
+	Produktion Startet: test1 <%  %><br>
+	Produktion Slut:	test2 <% %><br>
+	</div>
 </body>
 </html>
