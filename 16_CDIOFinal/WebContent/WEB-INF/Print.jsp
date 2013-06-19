@@ -36,12 +36,27 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= s.decimalFormat(fullBatchList.getNomNetto()) %><br>
-				Tolerance: <%= s.decimalFormat(fullBatchList.getTolerance()) %><br>
-				Tara: <%= s.decimalFormat(fullBatchList.getTara()) %><br>
-				Netto: <%= s.decimalFormat(fullBatchList.getNetto()) %><br>
-				Opr: <%= fullBatchList.getOprId() %><br>
-				Terminal: <%= fullBatchList.getTerminal() %><br>
+				<table id="print">
+					<tr>
+						<th>NomNetto</th>
+						<th>Tolerance</th>
+						<th>Tara</th>
+						<th>Netto</th>
+						<th>Batch</th>
+						<th>Opr</th>
+						<th>Terminal</th>
+					</tr>
+					<tr>
+						<td><%= s.decimalFormat(fullBatchList.getNomNetto()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getTolerance()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getTara()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getNetto()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getCbId()) %></td>
+						<td><%= fullBatchList.getOprId() %></td>
+						<td><%= fullBatchList.getTerminal() %></td>
+						
+					
+				</table>
 			<% } %>
 		<% } %>
 		<% if (fullBatchListNotMade.size() > 0) { %>
@@ -53,8 +68,20 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= s.decimalFormat(fullBatchList.getNomNetto()) %><br>
-				Tolerance: <%= s.decimalFormat(fullBatchList.getTolerance()) %><br>
+				<table id="print">
+					<tr>
+						<th>NomNetto</th>
+						<th>Tolerance</th>
+						<th>Tara</th>
+						<th>Netto</th>
+						<th>Batch</th>
+						<th>Opr</th>
+						<th>Terminal</th>
+					</tr>
+					<tr>
+						<td><%= s.decimalFormat(fullBatchList.getNomNetto()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getTolerance()) %></td>
+				</table>
 			<% } %>
 		<% } %>
 		<br>
