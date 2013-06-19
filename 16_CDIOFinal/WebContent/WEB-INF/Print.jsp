@@ -53,9 +53,7 @@
 						<td><%= s.decimalFormat(fullBatchList.getNetto()) %></td>
 						<td><%= s.decimalFormat(fullBatchList.getCbId()) %></td>
 						<td><%= fullBatchList.getOprId() %></td>
-						<td><%= fullBatchList.getTerminal() %></td>
-						
-					
+						<td><%= fullBatchList.getTerminal() %></td>				
 				</table>
 			<% } %>
 		<% } %>
@@ -78,7 +76,6 @@
 						<th>Opr</th>
 						<th>Terminal</th>
 					</tr>
-					<tr>
 						<td><%= s.decimalFormat(fullBatchList.getNomNetto()) %></td>
 						<td><%= s.decimalFormat(fullBatchList.getTolerance()) %></td>
 				</table>
