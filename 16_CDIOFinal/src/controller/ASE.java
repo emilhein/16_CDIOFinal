@@ -59,9 +59,19 @@ public class ASE {
 			}
 			
 			System.out.println();
+			System.out.println("Terminal:");
+			System.out.println();
+			
+			int terminal = boundary.readInt("", 0, Integer.MAX_VALUE);
+
+			if (terminal == 0) {
+				continue;
+			}
+			
+			System.out.println();
 			
 			try {
-				new Weight(address, port);
+				new Weight(address, port, terminal);
 				System.out.println("Connected to weight.");
 			} catch (Exception e) {
 				System.err.println("Cannot connect to weight (" + e.getMessage() + ").");
@@ -82,13 +92,15 @@ public class ASE {
 		
 		private String address;
 		private int port;
+		private int terminal;
 		
 		//# New
 		
-		public Weight(String address, int port) throws Exception {
+		public Weight(String address, int port, int terminal) throws Exception {
 			
 			this.address = address;
 			this.port = port;
+			this.terminal = terminal;
 			
 			try {
 
@@ -129,7 +141,7 @@ public class ASE {
 		@Override
 		public void run() {
 
-			// 1: Bekræft
+			// 1: Bekrï¿½ft
 			// 0: Annuller/Tilbage
 
 			int step = 0;
@@ -143,8 +155,8 @@ public class ASE {
 					
 						case 0:
 							
-							// 3. Operatøren indtaster operatør nr.
-							// 4. Vægten svarer tilbage med operatørnavn som så godkendes
+							// 3. Operatï¿½ren indtaster operatï¿½r nr.
+							// 4. Vï¿½gten svarer tilbage med operatï¿½rnavn som sï¿½ godkendes
 							procedure = new Procedure();
 							getOperator(procedure);
 							step += 1;
@@ -152,8 +164,8 @@ public class ASE {
 							
 						case 1:
 					
-							// 5. Operatøren indtaster produktbatch nummer
-							// 6. Vægten svarer tilbage med navn på recept der skal produceres (eks: saltvand med citron)
+							// 5. Operatï¿½ren indtaster produktbatch nummer
+							// 6. Vï¿½gten svarer tilbage med navn pï¿½ recept der skal produceres (eks: saltvand med citron)
 							if (getProductBatch(procedure)) {
 								step += 1;
 							} else {
@@ -163,12 +175,12 @@ public class ASE {
 					
 						case 2:
 							
-							// 7. Operatøren kontrollerer at vægten er ubelastet og trykker ’ok’
-							// 8. Vægten tareres
-							// 9. Vægten beder om første tara beholder
-							// 10. Operatør placerer første tarabeholder og trykker ’ok’
-							// 11. Vægten af tarabeholder registreres
-							// 12. Vægten tareres
+							// 7. Operatï¿½ren kontrollerer at vï¿½gten er ubelastet og trykker ï¿½okï¿½
+							// 8. Vï¿½gten tareres
+							// 9. Vï¿½gten beder om fï¿½rste tara beholder
+							// 10. Operatï¿½r placerer fï¿½rste tarabeholder og trykker ï¿½okï¿½
+							// 11. Vï¿½gten af tarabeholder registreres
+							// 12. Vï¿½gten tareres
 							if (getContainerWeight(procedure)) {
 								step += 1;
 							} else {
@@ -178,7 +190,7 @@ public class ASE {
 							
 						case 3:
 							
-							// 13. Vægten beder om raavarebatch nummer på første råvare
+							// 13. Vï¿½gten beder om raavarebatch nummer pï¿½ fï¿½rste rï¿½vare
 							if (getCommodityBatch(procedure)) {
 								step += 1;
 							} else {
@@ -188,7 +200,7 @@ public class ASE {
 
 						case 4:
 							
-							// 14. Operatøren afvejer op til den ønskede mængde og trykker ’ok’
+							// 14. Operatï¿½ren afvejer op til den ï¿½nskede mï¿½ngde og trykker ï¿½okï¿½
 							if (getCommodityWeight(procedure)) {
 								step += 1;
 							} else {
@@ -198,13 +210,13 @@ public class ASE {
 					
 						case 5:
 							
-							// 15. Pkt. 7 – 14 gentages indtil alle råvarer er afvejet
+							// 15. Pkt. 7 ï¿½ 14 gentages indtil alle rï¿½varer er afvejet
 							procedure.productBatch.setStatus(1);
 							procedure.commodityBatch.setMaengde(procedure.commodityBatch.getMaengde() - procedure.commodityWeight);
 							
 							databaseAccess.updateProductBatch(procedure.productBatch);
 							databaseAccess.updateCommodityBatch(procedure.commodityBatch);
-							databaseAccess.createProductBatchComp(new ProductBatchComp(procedure.productBatch.getPbId(), procedure.commodityBatch.getCbId(), procedure.containerWeight, procedure.commodityWeight, procedure.operator.getOprId()));
+							databaseAccess.createProductBatchComp(new ProductBatchComp(procedure.productBatch.getPbId(), procedure.commodityBatch.getCbId(), procedure.containerWeight, procedure.commodityWeight, procedure.operator.getOprId(), terminal));
 							
 							procedure.recipeComps.remove(procedure.recipeComp);
 							
@@ -217,17 +229,18 @@ public class ASE {
 					
 						case 6:
 							
-							// 16. Systemet sætter produktbatch nummerets status til ”Afsluttet”
+							// 16. Systemet sï¿½tter produktbatch nummerets status til ï¿½Afsluttetï¿½
 							procedure.productBatch.setStatus(2);
 							
 							databaseAccess.updateProductBatch(procedure.productBatch);
+							databaseAccess.setEndTimeStamp(procedure.productBatch);
 							
 							step += 1;
 							break;
 							
 						default:
 							
-							// 17. Det kan herefter genoptages af en ny operatør
+							// 17. Det kan herefter genoptages af en ny operatï¿½r
 							step = 0;
 							
 					}
@@ -372,7 +385,7 @@ public class ASE {
 					continue loop;
 				}
 				
-				if (procedure.commodityBatch.getMaengde() < procedure.recipeComp.getNomNetto() - (procedure.recipeComp.getNomNetto() * procedure.recipeComp.getTolerance())) {
+				if (procedure.commodityBatch.getMaengde() < procedure.recipeComp.getNomNetto() - (procedure.recipeComp.getNomNetto() * procedure.recipeComp.getTolerance() * 0.01)) {
 					display("Missing");
 					continue;
 				}
@@ -389,7 +402,7 @@ public class ASE {
 		private boolean getCommodityWeight(Procedure procedure) throws Exception {
 			
 			double target = procedure.recipeComp.getNomNetto();
-			double tolerance = procedure.recipeComp.getNomNetto() * procedure.recipeComp.getTolerance();
+			double tolerance = procedure.recipeComp.getNomNetto() * procedure.recipeComp.getTolerance() * 0.01;
 			boolean stopped = false;
 			int pause = 0;
 			
