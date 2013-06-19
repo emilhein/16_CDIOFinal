@@ -109,6 +109,9 @@ public class ASE {
 				writer = new DataOutputStream(socket.getOutputStream());
 				databaseAccess = new DatabaseAccess();
 				
+				// Ignorer I4 A "3154308"
+				reader.readLine();
+				
 			} catch (Exception e) {
 				
 				try {
