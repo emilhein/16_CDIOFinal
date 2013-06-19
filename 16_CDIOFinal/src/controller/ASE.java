@@ -109,9 +109,6 @@ public class ASE {
 				writer = new DataOutputStream(socket.getOutputStream());
 				databaseAccess = new DatabaseAccess();
 				
-				// Ignorer I4 A "3154308"
-				reader.readLine();
-				
 			} catch (Exception e) {
 				
 				try {
@@ -444,11 +441,16 @@ public class ASE {
 			writer.writeBytes("D \"" + message + "\"\r\n");
 			
 			// Receive
-			String response = reader.readLine();
-			if (!response.equals("D A")) {
-				throw new Exception("Received message '" + response + "' differs from 'D A'.");
+			String response;
+			while (true) {
+				response = reader.readLine();
+				if (response.equals("D A")) {
+					break;
+				}
+				System.err.println();
+				System.err.println("Received message '" + response + "' differs from 'D A'.");
 			}
-			
+		
 			// Wait
 			Thread.sleep(2000);
 
@@ -456,9 +458,13 @@ public class ASE {
 			writer.writeBytes("DW\r\n");
 						
 			// Receive
-			response = reader.readLine();
-			if (!response.equals("DW A")) {
-				throw new Exception("Received message '" + response + "' differs from 'DW A'.");
+			while (true) {
+				response = reader.readLine();
+				if (response.equals("DW A")) {
+					break;
+				}
+				System.err.println();
+				System.err.println("Received message '" + response + "' differs from 'DW A'.");
 			}
 			
 		}
@@ -468,17 +474,27 @@ public class ASE {
 			writer.writeBytes("RM20 4 \"" + message + "\" \"" + input + "\" \"" + unit + "\"\r\n");
 			
 			// Receive
-			String response = reader.readLine();
-			if (!response.equals("RM20 B")) {
-				throw new Exception("Received message '" + response + "' differs from 'RM20 B'.");
+			String response;
+			while (true) {
+				response = reader.readLine();
+				if (response.equals("RM20 B")) {
+					break;
+				}
+				System.err.println();
+				System.err.println("Received message '" + response + "' differs from 'RM20 B'.");
 			}
 			
 			// Receive
 			final Pattern pattern = Pattern.compile("^RM20 A \"([^\"]*)\"$");
-			response = reader.readLine();
-			Matcher matcher = pattern.matcher(response);
-			if (!matcher.matches()) {
-				throw new Exception("Received message '" + response + "' differs from pattern '^RM20 A \"([^\"]*)\"$'.");
+			Matcher matcher;
+			while (true) {
+				response = reader.readLine();
+				matcher = pattern.matcher(response);
+				if (matcher.matches()) {
+					break;
+				}
+				System.err.println();
+				System.err.println("Received message '" + response + "' differs from pattern '^RM20 A \"([^\"]*)\"$'.");
 			}
 			
 			return Integer.parseInt(matcher.group(1));
@@ -490,10 +506,16 @@ public class ASE {
 			
 			// Receive
 			final Pattern pattern = Pattern.compile("^S S \\s*-?([0-9\\.]*) kg$");
-			String response = reader.readLine();
-			Matcher matcher = pattern.matcher(response);
-			if (!matcher.matches()) {
-				throw new Exception("Received message '" + response + "' differs from pattern '^S S \\s*-?([0-9\\.]*) kg$'.");
+			String response;
+			Matcher matcher;
+			while (true) {
+				response = reader.readLine();
+				matcher = pattern.matcher(response);
+				if (matcher.matches()) {
+					break;
+				}
+				System.err.println();
+				System.err.println("Received message '" + response + "' differs from pattern '^S S \\s*-?([0-9\\.]*) kg$'.");
 			}
 			
 			return Double.parseDouble(matcher.group(1));
@@ -505,10 +527,16 @@ public class ASE {
 			
 			// Receive
 			final Pattern pattern = Pattern.compile("^T S \\s*-?([0-9\\.]*) kg$");
-			String response = reader.readLine();
-			Matcher matcher = pattern.matcher(response);
-			if (!matcher.matches()) {
-				throw new Exception("Received message '" + response + "' differs from pattern '^T S \\s*-?([0-9\\.]*) kg$'.");
+			String response;
+			Matcher matcher;
+			while (true) {
+				response = reader.readLine();
+				matcher = pattern.matcher(response);
+				if (matcher.matches()) {
+					break;
+				}
+				System.err.println();
+				System.err.println("Received message '" + response + "' differs from pattern '^T S \\s*-?([0-9\\.]*) kg$'.");
 			}
 			
 			return Double.parseDouble(matcher.group(1));
