@@ -33,8 +33,8 @@
 			<td><center><a href="?page=CommodityBatches&filterCommodityId=<%= productBatchComp.getCbId() %>"><%= productBatchComp.getCbId() %></a></center></td>
 			<td><center><a href="?page=Operators&filterOperatorId=<%= productBatchComp.getOprId() %>"><%= productBatchComp.getOprId() %></a></center></td>
 			<td><center><%= productBatchComp.getTerminal() %></center></td>
-			<td><center><%= s.DecimalFormat(productBatchComp.getNetto()) %></center></td>
-			<td><center><%= s.DecimalFormat(productBatchComp.getTara()) %></center></td>
+			<td><center><%= s.decimalFormat(productBatchComp.getNetto()) %></center></td>
+			<td><center><%= s.decimalFormat(productBatchComp.getTara()) %></center></td>
 		</tr>
 	<% } %>
 </table>

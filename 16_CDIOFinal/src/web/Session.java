@@ -536,10 +536,11 @@ public class Session {
 		
 	}
 	
-	public static String DecimalFormat(double tal)
-	{
-		java.text.DecimalFormat df = new java.text.DecimalFormat("0.####");
-        return df.format(tal);        
+	public static String decimalFormat(double tal) {
+		
+		final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("0.####");
+        
+		return decimalFormat.format(tal);        
 	}
 				
 }

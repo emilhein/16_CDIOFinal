@@ -36,10 +36,10 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= s.DecimalFormat(fullBatchList.getNomNetto()) %><br>
-				Tolerance: <%= s.DecimalFormat(fullBatchList.getTolerance()) %><br>
-				Tara: <%= s.DecimalFormat(fullBatchList.getTara()) %><br>
-				Netto: <%= s.DecimalFormat(fullBatchList.getNetto()) %><br>
+				NomNetto: <%= s.decimalFormat(fullBatchList.getNomNetto()) %><br>
+				Tolerance: <%= s.decimalFormat(fullBatchList.getTolerance()) %><br>
+				Tara: <%= s.decimalFormat(fullBatchList.getTara()) %><br>
+				Netto: <%= s.decimalFormat(fullBatchList.getNetto()) %><br>
 				Opr: <%= fullBatchList.getOprId() %><br>
 				Terminal: <%= fullBatchList.getTerminal() %><br>
 			<% } %>
@@ -53,16 +53,16 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= s.DecimalFormat(fullBatchList.getNomNetto()) %><br>
-				Tolerance: <%= s.DecimalFormat(fullBatchList.getTolerance()) %><br>
+				NomNetto: <%= s.decimalFormat(fullBatchList.getNomNetto()) %><br>
+				Tolerance: <%= s.decimalFormat(fullBatchList.getTolerance()) %><br>
 			<% } %>
 		<% } %>
 		<br>
 		<center>Opsummering</center>
 		<br>
 		<div style="border-bottom: 1px black solid; margin-left: auto; margin-rigth: auto">
-			Sum Tara: <%= tara %><br>
-			Sum Netto: <%= netto %><br>
+			Sum Tara: <%= s.decimalFormat(tara) %><br>
+			Sum Netto: <%= s.decimalFormat(netto) %><br>
 			<br>
 			Produktion Status: <%= productBatch.getStatus() == 0 ? "Ikke påbegyndt" : productBatch.getStatus() == 1 ? "Under produktion" : "Afsluttet" %><br>
 			Produktion Startet: <%= productBatch.getStartTime() %><br>
