@@ -1,4 +1,5 @@
 <%@ page import="database_objects.ProductBatch" %>
+<%@ page import="database_objects.Recipe" %>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
 
@@ -11,7 +12,7 @@
 		message1 = "Filtered by recipe id: " + request.getParameter("filterRecipeId");
 	}
 	if (request.getParameter("add") != null) {
-		message2 = s.addProductBatch(request.getParameter("id"), request.getParameter("receptId"));		
+		message2 = s.addProductBatch(request.getParameter("id"), request.getParameter("recipeId"));		
 	}
 %>
 
@@ -28,7 +29,7 @@
 <table>
 	<tr>
 		<th>Id</th>
-		<th>Recept Id</th>
+		<th>Recipe Id</th>
 		<th>Begin</th>
 		<th>End</th>
 		<th>Status</th>
@@ -36,7 +37,7 @@
 	<% for (ProductBatch productBatch : s.getProductBatches(request.getParameter("filterProductBatchId"), request.getParameter("filterRecipeId"))) { %>
 		<tr>
 			<td><center><%= productBatch.getPbId() %></center></td>
-			<td><center><a href="?page=Recipes&filterRecipeId=<%= productBatch.getReceptId() %>"><%= productBatch.getReceptId() %></a></center></td>
+			<td><center><a href="?page=Recipes&filterRecipeId=<%= productBatch.getReceptId() %>"><%= s.getRecipes("" + productBatch.getReceptId()).get(0).getRecipeName() %> (<%= productBatch.getReceptId() %>)</a></center></td>
 			<td><center><%= productBatch.getStartTime() %></center></td>
 			<td><center><%= productBatch.getEndTime() == null ? "-" : productBatch.getEndTime() %></center></td>
 			<td><center><%= productBatch.getStatus() %></center></td>
@@ -48,7 +49,14 @@
 		<input type="hidden" name="add" value="true">
 		<tr>
 			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
-			<td><br><input type="text" name="receptId" value="<%= request.getParameter("add") != null && request.getParameter("receptId") != null ? request.getParameter("receptId") : "" %>"></td>
+			<td>
+				<br>
+				<select name="recipeId">
+  				<% for (Recipe recipe : s.getRecipes(null)) { %>
+  					<option value="<%= recipe.getRecipeId() %>"<%= request.getParameter("add") != null && request.getParameter("recipeId").equals("" + recipe.getRecipeId()) ? " selected=\"selected\"" : "" %>><%= recipe.getRecipeName() %> (<%= recipe.getRecipeId() %>)</option>
+  				<% } %>
+				</select>
+			</td>
 			<td><br></td>
 			<td><br></td>
 			<td><br></td>

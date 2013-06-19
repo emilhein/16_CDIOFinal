@@ -31,7 +31,7 @@
 		<tr>
 			<td><center><a href="?page=ProductBatches&filterProductBatchId=<%= productBatchComp.getPbId() %>"><%= productBatchComp.getPbId() %></a></center></td>
 			<td><center><a href="?page=CommodityBatches&filterCommodityId=<%= productBatchComp.getCbId() %>"><%= productBatchComp.getCbId() %></a></center></td>
-			<td><center><a href="?page=Operators&filterOperatorId=<%= productBatchComp.getOprId() %>"><%= productBatchComp.getOprId() %></a></center></td>
+			<td><center><a href="?page=Operators&filterOperatorId=<%= productBatchComp.getOprId() %>"><%= s.getOperators("" + productBatchComp.getOprId()).get(0).getOprName() %> (<%= productBatchComp.getOprId() %>)</a></center></td>
 			<td><center><%= productBatchComp.getTerminal() %></center></td>
 			<td><center><%= s.decimalFormat(productBatchComp.getNetto()) %></center></td>
 			<td><center><%= s.decimalFormat(productBatchComp.getTara()) %></center></td>

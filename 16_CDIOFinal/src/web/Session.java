@@ -459,19 +459,19 @@ public class Session {
 				
 		return null;
 	}
-	public static String addProductBatch(String id, String receptId) {
+	public static String addProductBatch(String id, String recipeId) {
 		
 		if (id == null || !id.matches("^[0-9]{1,8}$")) {
 			return "Id must be a number between 1 and 99999999.";
 		}
-		if (receptId == null || !receptId.matches("^[0-9]{1,8}$")) {
-			return "Recept id must be a number between 1 and 99999999.";
+		if (recipeId == null || !recipeId.matches("^[0-9]{1,8}$")) {
+			return "Recipe id must be a number between 1 and 99999999.";
 		}
 		
 		// Add
 
 		try {
-			databaseAccess.createProductBatch(new ProductBatch(Integer.parseInt(id), Integer.parseInt(receptId), null, null, 0));
+			databaseAccess.createProductBatch(new ProductBatch(Integer.parseInt(id), Integer.parseInt(recipeId), null, null, 0));
 		} catch (Exception e) {
 			return "Could not add product batch (" + e.getMessage() + ").";
 		}
