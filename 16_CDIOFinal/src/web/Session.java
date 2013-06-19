@@ -542,5 +542,28 @@ public class Session {
         
 		return decimalFormat.format(tal).replace(",", ".");    
 	}
+	
+	public static String getRightsName(int rights) {
+		
+		switch (rights) {
+		
+			case 1:
+				return "Administrator";
+				
+			case 2:
+				return "Pharmacist";
+				
+			case 3:
+				return "Foreman";
+				
+			case 4:
+				return "Operator";
+				
+			case 5:
+				return "Blocked";
+		}
+		
+		return "Unknown";
+	}
 				
 }
