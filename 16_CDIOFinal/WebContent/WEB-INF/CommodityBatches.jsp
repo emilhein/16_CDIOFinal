@@ -53,7 +53,7 @@
 				<br>
 				<select name="commodityId">
   				<% for (Commodity commodity : s.getCommodities(null)) { %>
-  					<option value="<%= commodity.getCommodityId() %>"<%= request.getParameter("add") != null && request.getParameter("commodityId").equals("" + commodity.getCommodityId()) ? " selected=\"selected\"" : "" %>><%= commodity.getCommodityId() %>: <%= commodity.getCommodityName() %></option>
+  					<option value="<%= commodity.getCommodityId() %>"<%= request.getParameter("add") != null && request.getParameter("commodityId").equals("" + commodity.getCommodityId()) ? " selected=\"selected\"" : "" %>><%= commodity.getCommodityId() %>. <%= commodity.getCommodityName() %></option>
   				<% } %>
 				</select>
 			</td>

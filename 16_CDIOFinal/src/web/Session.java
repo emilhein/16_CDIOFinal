@@ -309,7 +309,7 @@ public class Session {
 		if (password == null || !password.matches("^.{5,8}$")) {
 			return "Password length must be between 5 and 8 characters.";
 		}
-		if (rights == null || !rights.matches("^[0-9]{1,8}$")) {
+		if (rights == null || !rights.matches("^[0-9]$") || Integer.parseInt(rights) < 1 || Integer.parseInt(rights) > 5) {
 			return "Rights must be a number between 1 and 5.";
 		}
 
@@ -353,7 +353,7 @@ public class Session {
 		if (password == null || !password.matches("^.{5,8}$")) {
 			return "Password length must be between 5 and 8 characters.";
 		}
-		if (rights == null || !rights.matches("^[0-9]{1,8}$")) {
+		if (rights == null || !rights.matches("^[0-9]$") || Integer.parseInt(rights) < 1 || Integer.parseInt(rights) > 5) {
 			return "Rights must be a number between 1 and 5.";
 		}
 		
