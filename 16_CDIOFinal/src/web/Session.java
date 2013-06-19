@@ -413,8 +413,8 @@ public class Session {
 		if (id == null || !id.matches("^[0-9]{1,8}$")) {
 			return "Id must be a number between 1 and 99999999.";
 		}
-		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$")) {
-			return "Quantity must be a decimal number greater than or equal to 0.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]{0,4}$")) {
+			return "Quantity must be a decimal number greater than or equal to 0 with a maximum of 4 decimals.";
 		}
 		
 		CommodityBatch commodityBatch;
@@ -445,8 +445,8 @@ public class Session {
 		if (commodityId == null || !commodityId.matches("^[0-9]{1,8}$")) {
 			return "Commodity id must be a number between 1 and 99999999.";
 		}
-		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$")) {
-			return "Quantity must be a decimal number greater than or equal to 0.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]{0,4}$")) {
+			return "Quantity must be a decimal number greater than or equal to 0 with a maximum of 4 decimals.";
 		}
 		
 		// Add
@@ -486,11 +486,11 @@ public class Session {
 		if (commodityId == null || !commodityId.matches("^[0-9]{1,8}$")) {
 			return "Commodity id must be a number between 1 and 99999999.";
 		}
-		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$") || Double.parseDouble(quantity) < 0.05 || Double.parseDouble(quantity) > 20) {
-			return "Quantity must be a decimal number between 0.05 and 20.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]{0,4}$") || Double.parseDouble(quantity) < 0.05 || Double.parseDouble(quantity) > 20) {
+			return "Quantity must be a decimal number between 0.05 and 20 with a maximum of 4 decimals.";
 		}
-		if (tolerance == null || !tolerance.matches("^[0-9]+\\.?[0-9]*$") || Double.parseDouble(tolerance) < 0.1 || Double.parseDouble(tolerance) > 10) {
-			return "Tolerance must be a decimal number between 0.1 and 10.";
+		if (tolerance == null || !tolerance.matches("^[0-9]+\\.?[0-9]{0,4}$") || Double.parseDouble(tolerance) < 0.1 || Double.parseDouble(tolerance) > 10) {
+			return "Tolerance must be a decimal number between 0.1 and 10 with a maximum of 4 decimals.";
 		}
 
 		// Add
