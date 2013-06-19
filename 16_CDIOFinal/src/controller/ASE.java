@@ -407,17 +407,8 @@ public class ASE {
 			double target = procedure.recipeComp.getNomNetto();
 			double tolerance = procedure.recipeComp.getNomNetto() * procedure.recipeComp.getTolerance() * 0.01;
 			boolean stopped = false;
-			int pause = 0;
 			
 			while (true) {
-			
-				if (pause <= 0 && !stopped) {
-					if (readInt("Place commodity", "1", "") != 1) {
-						return false;
-					}
-					pause = 10;
-				}
-				pause -= 1;
 				
 				procedure.commodityWeight = weight();
 				
