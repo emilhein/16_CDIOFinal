@@ -540,7 +540,7 @@ public class Session {
 		
 		final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("0.####");
         
-		return decimalFormat.format(tal);        
+		return decimalFormat.format(tal).replace(",", ".");    
 	}
 				
 }
