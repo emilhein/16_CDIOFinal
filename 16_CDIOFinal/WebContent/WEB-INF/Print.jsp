@@ -19,9 +19,10 @@
 	%>
 	<div style="border: 1px dashed black; width: 600px; padding: 10px">
 		<div style="border-bottom: 1px black solid; width: 80%; margin-left: auto; margin-right: auto">
-			Udskrevet: <%= s.getDate() %><br>
+			Printed: <%= s.getDate() %><br>
 			Produkt Batch nr. <%= productBatch.getPbId()%><br>
-			Recept nr. <%= productBatch.getReceptId() %>
+			Recept nr. <%= productBatch.getReceptId() %><br>
+			Recipe name: <%= s.getRecipes("" + productBatch.getReceptId()).get(0).getRecipeName() %>
 		</div>
 		<% if (fullBatchListMade.size() > 0) { %>
 			<br>
