@@ -49,7 +49,7 @@
 				<br>
 				<select name="recipeId">
   				<% for (Recipe recipe : s.getRecipes(null)) { %>
-  					<option value="<%= recipe.getRecipeId() %>"<%= request.getParameter("add") != null && request.getParameter("recipeId").equals("" + recipe.getRecipeId()) ? " selected=\"selected\"" : "" %>><%= recipe.getRecipeName() %> (<%= recipe.getRecipeId() %>)</option>
+  					<option value="<%= recipe.getRecipeId() %>"<%= request.getParameter("add") != null && message2 != null && request.getParameter("recipeId").equals("" + recipe.getRecipeId()) ? " selected=\"selected\"" : "" %>><%= recipe.getRecipeName() %> (<%= recipe.getRecipeId() %>)</option>
   				<% } %>
 				</select>
 			</td>
@@ -57,12 +57,12 @@
 				<br>
 				<select name="commodityId">
   				<% for (Commodity commodity : s.getCommodities(null)) { %>
-  					<option value="<%= commodity.getCommodityId() %>"<%= request.getParameter("add") != null && request.getParameter("commodityId").equals("" + commodity.getCommodityId()) ? " selected=\"selected\"" : "" %>><%= commodity.getCommodityName() %> (<%= commodity.getCommodityId() %>)</option>
+  					<option value="<%= commodity.getCommodityId() %>"<%= request.getParameter("add") != null && message2 != null && request.getParameter("commodityId").equals("" + commodity.getCommodityId()) ? " selected=\"selected\"" : "" %>><%= commodity.getCommodityName() %> (<%= commodity.getCommodityId() %>)</option>
   				<% } %>
 				</select>
 			</td>
-			<td><br><input type="text" name="quantity" value="<%= request.getParameter("add") != null && request.getParameter("quantity") != null ? request.getParameter("quantity") : "" %>"></td>
-			<td><br><input type="text" name="tolerance" value="<%= request.getParameter("add") != null && request.getParameter("tolerance") != null ? request.getParameter("tolerance") : "" %>"></td>
+			<td><br><input type="text" name="quantity" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("quantity") != null ? request.getParameter("quantity") : "" %>"></td>
+			<td><br><input type="text" name="tolerance" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("tolerance") != null ? request.getParameter("tolerance") : "" %>"></td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>

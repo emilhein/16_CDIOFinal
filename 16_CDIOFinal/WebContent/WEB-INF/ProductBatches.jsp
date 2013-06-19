@@ -48,12 +48,12 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
+			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
 			<td>
 				<br>
 				<select name="recipeId">
   				<% for (Recipe recipe : s.getRecipes(null)) { %>
-  					<option value="<%= recipe.getRecipeId() %>"<%= request.getParameter("add") != null && request.getParameter("recipeId").equals("" + recipe.getRecipeId()) ? " selected=\"selected\"" : "" %>><%= recipe.getRecipeName() %> (<%= recipe.getRecipeId() %>)</option>
+  					<option value="<%= recipe.getRecipeId() %>"<%= request.getParameter("add") != null && message2 != null && request.getParameter("recipeId").equals("" + recipe.getRecipeId()) ? " selected=\"selected\"" : "" %>><%= recipe.getRecipeName() %> (<%= recipe.getRecipeId() %>)</option>
   				<% } %>
 				</select>
 			</td>

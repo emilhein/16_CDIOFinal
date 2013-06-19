@@ -41,9 +41,9 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
-			<td><br><input type="text" name="name" value="<%= request.getParameter("add") != null && request.getParameter("name") != null ? request.getParameter("name") : "" %>"></td>
-			<td><br><input type="text" name="supplier" value="<%= request.getParameter("add") != null && request.getParameter("supplier") != null ? request.getParameter("supplier") : "" %>"></td>
+			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
+			<td><br><input type="text" name="name" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("name") != null ? request.getParameter("name") : "" %>"></td>
+			<td><br><input type="text" name="supplier" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("supplier") != null ? request.getParameter("supplier") : "" %>"></td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
