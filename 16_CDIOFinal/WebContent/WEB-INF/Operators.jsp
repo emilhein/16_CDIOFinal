@@ -47,7 +47,7 @@
 				<td>
 					<select name="rights">
   					<% for (int i = 1; i <= 5; i++) { %>
-  						<option value="<%= i %>"<%= operator.getRights() == i ? " selected=\"selected\"" : "" %>><%= s.getRightsName(i) %> (<%= i %>)</option>
+  						<option value="<%= i %>"<%= operator.getRights() == i ? " selected=\"selected\"" : "" %>><%= s.getRightsName(i) %></option>
   					<% } %>
 					</select>
 				</td>
@@ -68,7 +68,7 @@
 				<br>
 				<select name="rights">
   				<% for (int i = 1; i <= 5; i++) { %>
-  					<option value="<%= i %>"<%= request.getParameter("add") != null && message2 != null && request.getParameter("rights").equals("" + i) ? " selected=\"selected\"" : "" %>><%= s.getRightsName(i) %> (<%= i %>)</option>
+  					<option value="<%= i %>"<%= request.getParameter("add") != null && message2 != null && request.getParameter("rights").equals("" + i) ? " selected=\"selected\"" : "" %>><%= s.getRightsName(i) %></option>
   				<% } %>
 				</select>
 			</td>
