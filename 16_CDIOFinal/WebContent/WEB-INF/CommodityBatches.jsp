@@ -1,4 +1,5 @@
 <%@ page import="database_objects.CommodityBatch" %>
+<%@ page import="database_objects.Commodity" %>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
 
@@ -48,7 +49,14 @@
 		<input type="hidden" name="add" value="true">
 		<tr>
 			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
-			<td><br><input type="text" name="commodityId" value="<%= request.getParameter("add") != null && request.getParameter("commodityId") != null ? request.getParameter("commodityId") : "" %>"></td>
+			<td>
+				<br>
+				<select name="commodityId">
+  				<% for (Commodity commodity : s.getCommodities(null)) { %>
+  					<option value="<%= commodity.getCommodityId() %>"<%= request.getParameter("add") != null && request.getParameter("commodityId").equals("" + commodity.getCommodityId()) ? " selected=\"selected\"" : "" %>><%= commodity.getCommodityId() %>: <%= commodity.getCommodityName() %></option>
+  				<% } %>
+				</select>
+			</td>
 			<td><br><input type="text" name="quantity" value="<%= request.getParameter("add") != null && request.getParameter("quantity") != null ? request.getParameter("quantity") : "" %>"></td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>
