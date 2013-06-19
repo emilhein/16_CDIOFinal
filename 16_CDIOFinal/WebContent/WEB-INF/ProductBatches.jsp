@@ -47,8 +47,8 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><br><input type="text" name="id"></td>
-			<td><br><input type="text" name="receptId"></td>
+			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
+			<td><br><input type="text" name="receptId" value="<%= request.getParameter("add") != null && request.getParameter("receptId") != null ? request.getParameter("receptId") : "" %>"></td>
 			<td><br></td>
 			<td><br></td>
 			<td><br></td>

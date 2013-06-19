@@ -43,10 +43,10 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><br><input type="text" name="recipeId"></td>
-			<td><br><input type="text" name="commodityId"></td>
-			<td><br><input type="text" name="quantity"></td>
-			<td><br><input type="text" name="tolerance"></td>
+			<td><br><input type="text" name="recipeId" value="<%= request.getParameter("add") != null && request.getParameter("recipeId") != null ? request.getParameter("recipeId") : "" %>"></td>
+			<td><br><input type="text" name="commodityId" value="<%= request.getParameter("add") != null && request.getParameter("commodityId") != null ? request.getParameter("commodityId") : "" %>"></td>
+			<td><br><input type="text" name="quantity" value="<%= request.getParameter("add") != null && request.getParameter("quantity") != null ? request.getParameter("quantity") : "" %>"></td>
+			<td><br><input type="text" name="tolerance" value="<%= request.getParameter("add") != null && request.getParameter("tolerance") != null ? request.getParameter("tolerance") : "" %>"></td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>

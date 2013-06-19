@@ -53,12 +53,12 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><br><input type="text" name="id"></td>
-			<td><br><input type="text" name="name"></td>
-			<td><br><input type="text" name="initials"></td>
-			<td><br><input type="text" name="cpr"></td>
-			<td><br><input type="text" name="password"></td>
-			<td><br><input type="text" name="rights"></td>
+			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
+			<td><br><input type="text" name="name" value="<%= request.getParameter("add") != null && request.getParameter("name") != null ? request.getParameter("name") : "" %>"></td>
+			<td><br><input type="text" name="initials" value="<%= request.getParameter("add") != null && request.getParameter("initials") != null ? request.getParameter("initials") : "" %>"></td>
+			<td><br><input type="text" name="cpr" value="<%= request.getParameter("add") != null && request.getParameter("cpr") != null ? request.getParameter("cpr") : "" %>"></td>
+			<td><br><input type="text" name="password" value="<%= request.getParameter("add") != null && request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
+			<td><br><input type="text" name="rights" value="<%= request.getParameter("add") != null && request.getParameter("rights") != null ? request.getParameter("rights") : "" %>"></td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
