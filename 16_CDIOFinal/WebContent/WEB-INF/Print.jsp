@@ -36,10 +36,10 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= fullBatchList.getNomNetto() %><br>
-				Tolerance: <%= fullBatchList.getTolerance() %><br>
-				Tara: <%= fullBatchList.getTara() %><br>
-				Netto: <%= fullBatchList.getNetto() %><br>
+				NomNetto: <%= s.DecimalFormat(fullBatchList.getNomNetto()) %><br>
+				Tolerance: <%= s.DecimalFormat(fullBatchList.getTolerance()) %><br>
+				Tara: <%= s.DecimalFormat(fullBatchList.getTara()) %><br>
+				Netto: <%= s.DecimalFormat(fullBatchList.getNetto()) %><br>
 				Opr: <%= fullBatchList.getOprId() %><br>
 				Terminal: <%= fullBatchList.getTerminal() %><br>
 			<% } %>
@@ -53,8 +53,8 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= fullBatchList.getNomNetto() %><br>
-				Tolerance: <%= fullBatchList.getTolerance() %><br>
+				NomNetto: <%= s.DecimalFormat(fullBatchList.getNomNetto()) %><br>
+				Tolerance: <%= s.DecimalFormat(fullBatchList.getTolerance()) %><br>
 			<% } %>
 		<% } %>
 		<br>

@@ -38,7 +38,7 @@
 			<tr>
 				<td><center><%= commodityBatch.getCbId() %></center></td>
 				<td><center><a href="?page=Commodities&filterCommodityId=<%= commodityBatch.getCommodityId() %>"><%= commodityBatch.getCommodityId() %></a></center></td>
-				<td><input type="text" name="quantity" value="<%= commodityBatch.getMaengde() %>"></td>
+				<td><input type="text" name="quantity" value="<%= s.DecimalFormat(commodityBatch.getMaengde())%>"></td>
 				<td><input type="submit" value="Update"></td>
 				<td><center><a href="?page=ProductBatchComponents&filterCommodityBatchId=<%= commodityBatch.getCbId() %>">Product Batch Components</a></center></td>
 			</tr>

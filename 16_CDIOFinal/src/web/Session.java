@@ -535,5 +535,11 @@ public class Session {
 		}
 		
 	}
+	
+	public static String DecimalFormat(double tal)
+	{
+		java.text.DecimalFormat df = new java.text.DecimalFormat("0.####");
+        return df.format(tal);        
+	}
 				
 }

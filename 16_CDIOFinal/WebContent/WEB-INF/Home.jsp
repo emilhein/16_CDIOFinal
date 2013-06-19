@@ -24,7 +24,7 @@
 				<tr>
 					<td><center><%= commoditySum.getCommodityId() %></center></td>
 					<td><center><%= commoditySum.getCommodityName() %></center></td>
-					<td><center><%= commoditySum.getSum() %></center></td>
+					<td><center><%= s.DecimalFormat(commoditySum.getSum()) %></center></td>
 				</tr>
 				<% } %>
 			<% } %>
@@ -45,7 +45,7 @@
 				<tr>
 					<td><center><%= commoditySum.getCommodityId() %></center></td>
 					<td><center><%= commoditySum.getCommodityName() %></center></td>
-					<td><center><%= commoditySum.getSum() %></center></td>
+					<td><center><%= s.DecimalFormat(commoditySum.getSum()) %></center></td>
 				</tr>
 			<% } %>
 		</table>

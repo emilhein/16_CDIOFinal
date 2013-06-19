@@ -36,8 +36,8 @@
 		<tr>
 			<td><center><a href="?page=Recipes&filterRecipeId=<%= recipeComp.getRecipeId() %>"><%= recipeComp.getRecipeId() %></a></center></td>
 			<td><center><a href="?page=Commodities&filterCommodityId=<%= recipeComp.getCommodityId() %>"><%= recipeComp.getCommodityId() %></a></center></td>
-			<td><center><%= recipeComp.getNomNetto() %></center></td>
-			<td><center><%= recipeComp.getTolerance() %></center></td>
+			<td><center><%= s.DecimalFormat(recipeComp.getNomNetto()) %></center></td>
+			<td><center><%= s.DecimalFormat(recipeComp.getTolerance()) %></center></td>
 		</tr>
 	<% } %>
 	<form method="post">
