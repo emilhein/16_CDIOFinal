@@ -289,6 +289,11 @@ public class ASE {
 					continue;
 				}
 				
+				if (procedure.operator.getRights() == 5) {
+					display("Blocked");
+					continue;
+				}
+				
 				if (readInt(procedure.operator.getOprName() + "?", "1", "") != 1) {
 					continue;
 				}
