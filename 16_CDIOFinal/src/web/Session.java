@@ -309,7 +309,7 @@ public class Session {
 		if (password == null || !password.matches("^.{5,8}$")) {
 			return "Password length must be between 5 and 8 characters.";
 		}
-		if (rights == null || !rights.matches("^[0-9]{1,8}$")) {
+		if (rights == null || !rights.matches("^[0-9]$") || Integer.parseInt(rights) < 1 || Integer.parseInt(rights) > 5) {
 			return "Rights must be a number between 1 and 5.";
 		}
 
@@ -353,7 +353,7 @@ public class Session {
 		if (password == null || !password.matches("^.{5,8}$")) {
 			return "Password length must be between 5 and 8 characters.";
 		}
-		if (rights == null || !rights.matches("^[0-9]{1,8}$")) {
+		if (rights == null || !rights.matches("^[0-9]$") || Integer.parseInt(rights) < 1 || Integer.parseInt(rights) > 5) {
 			return "Rights must be a number between 1 and 5.";
 		}
 		
@@ -413,8 +413,8 @@ public class Session {
 		if (id == null || !id.matches("^[0-9]{1,8}$")) {
 			return "Id must be a number between 1 and 99999999.";
 		}
-		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$")) {
-			return "Quantity must be a decimal number greater than or equal to 0.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]{0,4}$")) {
+			return "Quantity must be a decimal number greater than or equal to 0 with a maximum of 4 decimals.";
 		}
 		
 		CommodityBatch commodityBatch;
@@ -445,8 +445,8 @@ public class Session {
 		if (commodityId == null || !commodityId.matches("^[0-9]{1,8}$")) {
 			return "Commodity id must be a number between 1 and 99999999.";
 		}
-		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$")) {
-			return "Quantity must be a decimal number greater than or equal to 0.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]{0,4}$")) {
+			return "Quantity must be a decimal number greater than or equal to 0 with a maximum of 4 decimals.";
 		}
 		
 		// Add
@@ -459,19 +459,19 @@ public class Session {
 				
 		return null;
 	}
-	public static String addProductBatch(String id, String receptId) {
+	public static String addProductBatch(String id, String recipeId) {
 		
 		if (id == null || !id.matches("^[0-9]{1,8}$")) {
 			return "Id must be a number between 1 and 99999999.";
 		}
-		if (receptId == null || !receptId.matches("^[0-9]{1,8}$")) {
-			return "Recept id must be a number between 1 and 99999999.";
+		if (recipeId == null || !recipeId.matches("^[0-9]{1,8}$")) {
+			return "Recipe id must be a number between 1 and 99999999.";
 		}
 		
 		// Add
 
 		try {
-			databaseAccess.createProductBatch(new ProductBatch(Integer.parseInt(id), Integer.parseInt(receptId), null, null, 0));
+			databaseAccess.createProductBatch(new ProductBatch(Integer.parseInt(id), Integer.parseInt(recipeId), null, null, 0));
 		} catch (Exception e) {
 			return "Could not add product batch (" + e.getMessage() + ").";
 		}
@@ -486,11 +486,11 @@ public class Session {
 		if (commodityId == null || !commodityId.matches("^[0-9]{1,8}$")) {
 			return "Commodity id must be a number between 1 and 99999999.";
 		}
-		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]*$") || Double.parseDouble(quantity) < 0.05 || Double.parseDouble(quantity) > 20) {
-			return "Quantity must be a decimal number between 0.05 and 20.";
+		if (quantity == null || !quantity.matches("^[0-9]+\\.?[0-9]{0,4}$") || Double.parseDouble(quantity) < 0.05 || Double.parseDouble(quantity) > 20) {
+			return "Quantity must be a decimal number between 0.05 and 20 with a maximum of 4 decimals.";
 		}
-		if (tolerance == null || !tolerance.matches("^[0-9]+\\.?[0-9]*$") || Double.parseDouble(tolerance) < 0.1 || Double.parseDouble(tolerance) > 10) {
-			return "Tolerance must be a decimal number between 0.1 and 10.";
+		if (tolerance == null || !tolerance.matches("^[0-9]+\\.?[0-9]{0,4}$") || Double.parseDouble(tolerance) < 0.1 || Double.parseDouble(tolerance) > 10) {
+			return "Tolerance must be a decimal number between 0.1 and 10 with a maximum of 4 decimals.";
 		}
 
 		// Add
@@ -534,6 +534,36 @@ public class Session {
 			return null;
 		}
 		
+	}
+	
+	public static String decimalFormat(double tal) {
+		
+		final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("0.####");
+        
+		return decimalFormat.format(tal).replace(",", ".");    
+	}
+	
+	public static String getRightsName(int rights) {
+		
+		switch (rights) {
+		
+			case 1:
+				return "Administrator";
+				
+			case 2:
+				return "Pharmacist";
+				
+			case 3:
+				return "Foreman";
+				
+			case 4:
+				return "Operator";
+				
+			case 5:
+				return "Blocked";
+		}
+		
+		return "Unknown";
 	}
 				
 }

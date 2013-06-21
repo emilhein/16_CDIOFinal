@@ -19,9 +19,10 @@
 	%>
 	<div style="border: 1px dashed black; width: 600px; padding: 10px">
 		<div style="border-bottom: 1px black solid; width: 80%; margin-left: auto; margin-right: auto">
-			Udskrevet: <%= s.getDate() %><br>
+			Printed: <%= s.getDate() %><br>
 			Produkt Batch nr. <%= productBatch.getPbId()%><br>
-			Recept nr. <%= productBatch.getReceptId() %>
+			Recept nr. <%= productBatch.getReceptId() %><br>
+			Recipe name: <%= s.getRecipes("" + productBatch.getReceptId()).get(0).getRecipeName() %>
 		</div>
 		<% if (fullBatchListMade.size() > 0) { %>
 			<br>
@@ -36,12 +37,25 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= fullBatchList.getNomNetto() %><br>
-				Tolerance: <%= fullBatchList.getTolerance() %><br>
-				Tara: <%= fullBatchList.getTara() %><br>
-				Netto: <%= fullBatchList.getNetto() %><br>
-				Opr: <%= fullBatchList.getOprId() %><br>
-				Terminal: <%= fullBatchList.getTerminal() %><br>
+				<table id="print">
+					<tr>
+						<th>NomNetto</th>
+						<th>Tolerance</th>
+						<th>Tara</th>
+						<th>Netto</th>
+						<th>Batch</th>
+						<th>Opr</th>
+						<th>Terminal</th>
+					</tr>
+					<tr>
+						<td><%= s.decimalFormat(fullBatchList.getNomNetto()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getTolerance()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getTara()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getNetto()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getCbId()) %></td>
+						<td><%= fullBatchList.getOprId() %></td>
+						<td><%= fullBatchList.getTerminal() %></td>				
+				</table>
 			<% } %>
 		<% } %>
 		<% if (fullBatchListNotMade.size() > 0) { %>
@@ -53,16 +67,27 @@
 					Commodity Id: <%= fullBatchList.getCommodityId() %><br>
 					Commodity Name: <%= fullBatchList.getCommodityName() %><br>
 				</div>
-				NomNetto: <%= fullBatchList.getNomNetto() %><br>
-				Tolerance: <%= fullBatchList.getTolerance() %><br>
+				<table id="print">
+					<tr>
+						<th>NomNetto</th>
+						<th>Tolerance</th>
+						<th>Tara</th>
+						<th>Netto</th>
+						<th>Batch</th>
+						<th>Opr</th>
+						<th>Terminal</th>
+					</tr>
+						<td><%= s.decimalFormat(fullBatchList.getNomNetto()) %></td>
+						<td><%= s.decimalFormat(fullBatchList.getTolerance()) %></td>
+				</table>
 			<% } %>
 		<% } %>
 		<br>
 		<center>Opsummering</center>
 		<br>
 		<div style="border-bottom: 1px black solid; margin-left: auto; margin-rigth: auto">
-			Sum Tara: <%= tara %><br>
-			Sum Netto: <%= netto %><br>
+			Sum Tara: <%= s.decimalFormat(tara) %><br>
+			Sum Netto: <%= s.decimalFormat(netto) %><br>
 			<br>
 			Produktion Status: <%= productBatch.getStatus() == 0 ? "Ikke påbegyndt" : productBatch.getStatus() == 1 ? "Under produktion" : "Afsluttet" %><br>
 			Produktion Startet: <%= productBatch.getStartTime() %><br>

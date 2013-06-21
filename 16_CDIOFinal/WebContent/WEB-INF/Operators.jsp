@@ -44,7 +44,13 @@
 				<td><input type="text" name="initials" value="<%= operator.getIni() %>"></td>
 				<td><center><%= operator.getCpr() %></center></td>
 				<td><input type="text" name="password" value="<%= operator.getPassword() %>"></td>
-				<td><input type="text" name="rights" value="<%= operator.getRights() %>"></td>
+				<td>
+					<select name="rights">
+  					<% for (int i = 1; i <= 5; i++) { %>
+  						<option value="<%= i %>"<%= operator.getRights() == i ? " selected=\"selected\"" : "" %>><%= s.getRightsName(i) %></option>
+  					<% } %>
+					</select>
+				</td>
 				<td><input type="submit" value="Update"></td>
 				<td><center><a href="?page=ProductBatchComponents&filterOperatorId=<%= operator.getOprId() %>">Product Batch Components</a></center></td>
 			</tr>
@@ -53,12 +59,19 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
-			<td><br><input type="text" name="name" value="<%= request.getParameter("add") != null && request.getParameter("name") != null ? request.getParameter("name") : "" %>"></td>
-			<td><br><input type="text" name="initials" value="<%= request.getParameter("add") != null && request.getParameter("initials") != null ? request.getParameter("initials") : "" %>"></td>
-			<td><br><input type="text" name="cpr" value="<%= request.getParameter("add") != null && request.getParameter("cpr") != null ? request.getParameter("cpr") : "" %>"></td>
-			<td><br><input type="text" name="password" value="<%= request.getParameter("add") != null && request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
-			<td><br><input type="text" name="rights" value="<%= request.getParameter("add") != null && request.getParameter("rights") != null ? request.getParameter("rights") : "" %>"></td>
+			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
+			<td><br><input type="text" name="name" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("name") != null ? request.getParameter("name") : "" %>"></td>
+			<td><br><input type="text" name="initials" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("initials") != null ? request.getParameter("initials") : "" %>"></td>
+			<td><br><input type="text" name="cpr" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("cpr") != null ? request.getParameter("cpr") : "" %>"></td>
+			<td><br><input type="text" name="password" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
+			<td>
+				<br>
+				<select name="rights">
+  				<% for (int i = 1; i <= 5; i++) { %>
+  					<option value="<%= i %>"<%= request.getParameter("add") != null && message2 != null && request.getParameter("rights").equals("" + i) ? " selected=\"selected\"" : "" %>><%= s.getRightsName(i) %></option>
+  				<% } %>
+				</select>
+			</td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>

@@ -65,3 +65,8 @@
 	border: 1px solid #000
 }
 
+#print {
+	width:100%;
+	text-align:center;
+}
+

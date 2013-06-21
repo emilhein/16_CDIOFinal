@@ -1,4 +1,5 @@
 <%@ page import="database_objects.CommodityBatch" %>
+<%@ page import="database_objects.Commodity" %>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
 
@@ -37,8 +38,8 @@
 			<input type="hidden" name="id" value="<%= commodityBatch.getCbId() %>">
 			<tr>
 				<td><center><%= commodityBatch.getCbId() %></center></td>
-				<td><center><a href="?page=Commodities&filterCommodityId=<%= commodityBatch.getCommodityId() %>"><%= commodityBatch.getCommodityId() %></a></center></td>
-				<td><input type="text" name="quantity" value="<%= commodityBatch.getMaengde() %>"></td>
+				<td><center><a href="?page=Commodities&filterCommodityId=<%= commodityBatch.getCommodityId() %>"><%= s.getCommodities("" + commodityBatch.getCommodityId()).get(0).getCommodityName() %> (<%= commodityBatch.getCommodityId() %>)</a></center></td>
+				<td><input type="text" name="quantity" value="<%= s.decimalFormat(commodityBatch.getMaengde())%>"></td>
 				<td><input type="submit" value="Update"></td>
 				<td><center><a href="?page=ProductBatchComponents&filterCommodityBatchId=<%= commodityBatch.getCbId() %>">Product Batch Components</a></center></td>
 			</tr>
@@ -47,9 +48,16 @@
 	<form method="post">
 		<input type="hidden" name="add" value="true">
 		<tr>
-			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
-			<td><br><input type="text" name="commodityId" value="<%= request.getParameter("add") != null && request.getParameter("commodityId") != null ? request.getParameter("commodityId") : "" %>"></td>
-			<td><br><input type="text" name="quantity" value="<%= request.getParameter("add") != null && request.getParameter("quantity") != null ? request.getParameter("quantity") : "" %>"></td>
+			<td><br><input type="text" name="id" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
+			<td>
+				<br>
+				<select name="commodityId">
+  				<% for (Commodity commodity : s.getCommodities(null)) { %>
+  					<option value="<%= commodity.getCommodityId() %>"<%= request.getParameter("add") != null && message2 != null && request.getParameter("commodityId").equals("" + commodity.getCommodityId()) ? " selected=\"selected\"" : "" %>><%= commodity.getCommodityName() %> (<%= commodity.getCommodityId() %>)</option>
+  				<% } %>
+				</select>
+			</td>
+			<td><br><input type="text" name="quantity" value="<%= request.getParameter("add") != null && message2 != null && request.getParameter("quantity") != null ? request.getParameter("quantity") : "" %>"></td>
 			<td><br><input type="submit" value="Add"></td>
 		</tr>
 	</form>
