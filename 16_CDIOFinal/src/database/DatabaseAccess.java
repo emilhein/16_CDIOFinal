@@ -99,7 +99,7 @@ public class DatabaseAccess {
 			//commoditybatch --- cbId: int, commodityId: int, quantity: real.
 			//recipe --- recipeId: int, recipeName: varchar, 
 			//recipeComponent --- recipeId: int, commodityId int, nomNetto: Real, Tolerance: real.
-			//productbatch --- pbId: int, recipeId: int, startTime: TIMESTAMP, state: int.
+			//productbatch --- pbId: int, recipeId: int, startTime: TIMESTAMP, endTime: TIMESTAMP , state: int.
 			//productsbatchComponent --- pbId: int, cbId: int, tara: real, netto: real, oprId: int, terminal: int.
 
 
