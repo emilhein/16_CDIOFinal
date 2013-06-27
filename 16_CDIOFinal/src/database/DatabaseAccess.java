@@ -99,7 +99,7 @@ public class DatabaseAccess {
 			//commoditybatch --- cbId: int, commodityId: int, quantity: real.
 			//recipe --- recipeId: int, recipeName: varchar, 
 			//recipeComponent --- recipeId: int, commodityId int, nomNetto: Real, Tolerance: real.
-			//productbatch --- pbId: int, recipeId: int, startTime: TIMESTAMP, state: int.
+			//productbatch --- pbId: int, recipeId: int, startTime: TIMESTAMP, endTime: TIMESTAMP , state: int.
 			//productsbatchComponent --- pbId: int, cbId: int, tara: real, netto: real, oprId: int, terminal: int.
 
 
@@ -148,13 +148,13 @@ public class DatabaseAccess {
 			connector.doUpdate("INSERT INTO recipe VALUES(10,'Isvand')");
 
 			// indsæt recipeComponent.
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 4.0)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 12.2, 3.0)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,3, 12.2, 1.5)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,6, 12.2, 1.0)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,1, 12.2, 4.0)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,2, 12.2, 4.0)");
-			connector.doUpdate("INSERT INTO recipeComponent VALUES(10,3, 1, 4.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,1, 1.2, 8.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,2, 2.2, 9.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,3, 2.2, 5.5)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(1,6, 2.2, 5.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,1, 2.2, 7.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(2,2, 2.2, 7.0)");
+			connector.doUpdate("INSERT INTO recipeComponent VALUES(10,3, 1, 8.0)");
 
 			// indsæt productBatch.
 			connector.doUpdate("INSERT INTO productBatch(pbId, recipeId , state) VALUES(1,1,1)");
